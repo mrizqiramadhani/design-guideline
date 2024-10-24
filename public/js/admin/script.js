@@ -87,6 +87,49 @@ navLinks.forEach((link) => {
       }
     };
 
-    scrambleNextChar(); // Mulai animasi
+    scrambleNextChar(); // Mulai animas
   });
 });
+
+//*dropdown navbar
+
+// Function to toggle the modal
+function toggleModal(modal, action) {
+  if (action === "open") {
+    modal.classList.remove("hidden");
+  } else {
+    modal.classList.add("hidden");
+  }
+}
+
+// Modal Toggle Logic
+document.getElementById("openModal").onclick = function () {
+  const modal = document.getElementById("modal");
+  toggleModal(modal, "open");
+};
+
+document.getElementById("closeModal").onclick = function () {
+  const modal = document.getElementById("modal");
+  toggleModal(modal, "close");
+};
+
+// Dropdown Logic
+document.getElementById("userMenuButton").onclick = function (event) {
+  const dropdown = document.getElementById("userDropdown");
+  dropdown.classList.toggle("hidden");
+  event.stopPropagation(); // Prevent event from bubbling up
+};
+
+// Close dropdown when clicking outside
+window.onclick = function (event) {
+  const dropdown = document.getElementById("userDropdown");
+  const userMenuButton = document.getElementById("userMenuButton");
+
+  // Check if the clicked target is outside the dropdown and button
+  if (
+    !userMenuButton.contains(event.target) &&
+    !dropdown.contains(event.target)
+  ) {
+    dropdown.classList.add("hidden");
+  }
+};
