@@ -1,0 +1,82 @@
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;700&display=swap");
+@import url(https://db.onlinewebfonts.com/c/29ddb4605533a38e086b48fa105e0d12?family=Nohemi);
+
+* {
+  font-family: Nohemi;
+}
+.paragraf {
+  font-family: Raleway;
+}
+
+.sidebar-sticky {
+  position: sticky;
+  top: 90px; /* Adjust this value based on the height of the navbar */
+  height: calc(100vh - 90px); /* Adjust the height of the sidebar */
+  overflow-y: auto;
+}
+.sidebar-sticky ul li a {
+  color: #000000;
+  transition: color 0.4s;
+  position: relative;
+  -webkit-transition: color 0.4s;
+  -moz-transition: color 0.4s;
+  -ms-transition: color 0.4s;
+  -o-transition: color 0.4s;
+}
+
+.sidebar-sticky ul li a:hover {
+  color: #2076ff;
+}
+
+/* Active state */
+.sidebar-sticky ul li a.active {
+  color: #2076ff;
+}
+.section-heading {
+  padding-top: 140px; /* Ganti sesuai kebutuhan */
+  margin-top: -90px; /* Sesuaikan dengan tinggi navbar */
+  position: relative; /* Menjaga posisinya */
+}
+
+/* scramble effect */
+.nav-link {
+  transition: color 200ms;
+}
+/* .nav-link:hover {
+  color: #2076ff;
+} */
+
+/* navbar */
+#navbar {
+  height: 90px;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+  background-color: #000000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+}
+
+/* paralax effect */
+.parallax-container {
+  position: relative;
+  overflow: hidden;
+  height: 400px; /* Adjust height as needed */
+}
+
+.parallax-image {
+  position: absolute;
+  transition: transform 0.5s ease-in-out;
+}
+
+.icon {
+  left: 50%; /* Start from center */
+  transform: translateX(-50%) translateY(-50%); /* Center the icon */
+}
+
+.logo {
+  top: 50%; /* Start from the center vertically */
+  transform: translateY(-50%);
+}
