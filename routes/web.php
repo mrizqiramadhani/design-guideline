@@ -36,11 +36,13 @@ Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::group(['middleware' => 'checkRole:admin'], function () {
-    Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
-    Route::post('/admin/add-operator', [AdminController::class, 'addOperator'])->name('admin.addOperator');
-});
+Route::group(['middleware' => ['auth', 'startSessionByRole']], function () {
+    Route::group(['middleware' => ['checkAdmin']], function () {
+        Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+        Route::post('/admin/add-operator', [AdminController::class, 'addOperator'])->name('admin.addOperator');
+    });
 
-Route::group(['middleware' => 'checkRole:operator'], function () {
-    Route::get('/operator/dashboard', [OperatorController::class, 'index'])->name('operator.dashboard');
+    Route::group(['middleware' => ['checkOperator']], function () {
+        Route::get('/operator/dashboard', [OperatorController::class, 'index'])->name('operator.dashboard');
+    });
 });
