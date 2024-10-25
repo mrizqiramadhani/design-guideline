@@ -11,18 +11,32 @@
 <body>
     <!-- Header -->
     <header id="navbar" class="bg-black transition-colors duration-300 fixed top-0 left-0 right-0 z-10">
-        <div class="mx-auto max-w-screen-xl px-4 py-4 sm:px-6 sm:py-8 lg:px-8">
-            <div class="flex flex-col items-start gap-4 md:flex-row md:items-center md:justify-between">
-                <div>
-                    <h1 class="text-2xl font-bold text-white sm:text-3xl cursor-pointer">
-                        <a href="index.html"> Shafwah Operator Panel</a>
-                    </h1>
-                </div>
-                <div class="flex space-x-4 md:space-x-8">
-                    <ul class="flex space-x-10 text-lg text-white">
-                        <li><a href="#" class="nav-link">Dashboard</a></li>
-                        <li><a href="#" class="nav-link">Content Management</a></li>
+        <div class="mx-auto max-w-screen-xl px-4 py-3 sm:px-6 sm:py-4 lg:px-8">
+            <div class="flex items-center justify-between">
+                <h1 class="text-2xl font-bold text-white sm:text-3xl cursor-pointer">
+                    <a href="index.html">Shafwah Operator Panel</a>
+                </h1>
+                <div class="flex space-x-4">
+                    <ul class="flex space-x-6 text-lg text-white">
+                        <li><a href="/operator/dashboard" class="nav-link">Dashboard</a></li>
                     </ul>
+
+                    <!-- User Icon with Dropdown -->
+                    <div class="relative">
+                        <button id="userMenuButton" class="focus:outline-none">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A9 9 0 0112 2a9 9 0 016.879 15.804M12 12a3 3 0 100-6 3 3 0 000 6zm-5 7a5 5 0 0110 0H7z" />
+                            </svg>
+                        </button>
+
+                        <div id="userDropdown" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-20">
+                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile</a>
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button type="submit" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Logout</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

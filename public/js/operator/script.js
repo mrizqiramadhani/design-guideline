@@ -90,3 +90,25 @@ navLinks.forEach((link) => {
     scrambleNextChar(); // Mulai animasi
   });
 });
+
+//*logout
+// Dropdown Logic
+document.getElementById("userMenuButton").onclick = function (event) {
+  const dropdown = document.getElementById("userDropdown");
+  dropdown.classList.toggle("hidden");
+  event.stopPropagation(); // Prevent event from bubbling up
+};
+
+// Close dropdown when clicking outside
+window.onclick = function (event) {
+  const dropdown = document.getElementById("userDropdown");
+  const userMenuButton = document.getElementById("userMenuButton");
+
+  // Check if the clicked target is outside the dropdown and button
+  if (
+    !userMenuButton.contains(event.target) &&
+    !dropdown.contains(event.target)
+  ) {
+    dropdown.classList.add("hidden");
+  }
+};
