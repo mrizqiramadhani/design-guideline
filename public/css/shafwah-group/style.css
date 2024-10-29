@@ -80,3 +80,83 @@
   top: 50%; /* Start from the center vertically */
   transform: translateY(-50%);
 }
+
+.text-extra-small {
+  font-size: 0.7rem; /* Adjust to your preferred size */
+}
+
+/* button download logo */
+.button-custom {
+  border: 2px solid white; /* Border putih */
+  background-color: transparent; /* Latar belakang transparan */
+  color: white; /* Teks putih */
+  padding: 0.5rem 1rem; /* Padding tombol */
+  border-radius: 9999px; /* Tombol rounded */
+  transition: background-color 0.3s, color 0.3s; /* Transisi untuk efek hover */
+  font-size: 0.9rem;
+}
+
+.button-custom:hover {
+  background-color: white; /* Latar belakang putih saat hover */
+  color: black; /* Teks hitam saat hover */
+}
+
+/* copy code color palette */
+.color-circle {
+  width: 8rem;
+  height: 8rem;
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.color-circle:hover {
+  transform: scale(1.1);
+}
+
+/* Tooltip styling */
+.copy-tooltip {
+  position: absolute;
+  top: 50%; /* Center vertically */
+  left: 50%; /* Center horizontally */
+  transform: translate(-50%, -50%); /* Centering adjustment */
+  padding: 5px 10px;
+  border-radius: 4px;
+  color: white;
+  font-size: 0.5rem;
+  display: flex;
+  align-items: center;
+  visibility: hidden; /* Initially hidden */
+  opacity: 0; /* Initially transparent */
+  transition: visibility 0s, opacity 0.3s linear; /* Smooth transition */
+}
+
+.color-item:hover .copy-tooltip {
+  visibility: visible; /* Show on hover */
+  opacity: 1; /* Fully visible */
+}
+
+/* Notification styling */
+.notification {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: rgba(33, 225, 59, 0.85);
+  color: white;
+  padding: 12px 20px;
+  border-radius: 5px;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  z-index: 1;
+}
+
+/* Show notification */
+.notification.show {
+  opacity: 1;
+  transform: translateY(0);
+}

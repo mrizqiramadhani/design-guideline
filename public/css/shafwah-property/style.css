@@ -2,45 +2,45 @@
 @import url(https://db.onlinewebfonts.com/c/29ddb4605533a38e086b48fa105e0d12?family=Nohemi);
 
 * {
-    font-family: Nohemi;
+  font-family: Nohemi;
 }
 .paragraf {
-    font-family: Raleway;
+  font-family: Raleway;
 }
 
 .sidebar-sticky {
-    position: sticky;
-    top: 90px; /* Adjust this value based on the height of the navbar */
-    height: calc(100vh - 90px); /* Adjust the height of the sidebar */
-    overflow-y: auto;
+  position: sticky;
+  top: 90px; /* Adjust this value based on the height of the navbar */
+  height: calc(100vh - 90px); /* Adjust the height of the sidebar */
+  overflow-y: auto;
 }
 .sidebar-sticky ul li a {
-    color: #000000;
-    transition: color 0.4s;
-    position: relative;
-    -webkit-transition: color 0.4s;
-    -moz-transition: color 0.4s;
-    -ms-transition: color 0.4s;
-    -o-transition: color 0.4s;
+  color: #000000;
+  transition: color 0.4s;
+  position: relative;
+  -webkit-transition: color 0.4s;
+  -moz-transition: color 0.4s;
+  -ms-transition: color 0.4s;
+  -o-transition: color 0.4s;
 }
 
 .sidebar-sticky ul li a:hover {
-    color: #2076ff;
+  color: #2076ff;
 }
 
 /* Active state */
 .sidebar-sticky ul li a.active {
-    color: #2076ff;
+  color: #2076ff;
 }
 .section-heading {
-    padding-top: 140px; /* Ganti sesuai kebutuhan */
-    margin-top: -90px; /* Sesuaikan dengan tinggi navbar */
-    position: relative; /* Menjaga posisinya */
+  padding-top: 140px; /* Ganti sesuai kebutuhan */
+  margin-top: -90px; /* Sesuaikan dengan tinggi navbar */
+  position: relative; /* Menjaga posisinya */
 }
 
 /* scramble effect */
 .nav-link {
-    transition: color 200ms;
+  transition: color 200ms;
 }
 /* .nav-link:hover {
   color: #2076ff;
@@ -48,13 +48,92 @@
 
 /* navbar */
 #navbar {
-    height: 90px;
-    opacity: 1;
-    transition: opacity 0.3s ease;
-    background-color: #000000;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 100;
+  height: 90px;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+  background-color: #000000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+}
+.text-extra-small {
+  font-size: 0.7rem; /* Adjust to your preferred size */
+}
+
+/* button download logo */
+.button-custom {
+  border: 2px solid white; /* Border putih */
+  background-color: transparent; /* Latar belakang transparan */
+  color: white; /* Teks putih */
+  padding: 0.5rem 1rem; /* Padding tombol */
+  border-radius: 9999px; /* Tombol rounded */
+  transition: background-color 0.3s, color 0.3s; /* Transisi untuk efek hover */
+  font-size: 0.9rem;
+}
+
+.button-custom:hover {
+  background-color: white; /* Latar belakang putih saat hover */
+  color: black; /* Teks hitam saat hover */
+}
+
+/* copy code color palette */
+.color-circle {
+  width: 8rem;
+  height: 8rem;
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.color-circle:hover {
+  transform: scale(1.1);
+}
+
+/* Tooltip styling */
+.copy-tooltip {
+  position: absolute;
+  top: 50%; /* Center vertically */
+  left: 50%; /* Center horizontally */
+  transform: translate(-50%, -50%); /* Centering adjustment */
+  padding: 5px 10px;
+  border-radius: 4px;
+  color: white;
+  font-size: 0.5rem;
+  display: flex;
+  align-items: center;
+  visibility: hidden; /* Initially hidden */
+  opacity: 0; /* Initially transparent */
+  transition: visibility 0s, opacity 0.3s linear; /* Smooth transition */
+}
+
+.color-item:hover .copy-tooltip {
+  visibility: visible; /* Show on hover */
+  opacity: 1; /* Fully visible */
+}
+
+/* Notification styling */
+.notification {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: rgba(33, 225, 59, 0.85);
+  color: white;
+  padding: 12px 20px;
+  border-radius: 5px;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  z-index: 1;
+}
+
+/* Show notification */
+.notification.show {
+  opacity: 1;
+  transform: translateY(0);
 }

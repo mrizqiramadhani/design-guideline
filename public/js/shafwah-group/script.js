@@ -90,3 +90,48 @@ navLinks.forEach((link) => {
     scrambleNextChar(); // Mulai animasi
   });
 });
+
+//* Copy code shafwah group
+// Show notification function
+function showNotification(message) {
+  const notification = document.getElementById("notification");
+  notification.textContent = message;
+  notification.classList.remove("hidden");
+  notification.classList.add("show");
+
+  // Hide after 3 seconds
+  setTimeout(() => {
+    notification.classList.remove("show");
+    notification.classList.add("hidden");
+  }, 3000);
+}
+
+// Copy color code to clipboard
+document.querySelectorAll(".color-item").forEach((item) => {
+  item.addEventListener("click", function () {
+    const colorCode = this.getAttribute("data-color");
+
+    navigator.clipboard
+      .writeText(colorCode)
+      .then(() => {
+        showNotification(`Kode warna ${colorCode} berhasil disalin!`);
+      })
+      .catch((err) => {
+        console.error("Gagal menyalin kode warna:", err);
+      });
+  });
+
+  // Show tooltip on hover
+  item.addEventListener("mouseenter", function () {
+    const tooltip = this.querySelector(".copy-tooltip");
+    tooltip.classList.remove("hidden");
+    tooltip.style.visibility = "visible";
+    tooltip.style.opacity = "1";
+  });
+
+  item.addEventListener("mouseleave", function () {
+    const tooltip = this.querySelector(".copy-tooltip");
+    tooltip.style.visibility = "hidden";
+    tooltip.style.opacity = "0";
+  });
+});
