@@ -49,13 +49,14 @@
             <div class="px-5 py-20">
                 <nav>
                     <ul class="space-y-6 text-lg text-gray-900">
-                        <li><a href="#deskripsi">Deskripsi</a></li>
-                        <li><a href="#logo">Logo</a></li>
-                        <li><a href="#color-palette">Color Palette</a></li>
-                        <li><a href="#typography">Typography</a></li>
-                        <li><a href="#illustration">Illustration</a></li>
-                        <li><a href="#social-media">Social Media</a></li>
-                        <li><a href="#iconography">Iconography</a></li>
+                        <li><a href="{{ route('admin.deskripsi') }}">Deskripsi</a></li>
+                        <li><a href="{{ route('admin.logo') }}">Logo</a></li>
+                        <li><a href="{{ route('admin.color') }}">Color Palette</a></li>
+                        <li><a href="{{ route('admin.typography') }}">Typography</a></li>
+                        <li><a href="{{ route('admin.illustration') }}">Illustration</a></li>
+                        <li><a href="{{ route('admin.social') }}">Social Media</a></li>
+                        <li><a href="{{ route('admin.iconography') }}">Iconography</a></li>
+                        <li><a href="{{ route('admin.campaign') }}">Campaign</a></li>
                     </ul>
                 </nav>
             </div>
@@ -71,46 +72,10 @@
             <div class="mt-20 mb-5 flex items-center justify-between">
                 <h2 class="text-4xl font-bold text-gray-900">Deskripsi</h2>
                 <div class="flex space-x-4">
-                    <a href="#" id="openModal" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">+ Add New Operator</a>
-                    <a href="#" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">+ Add New Content</a>
+                <a href="#" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">+ Add New Content</a>
                 </div>
             </div>
 
-            <!-- Modal -->
-            <div id="modal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
-                <div class="bg-white rounded-lg shadow-lg p-6 w-11/12 md:w-1/3">
-                    <div class="flex justify-between items-center mb-4">
-                        <h2 class="text-lg font-bold">Add New Operator</h2>
-                        <button id="closeModal" class="text-gray-500 hover:text-gray-700">&times;</button>
-                    </div>
-
-                    <!-- Display Validation Errors -->
-                    @if ($errors->any())
-                        <div class="bg-red-500 text-white p-3 rounded mb-4">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
-
-                    <form action="{{ route('admin.addOperator') }}" method="POST">
-                        @csrf
-                        <div class="mb-4">
-                            <input type="text" name="name" placeholder="Name" required class="w-full h-10 border border-gray-300 rounded px-2" />
-                        </div>
-                        <div class="mb-4">
-                            <input type="email" name="email" placeholder="Email" required class="w-full h-10 border border-gray-300 rounded px-2" />
-                        </div>
-                        <div class="mb-4">
-                            <input type="password" name="password" placeholder="Password" required class="w-full h-10 border border-gray-300 rounded px-2" />
-                        </div>
-                        
-                        <button type="submit" class="w-full bg-blue-500 text-white rounded py-2 hover:bg-blue-600">Add Operator</button>
-                    </form>
-                </div>
-            </div>
 
             <!-- Content Table -->
             <div class="overflow-x-auto">

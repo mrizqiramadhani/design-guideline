@@ -69,7 +69,7 @@
                     </div>
                 @endif
             <div class="mt-20 mb-5 flex items-center justify-between">
-                <h2 class="text-4xl font-bold text-gray-900">Deskripsi</h2>
+                <h2 class="text-4xl font-bold text-gray-900">Color Palette</h2>
                 <div class="flex space-x-4">
                 <a href="#" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">+ Add New Content</a>
                 </div>

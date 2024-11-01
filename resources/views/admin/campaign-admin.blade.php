@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Operator - Content Management</title>
+    <title>Admin - Content Management</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="{{ asset('css/admin/style.css') }}" />
     <link rel="icon" href="{{ asset('img/SG 2023-04.png') }}">
@@ -14,11 +14,12 @@
         <div class="mx-auto max-w-screen-xl px-4 py-3 sm:px-6 sm:py-4 lg:px-8">
             <div class="flex items-center justify-between">
                 <h1 class="text-2xl font-bold text-white sm:text-3xl cursor-pointer">
-                    <a href="index.html">Shafwah Operator Panel</a>
+                    <a href="index.html">Shafwah Admin Panel</a>
                 </h1>
                 <div class="flex space-x-4">
                     <ul class="flex space-x-6 text-lg text-white">
                         <li><a href="#" class="nav-link">Dashboard</a></li>
+                        <li><a href="#" class="nav-link">Operators</a></li>
                     </ul>
 
                     <!-- User Icon with Dropdown -->
@@ -48,14 +49,14 @@
             <div class="px-5 py-20">
                 <nav>
                     <ul class="space-y-6 text-lg text-gray-900">
-                        <li><a href="{{ route('operator.deskripsi') }}">Deskripsi</a></li>
-                        <li><a href="{{ route('operator.logo') }}">Logo</a></li>
-                        <li><a href="{{ route('operator.color') }}">Color Palette</a></li>
-                        <li><a href="{{ route('operator.typography') }}">Typography</a></li>
-                        <li><a href="{{ route('operator.illustration') }}">Illustration</a></li>
-                        <li><a href="{{ route('operator.social') }}">Social Media</a></li>
-                        <li><a href="{{ route('operator.iconography') }}">Iconography</a></li>
-                        <li><a href="{{ route('operator.campaign') }}">Campaign</a></li>
+                        <li><a href="{{ route('admin.deskripsi') }}">Deskripsi</a></li>
+                        <li><a href="{{ route('admin.logo') }}">Logo</a></li>
+                        <li><a href="{{ route('admin.color') }}">Color Palette</a></li>
+                        <li><a href="{{ route('admin.typography') }}">Typography</a></li>
+                        <li><a href="{{ route('admin.illustration') }}">Illustration</a></li>
+                        <li><a href="{{ route('admin.social') }}">Social Media</a></li>
+                        <li><a href="{{ route('admin.iconography') }}">Iconography</a></li>
+                        <li><a href="{{ route('admin.campaign') }}">Campaign</a></li>
                     </ul>
                 </nav>
             </div>
@@ -69,7 +70,7 @@
                     </div>
                 @endif
             <div class="mt-20 mb-5 flex items-center justify-between">
-                <h2 class="text-4xl font-bold text-gray-900">Deskripsi</h2>
+                <h2 class="text-4xl font-bold text-gray-900">Campaign</h2>
                 <div class="flex space-x-4">
                 <a href="#" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">+ Add New Content</a>
                 </div>
