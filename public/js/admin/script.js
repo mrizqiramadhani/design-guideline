@@ -93,25 +93,7 @@ navLinks.forEach((link) => {
 
 //*dropdown navbar
 
-// Function to toggle the modal
-function toggleModal(modal, action) {
-  if (action === "open") {
-    modal.classList.remove("hidden");
-  } else {
-    modal.classList.add("hidden");
-  }
-}
 
-// Modal Toggle Logic
-document.getElementById("openModal").onclick = function () {
-  const modal = document.getElementById("modal");
-  toggleModal(modal, "open");
-};
-
-document.getElementById("closeModal").onclick = function () {
-  const modal = document.getElementById("modal");
-  toggleModal(modal, "close");
-};
 
 // Dropdown Logic
 document.getElementById("userMenuButton").onclick = function (event) {
