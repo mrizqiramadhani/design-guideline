@@ -8,6 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="{{ asset('css/admin/style.css') }}" />
     <link rel="icon" href="{{ asset('img/SG 2023-04.png') }}">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -79,8 +80,10 @@
             <div class="mt-20 mb-5 flex items-center justify-between">
                 <h2 class="text-4xl font-bold text-gray-900">Operator List</h2>
                 <div class="flex space-x-4">
-                    <a href="#" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">+ Add New
-                        operator</a>
+                    <button onclick="toggleModal()"
+                        class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
+                        + Add New Operator
+                    </button>
                 </div>
             </div>
 
@@ -142,6 +145,65 @@
                         </tr>
                     </tbody>
                 </table>
+
+                <!-- Modal -->
+                <div id="addOperatorModal"
+                    class="fixed inset-0 bg-gray-500 bg-opacity-50 hidden items-center justify-center">
+                    <div class="bg-white rounded-lg w-1/3 p-8 shadow-lg">
+                        <h2 class="text-2xl font-semibold mb-4">Add New Operator</h2>
+
+                        <!-- Error Messages -->
+                        @if ($errors->any())
+                            <div class="bg-red-100 text-red-700 p-3 rounded mb-4">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+
+                        <form action="{{ route('admin.addOperator') }}" method="POST">
+                            @csrf
+                            <div class="mb-4">
+                                <label for="name" class="block text-gray-700">Name:</label>
+                                <input type="text" name="name" id="name"
+                                    class="w-full border border-gray-300 p-2 rounded" required>
+                            </div>
+                            <div class="mb-4">
+                                <label for="email" class="block text-gray-700">Email:</label>
+                                <input type="email" name="email" id="email"
+                                    class="w-full border border-gray-300 p-2 rounded" required>
+                            </div>
+                            <div class="mb-4">
+                                <label for="password" class="block text-gray-700">Password:</label>
+                                <input type="password" name="password" id="password"
+                                    class="w-full border border-gray-300 p-2 rounded" required>
+                            </div>
+
+                            <div class="flex justify-end">
+                                <button type="button" onclick="closeModal()"
+                                    class="mr-4 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Cancel</button>
+                                <button type="submit"
+                                    class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Add
+                                    Operator</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- SweetAlert Success Message -->
+                @if (session('success'))
+                    <script>
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success',
+                            text: '{{ session('success') }}',
+                            confirmButtonColor: '#3085d6',
+                            confirmButtonText: 'OK'
+                        });
+                    </script>
+                @endif
 
             </div>
         </main>

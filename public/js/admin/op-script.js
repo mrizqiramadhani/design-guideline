@@ -112,3 +112,15 @@ window.onclick = function (event) {
     dropdown.classList.add("hidden");
   }
 };
+
+//! Add Operator
+function toggleModal() {
+  const modal = document.getElementById("addOperatorModal");
+  modal.classList.toggle("hidden");
+  modal.classList.toggle("flex");
+}
+function closeModal() {
+  const modal = document.getElementById("addOperatorModal"); // Make sure to reference the correct modal ID
+  modal.classList.remove("flex"); // Remove the 'flex' class to hide the modal
+  modal.classList.add("hidden"); // Add the 'hidden' class to ensure it's not visible
+}
