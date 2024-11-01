@@ -115,34 +115,6 @@
                                 </div>
                             </td>
                         </tr>
-                        <tr class="border-t">
-                            <td class="px-4 py-2 text-gray-900">2</td>
-                            <td class="px-4 py-2 text-gray-900">Jane Smith</td>
-                            <td class="px-4 py-2 text-gray-900">jane@example.com</td>
-                            <td class="px-4 py-2 text-gray-900">**********</td>
-                            <td class="px-4 py-2">
-                                <div class="flex space-x-2">
-                                    <a href="#"
-                                        class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">Edit</a>
-                                    <a href="#"
-                                        class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">Delete</a>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr class="border-t">
-                            <td class="px-4 py-2 text-gray-900">3</td>
-                            <td class="px-4 py-2 text-gray-900">Emily Johnson</td>
-                            <td class="px-4 py-2 text-gray-900">emily@example.com</td>
-                            <td class="px-4 py-2 text-gray-900">**********</td>
-                            <td class="px-4 py-2">
-                                <div class="flex space-x-2">
-                                    <a href="#"
-                                        class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">Edit</a>
-                                    <a href="#"
-                                        class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">Delete</a>
-                                </div>
-                            </td>
-                        </tr>
                     </tbody>
                 </table>
 
@@ -210,6 +182,13 @@
     </div>
 
     <script src="{{ asset('js/admin/op-script.js') }}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            @if ($errors->any())
+                toggleModal();
+            @endif
+        });
+    </script>
 </body>
 
 </html>
