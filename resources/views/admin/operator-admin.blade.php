@@ -101,24 +101,27 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="border-t">
-                            <td class="px-4 py-2 text-gray-900">1</td>
-                            <td class="px-4 py-2 text-gray-900">John Doe</td>
-                            <td class="px-4 py-2 text-gray-900">john@example.com</td>
-                            <td class="px-4 py-2 text-gray-900">**********</td>
-                            <td class="px-4 py-2">
-                                <div class="flex space-x-2">
-                                    <a href="#"
-                                        class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">Edit</a>
-                                    <a href="#"
-                                        class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">Delete</a>
-                                </div>
-                            </td>
-                        </tr>
+                        @foreach ($operators as $operator)
+                            <tr class="border-t">
+                                <td class="px-4 py-2 text-gray-900">{{ $operator->id }}</td>
+                                <td class="px-4 py-2 text-gray-900">{{ $operator->name }}</td>
+                                <td class="px-4 py-2 text-gray-900">{{ $operator->email }}</td>
+                                <td class="px-4 py-2 text-gray-900">*************</td>
+                                <td class="px-4 py-2">
+                                    <div class="flex space-x-2">
+                                        <button data-id="{{ $operator->id }}"
+                                            onclick="editOperatorModal(this.dataset.id)"
+                                            class="bg-blue-500 text-white px-2 py-1 rounded">Edit</button>
+                                        <a href="#"
+                                            class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">Delete</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
 
-                <!-- Modal -->
+                <!-- Modal tambah operator -->
                 <div id="addOperatorModal"
                     class="fixed inset-0 bg-gray-500 bg-opacity-50 hidden items-center justify-center">
                     <div class="bg-white rounded-lg w-1/3 p-8 shadow-lg">
@@ -177,6 +180,56 @@
                     </script>
                 @endif
 
+
+                <!-- Modal Edit Operator -->
+                <div id="editOperatorModal"
+                    class="hidden fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+                    <div class="bg-white rounded-lg p-6">
+                        <h2 class="text-lg font-bold mb-4">Edit Operator</h2>
+                        <!-- Error Messages -->
+                        @if ($errors->any())
+                            <div class="bg-red-100 text-red-700 p-3 rounded mb-4">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+                        <form id="editOperatorForm" action="" method="POST">
+                            @csrf
+                            @method('PUT') <!-- Pastikan menggunakan method PUT untuk update -->
+                            <div class="mb-4">
+                                <label for="editName" class="block text-gray-700">Name:</label>
+                                <input type="text" name="name" id="editName"
+                                    class="w-full border border-gray-300 p-2 rounded" required>
+                            </div>
+                            <div class="mb-4">
+                                <label for="editEmail" class="block text-gray-700">Email:</label>
+                                <input type="email" name="email" id="editEmail"
+                                    class="w-full border border-gray-300 p-2 rounded" required>
+                            </div>
+                            <div class="flex justify-end">
+                                <button type="button" onclick="closeEditModal()"
+                                    class="mr-4 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Cancel</button>
+                                <button type="submit"
+                                    class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Update
+                                    Operator</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                @if (session('success'))
+                    <script>
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success',
+                            text: '{{ session('success') }}',
+                            confirmButtonText: 'OK'
+                        });
+                    </script>
+                @endif
             </div>
         </main>
     </div>

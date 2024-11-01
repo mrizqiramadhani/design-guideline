@@ -124,3 +124,34 @@ function closeModal() {
   modal.classList.remove("flex"); // Remove the 'flex' class to hide the modal
   modal.classList.add("hidden"); // Add the 'hidden' class to ensure it's not visible
 }
+
+//todo Edit operator
+function editOperatorModal(id) {
+  fetch(`/admin/operator/edit/${id}`) // Ambil data operator
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      // Mengisi form dengan data operator
+      document.getElementById("editName").value = data.name;
+      document.getElementById("editEmail").value = data.email;
+
+      // Set action form untuk mengupdate data
+      document.getElementById(
+        "editOperatorForm"
+      ).action = `/admin/operator/update/${id}`; // Mengisi action dengan URL update
+
+      // Tampilkan modal
+      document.getElementById("editOperatorModal").classList.remove("hidden");
+    })
+    .catch((error) => {
+      console.error("There was a problem with the fetch operation:", error);
+    });
+}
+
+function closeEditModal() {
+  document.getElementById("editOperatorModal").classList.add("hidden"); // Sembunyikan modal
+}

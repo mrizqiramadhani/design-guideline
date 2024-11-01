@@ -16,12 +16,12 @@
         <div class="mx-auto max-w-screen-xl px-4 py-3 sm:px-6 sm:py-4 lg:px-8">
             <div class="flex items-center justify-between">
                 <h1 class="text-2xl font-bold text-white sm:text-3xl cursor-pointer">
-                    <a href="index.html">Shafwah Admin Panel</a>
+                    <a href="operator/dashboard">Shafwah Operator Panel</a>
                 </h1>
                 <div class="flex space-x-4">
                     <ul class="flex space-x-6 text-lg text-white">
-                        <li><a href="{{ route('admin.dashboard') }}" class="nav-link">Dashboard</a></li>
-                        <li><a href="{{ route('admin.operator-list') }}" class="nav-link">Operator</a></li>
+                        <li><a href="{{ route('operator.dashboard') }}" class="nav-link">Dashboard</a></li>
+
                     </ul>
 
                     <!-- User Icon with Dropdown -->

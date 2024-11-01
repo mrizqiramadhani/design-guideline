@@ -30,8 +30,44 @@ class AdminController extends Controller
             'role' => 'operator',
         ]);
 
-        // dd($operator);
 
         return redirect()->back()->with('success', 'Operator added successfully.');
+    }
+
+
+    public function showOperators()
+    {
+        $operators = User::where('role', 'operator')->get();
+        return view('admin.operator-admin', compact('operators'));
+    }
+
+    public function editOperator($id)
+    {
+        // Ambil data operator berdasarkan ID
+        $operator = User::findOrFail($id);
+
+        // Kembalikan response JSON dengan data operator
+        return response()->json([
+            'name' => $operator->name,
+            'email' => $operator->email,
+        ]);
+    }
+
+    public function updateOperator(Request $request, $id)
+    {
+        // Validasi data
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+        ]);
+
+        // Cari operator berdasarkan ID dan update data
+        $operator = User::findOrFail($id);
+        $operator->name = $validatedData['name'];
+        $operator->email = $validatedData['email'];
+        $operator->save();
+
+        // Set flash message untuk sukses
+        return redirect()->back()->with('success', 'Operator updated successfully!');
     }
 }

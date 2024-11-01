@@ -36,10 +36,14 @@ Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
+//* Admin Route
 Route::group(['middleware' => ['auth', 'startSessionByRole']], function () {
     Route::group(['middleware' => ['checkAdmin']], function () {
         Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
         Route::post('/admin/add-operator', [AdminController::class, 'addOperator'])->name('admin.addOperator');
+        Route::get('/admin/operator-list', [AdminController::class, 'showOperators'])->name('admin.show-operators');
+        Route::get('/admin/operator/edit/{id}', [AdminController::class, 'editOperator'])->name('admin.editOperator');
+        Route::put('/admin/operator/update/{id}', [AdminController::class, 'updateOperator'])->name('admin.updateOperator');
         Route::get('/admin/operator', function () {
             return view('admin.operator-admin');
         })->name('admin.operator-list');
