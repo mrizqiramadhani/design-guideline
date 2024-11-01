@@ -92,9 +92,6 @@ navLinks.forEach((link) => {
 });
 
 //*dropdown navbar
-
-
-
 // Dropdown Logic
 document.getElementById("userMenuButton").onclick = function (event) {
   const dropdown = document.getElementById("userDropdown");
