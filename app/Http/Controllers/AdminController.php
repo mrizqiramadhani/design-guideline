@@ -89,7 +89,7 @@ class AdminController extends Controller
         $operator = User::findOrFail($id);
         $operator->delete();
     
-        return redirect()->route('admin.show-operators')->with('success', 'Operator berhasil dihapus.');
+        return redirect()->route('admin.show-operators')->with('success', 'Operator successfully deleted.');
     }
     
 
