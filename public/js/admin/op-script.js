@@ -156,3 +156,19 @@ function editOperatorModal(id) {
 function closeEditModal() {
   document.getElementById("editOperatorModal").classList.add("hidden"); // Sembunyikan modal
 }
+
+function showDeleteModal(id) {
+  const deleteModal = document.getElementById('deleteModal');
+  const deleteForm = document.getElementById('deleteForm');
+  
+  // Set the form action to delete the specific operator
+  deleteForm.action = `/admin/operator/${id}`;
+  
+  // Show the modal
+  deleteModal.classList.remove('hidden');
+}
+
+function closeDeleteModal() {
+  const deleteModal = document.getElementById('deleteModal');
+  deleteModal.classList.add('hidden');
+}

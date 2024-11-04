@@ -101,3 +101,5 @@ Route::group(['middleware' => ['auth', 'startSessionByRole']], function () {
         })->name('operator.campaign');
     });
 });
+
+Route::delete('/admin/operator/{id}', [AdminController::class, 'deleteOperator'])->name('admin.deleteOperator');

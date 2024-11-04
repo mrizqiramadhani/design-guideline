@@ -83,4 +83,14 @@ class AdminController extends Controller
             return redirect()->back()->withErrors(['email' => 'Email sudah digunakan.']);
         }
     }
+
+    public function deleteOperator($id)
+    {
+        $operator = User::findOrFail($id);
+        $operator->delete();
+    
+        return redirect()->route('admin.show-operators')->with('success', 'Operator berhasil dihapus.');
+    }
+    
+
 }

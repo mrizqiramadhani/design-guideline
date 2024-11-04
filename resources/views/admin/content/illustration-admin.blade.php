@@ -21,7 +21,7 @@
                 <div class="flex space-x-4">
                     <ul class="flex space-x-6 text-lg text-white">
                         <li><a href="{{ route('admin.dashboard') }}" class="nav-link">Dashboard</a></li>
-                        <li><a href="{{ route('admin.operator-list') }}" class="nav-link">Operator</a></li>
+                        <li><a href="{{ route('admin.show-operators') }}" class="nav-link">Operator</a></li>
                     </ul>
 
                     <!-- User Icon with Dropdown -->
