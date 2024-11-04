@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="{{ asset('css/admin/style.css') }}" />
     <link rel="icon" href="{{ asset('img/SG 2023-04.png') }}">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
@@ -111,8 +113,9 @@
                                     <div class="flex space-x-2">
                                         <button data-id="{{ $operator->id }}"
                                             onclick="editOperatorModal(this.dataset.id)"
-                                            class="bg-blue-500 text-white px-2 py-1 rounded">Edit</button>
-                                        <button data-id="{{ $operator->id }}" onclick="showDeleteModal(this.dataset.id)"
+                                            class="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600">Edit</button>
+                                        <button data-id="{{ $operator->id }}"
+                                            onclick="showDeleteModal(this.dataset.id)"
                                             class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">Delete</button>
                                     </div>
                                 </td>
@@ -122,21 +125,23 @@
                 </table>
 
                 <!-- Modal Konfirmasi Hapus -->
-<div id="deleteModal" class="hidden fixed inset-0 bg-gray-500 bg-opacity-50 flex items-center justify-center">
-    <div class="bg-white rounded-lg w-1/3 p-8 shadow-lg">
-        <h2 class="text-2xl font-semibold mb-4">Delete Confirmation</h2>
-        <p class="mb-6">Are you sure you want to delete this operator?</p>
-        <div class="flex justify-end">
-            <button onclick="closeDeleteModal()"
-                class="mr-4 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Cancel</button>
-            <form id="deleteForm" action="" method="POST">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Delete</button>
-            </form>
-        </div>
-    </div>
-</div>
+                <div id="deleteModal"
+                    class="hidden fixed inset-0 bg-gray-500 bg-opacity-50 flex items-center justify-center">
+                    <div class="bg-white rounded-lg w-1/3 p-8 shadow-lg">
+                        <h2 class="text-2xl font-semibold mb-4">Delete Confirmation</h2>
+                        <p class="mb-6">Are you sure you want to delete this operator?</p>
+                        <div class="flex justify-end">
+                            <button onclick="closeDeleteModal()"
+                                class="mr-4 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Cancel</button>
+                            <form id="deleteForm" action="" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit"
+                                    class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
 
 
                 <!-- Modal tambah operator -->
@@ -145,19 +150,9 @@
                     <div class="bg-white rounded-lg w-1/3 p-8 shadow-lg">
                         <h2 class="text-2xl font-semibold mb-4">Add New Operator</h2>
 
-                        <!-- Error Messages -->
-                        @if ($errors->any())
-                            <div class="bg-red-100 text-red-700 p-3 rounded mb-4">
-                                <ul>
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        @endif
-
-                        <form action="{{ route('admin.addOperator') }}" method="POST">
+                        <form id="addOperatorForm" action="{{ route('admin.addOperator') }}" method="POST">
                             @csrf
+                            <div id="errorMessages" class="text-red-500 mb-4 hidden"></div>
                             <div class="mb-4">
                                 <label for="name" class="block text-gray-700">Name:</label>
                                 <input type="text" name="name" id="name"
@@ -204,21 +199,8 @@
                     class="hidden fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
                     <div class="bg-white rounded-lg p-6">
                         <h2 class="text-lg font-bold mb-4">Edit Operator</h2>
-                        @if (session('success'))
-                            <div class="bg-green-100 text-green-700 p-3 rounded mb-4">
-                                {{ session('success') }}
-                            </div>
-                        @endif
-                        <!-- Error Messages -->
-                        @if ($errors->any())
-                            <div class="bg-red-100 text-red-700 p-3 rounded mb-4">
-                                <ul>
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        @endif
+                        <div id="editErrorMessages" class="text-red-500 mb-4 hidden"></div>
+
                         <form id="editOperatorForm" action="" method="POST">
                             @csrf
                             @method('PUT') <!-- Pastikan menggunakan method PUT untuk update -->
@@ -265,13 +247,6 @@
     </div>
 
     <script src="{{ asset('js/admin/op-script.js') }}"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            @if ($errors->any())
-                toggleModal();
-            @endif
-        });
-    </script>
 </body>
 
 </html>

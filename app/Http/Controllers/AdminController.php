@@ -16,25 +16,29 @@ class AdminController extends Controller
 
     public function addOperator(Request $request)
     {
+        try {
+            // Validasi data
+            $request->validate([
+                'name' => 'required|string|max:255',
+                'email' => 'required|string|email|max:255|unique:users',
+                'password' => 'required|string|min:8',
+            ]);
 
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8', // Adjust according to your needs
-        ]);
+            // Jika validasi berhasil, buat operator
+            $operator = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'role' => 'operator',
+            ]);
 
-        // If validation passes, create the operator
-        $operator = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'role' => 'operator',
-        ]);
-
-
-        return redirect()->back()->with('success', 'Operator added successfully.');
+            // Mengembalikan respon sukses
+            return response()->json(['success' => 'Operator added successfully.']);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            // Mengembalikan respon error jika validasi gagal
+            return response()->json(['errors' => $e->validator->errors()], 422);
+        }
     }
-
 
     public function showOperators()
     {
@@ -59,7 +63,7 @@ class AdminController extends Controller
         // Validasi data
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
+            'email' => 'required|email|max:255|unique:users,email,' . $id,
             'password' => 'nullable|string|min:8', // Password opsional
         ]);
 
@@ -76,11 +80,25 @@ class AdminController extends Controller
 
             $operator->save();
 
-            // Set flash message untuk sukses
+            // Jika permintaan adalah AJAX, kirim respons JSON
+            if ($request->ajax()) {
+                return response()->json(['success' => 'Operator updated successfully!']);
+            }
+
+            // Jika bukan AJAX, gunakan redirect biasa
             return redirect()->back()->with('success', 'Operator updated successfully!');
         } catch (QueryException $e) {
-            // Jika terjadi kesalahan, set flash message untuk error
-            return redirect()->back()->withErrors(['email' => 'Email sudah digunakan.']);
+            // Jika terjadi kesalahan, buat pesan error
+
+            $errorMessage = ['email' => 'Email sudah digunakan.'];
+
+            // Jika permintaan adalah AJAX, kirim respons JSON untuk error
+            if ($request->ajax()) {
+                return response()->json(['errors' => $errorMessage], 422);
+            }
+
+            // Jika bukan AJAX, kembalikan dengan error melalui redirect
+            return redirect()->back()->withErrors($errorMessage);
         }
     }
 
@@ -88,9 +106,7 @@ class AdminController extends Controller
     {
         $operator = User::findOrFail($id);
         $operator->delete();
-    
+
         return redirect()->route('admin.show-operators')->with('success', 'Operator successfully deleted.');
     }
-    
-
 }

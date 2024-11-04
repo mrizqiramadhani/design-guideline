@@ -124,6 +124,55 @@ function closeModal() {
   modal.classList.remove("flex"); // Remove the 'flex' class to hide the modal
   modal.classList.add("hidden"); // Add the 'hidden' class to ensure it's not visible
 }
+document
+  .getElementById("addOperatorForm")
+  .addEventListener("submit", function (event) {
+    event.preventDefault(); // Mencegah pengiriman formulir biasa
+
+    const formData = new FormData(this);
+    const errorMessages = document.getElementById("errorMessages");
+
+    fetch(this.action, {
+      method: "POST",
+      body: formData,
+      headers: {
+        "X-Requested-With": "XMLHttpRequest",
+        "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]')
+          .content, // Mengambil token dari meta
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // Reset error messages
+        errorMessages.innerHTML = "";
+        errorMessages.classList.add("hidden"); // Sembunyikan pesan error sebelumnya
+
+        if (data.errors) {
+          errorMessages.classList.remove("hidden"); // Tampilkan elemen pesan error
+
+          // Tampilkan semua pesan error
+          for (const [key, value] of Object.entries(data.errors)) {
+            value.forEach((error) => {
+              errorMessages.innerHTML += `<div class="bg-red-100 text-red-700 px-4 py-3 rounded>
+                    <span class="block sm:inline">${error}</span></div>`;
+            });
+          }
+        } else if (data.success) {
+          // Tampilkan pesan sukses dengan SweetAlert
+          Swal.fire({
+            title: "Success!",
+            text: data.success,
+            icon: "success",
+            confirmButtonText: "OK",
+          }).then(() => {
+            location.reload(); // Reload halaman set  elah menambah operator
+          });
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  });
 
 //todo Edit operator
 function editOperatorModal(id) {
@@ -153,22 +202,92 @@ function editOperatorModal(id) {
     });
 }
 
+// Handle form submit untuk update operator
+document
+  .getElementById("editOperatorForm")
+  .addEventListener("submit", function (event) {
+    event.preventDefault(); // Mencegah pengiriman formulir biasa
+
+    const formData = new FormData(this);
+    const errorMessages = document.getElementById("editErrorMessages");
+
+    fetch(this.action, {
+      method: "POST",
+      body: formData,
+      headers: {
+        "X-Requested-With": "XMLHttpRequest",
+        "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]')
+          .content, // Mengambil token dari meta
+      },
+    })
+      .then((response) => {
+        // Cek apakah response sukses atau error
+        if (!response.ok) {
+          // Jika gagal validasi, ambil error sebagai JSON
+          return response.json().then((data) => {
+            if (data.errors) {
+              throw data.errors;
+            } else {
+              throw new Error("Unexpected error occurred");
+            }
+          });
+        }
+        // Jika response sukses, parse sebagai JSON
+        return response.json();
+      })
+      .then((data) => {
+        // Bersihkan pesan error sebelumnya
+        errorMessages.innerHTML = "";
+        errorMessages.classList.add("hidden");
+
+        if (data.success) {
+          // Tampilkan pesan sukses dengan SweetAlert
+          Swal.fire({
+            title: "Success!",
+            text: data.success,
+            icon: "success",
+            confirmButtonText: "OK",
+          }).then(() => {
+            location.reload(); // Reload halaman setelah update operator
+          });
+        }
+      })
+      .catch((errors) => {
+        console.error("Validation Errors:", errors);
+
+        // Tampilkan pesan error validasi di dalam elemen errorMessages
+        errorMessages.classList.remove("hidden"); // Tampilkan elemen pesan error
+        errorMessages.innerHTML = ""; // Kosongkan pesan sebelumnya
+
+        // Tampilkan semua pesan error
+        for (const [field, messages] of Object.entries(errors)) {
+          messages.forEach((error) => {
+            errorMessages.innerHTML += `<div class="bg-red-100 text-red-700 px-4 py-3 rounded>
+                    <span class="block sm:inline">${error}</span></div>`;
+          });
+        }
+      });
+  });
+
 function closeEditModal() {
-  document.getElementById("editOperatorModal").classList.add("hidden"); // Sembunyikan modal
+  document.getElementById("editOperatorModal").classList.add("hidden");
+  document.getElementById("editErrorMessages").classList.add("hidden"); // Sembunyikan error messages saat modal ditutup
+  document.getElementById("editErrorMessages").innerHTML = ""; // Bersihkan pesan error
 }
 
+//! Delete Modal
 function showDeleteModal(id) {
-  const deleteModal = document.getElementById('deleteModal');
-  const deleteForm = document.getElementById('deleteForm');
-  
+  const deleteModal = document.getElementById("deleteModal");
+  const deleteForm = document.getElementById("deleteForm");
+
   // Set the form action to delete the specific operator
   deleteForm.action = `/admin/operator/${id}`;
-  
+
   // Show the modal
-  deleteModal.classList.remove('hidden');
+  deleteModal.classList.remove("hidden");
 }
 
 function closeDeleteModal() {
-  const deleteModal = document.getElementById('deleteModal');
-  deleteModal.classList.add('hidden');
+  const deleteModal = document.getElementById("deleteModal");
+  deleteModal.classList.add("hidden");
 }
