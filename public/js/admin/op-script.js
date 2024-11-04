@@ -138,6 +138,7 @@ function editOperatorModal(id) {
       // Mengisi form dengan data operator
       document.getElementById("editName").value = data.name;
       document.getElementById("editEmail").value = data.email;
+      document.getElementById("editPassword").value = ""; // Kosongkan input password
 
       // Set action form untuk mengupdate data
       document.getElementById(

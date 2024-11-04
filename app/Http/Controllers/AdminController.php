@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Database\QueryException;
 
 class AdminController extends Controller
 {
@@ -59,15 +60,27 @@ class AdminController extends Controller
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
+            'password' => 'nullable|string|min:8', // Password opsional
         ]);
 
-        // Cari operator berdasarkan ID dan update data
-        $operator = User::findOrFail($id);
-        $operator->name = $validatedData['name'];
-        $operator->email = $validatedData['email'];
-        $operator->save();
+        try {
+            // Cari operator berdasarkan ID dan update data
+            $operator = User::findOrFail($id);
+            $operator->name = $validatedData['name'];
+            $operator->email = $validatedData['email'];
 
-        // Set flash message untuk sukses
-        return redirect()->back()->with('success', 'Operator updated successfully!');
+            // Jika password diisi, update password
+            if (!empty($validatedData['password'])) {
+                $operator->password = bcrypt($validatedData['password']);
+            }
+
+            $operator->save();
+
+            // Set flash message untuk sukses
+            return redirect()->back()->with('success', 'Operator updated successfully!');
+        } catch (QueryException $e) {
+            // Jika terjadi kesalahan, set flash message untuk error
+            return redirect()->back()->withErrors(['email' => 'Email sudah digunakan.']);
+        }
     }
 }

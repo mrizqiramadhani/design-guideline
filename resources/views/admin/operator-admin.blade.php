@@ -22,7 +22,7 @@
                 <div class="flex space-x-4">
                     <ul class="flex space-x-6 text-lg text-white">
                         <li><a href="{{ route('admin.dashboard') }}" class="nav-link">Dashboard</a></li>
-                        <li><a href="{{ route('admin.operator-list') }}" class="nav-link">Operator</a></li>
+                        <li><a href="{{ route('admin.show-operators') }}" class="nav-link">Operator</a></li>
                     </ul>
 
                     <!-- User Icon with Dropdown -->
@@ -186,6 +186,11 @@
                     class="hidden fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
                     <div class="bg-white rounded-lg p-6">
                         <h2 class="text-lg font-bold mb-4">Edit Operator</h2>
+                        @if (session('success'))
+                            <div class="bg-green-100 text-green-700 p-3 rounded mb-4">
+                                {{ session('success') }}
+                            </div>
+                        @endif
                         <!-- Error Messages -->
                         @if ($errors->any())
                             <div class="bg-red-100 text-red-700 p-3 rounded mb-4">
@@ -209,6 +214,12 @@
                                 <input type="email" name="email" id="editEmail"
                                     class="w-full border border-gray-300 p-2 rounded" required>
                             </div>
+                            <div class="mb-4">
+                                <label for="editPassword" class="block text-gray-700">Password (Kosongkan jika tidak
+                                    ingin mengubah):</label>
+                                <input type="password" name="password" id="editPassword"
+                                    class="w-full border border-gray-300 p-2 rounded">
+                            </div>
                             <div class="flex justify-end">
                                 <button type="button" onclick="closeEditModal()"
                                     class="mr-4 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Cancel</button>
@@ -219,6 +230,7 @@
                         </form>
                     </div>
                 </div>
+
 
                 @if (session('success'))
                     <script>
