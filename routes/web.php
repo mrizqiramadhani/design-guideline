@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\OperatorController;
+use App\Http\Controllers\ColorController;
 
 Route::get('/', function () {
     return view('shafwah-group.index-sg');
@@ -71,6 +72,14 @@ Route::group(['middleware' => ['auth', 'startSessionByRole']], function () {
         Route::get('/admin/campaign', function () {
             return view('admin.content.campaign-admin');
         })->name('admin.campaign');
+
+        // Color Palette Routes
+        Route::get('/admin/color-palette', [ColorController::class, 'index'])->name('admin.color');
+        Route::get('/admin/color-palette/create', [ColorController::class, 'create'])->name('admin.color.create');
+        Route::post('/admin/color-palette', [ColorController::class, 'store'])->name('admin.color.store');
+        Route::get('/admin/color-palette/{color}/edit', [ColorController::class, 'edit'])->name('admin.color.edit');
+        Route::put('/admin/color-palette/{color}', [ColorController::class, 'update'])->name('admin.color.update');
+        Route::delete('/admin/color-palette/{color}', [ColorController::class, 'destroy'])->name('admin.color.destroy');
     });
 
     Route::group(['middleware' => ['checkOperator']], function () {

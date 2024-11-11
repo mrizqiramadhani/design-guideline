@@ -76,77 +76,52 @@
                     {{ session('success') }}
                 </div>
             @endif
+
             <div class="mt-20 mb-5 flex items-center justify-between">
                 <h2 class="text-4xl font-bold text-gray-900">Color Palette</h2>
                 <div class="flex space-x-4">
-                    <a href="#" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">+ Add New
-                        Content</a>
+                    <a href="{{ route('admin.color.create') }}" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">+ Add New Color</a>
                 </div>
             </div>
-
 
             <!-- Content Table -->
             <div class="overflow-x-auto">
                 <table class="min-w-full border border-gray-300 bg-white">
                     <thead class="bg-gray-50">
                         <tr>
-                            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Name</th>
-                            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Category</th>
-                            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Content Type</th>
+                            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Unit</th>
+                            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Color</th>
+                            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Code HEX</th>
                             <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Last Updated By</th>
                             <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="border-t">
-                            <td class="px-4 py-2 text-gray-900">Shafwah Group</td>
-                            <td class="px-4 py-2 text-gray-900">Description</td>
-                            <td class="px-4 py-2 text-gray-900">Text</td>
-                            <td class="px-4 py-2"></td>
+                        @foreach($colors as $color)
+                        <tr class="border-b border-gray-200">
+                            <td class="px-4 py-2">{{ $color->unit->name }}</td>
                             <td class="px-4 py-2">
-                                <div class="flex space-x-2">
-                                    <a href="#"
-                                        class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">Edit</a>
-                                    <a href="#"
-                                        class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">Delete</a>
-                                </div>
+                                <span class="inline-block w-6 h-6 rounded-full" style="background-color: {{ $color->color }};"></span>
+                            </td>
+                            <td class="px-4 py-2">{{ $color->color }}</td>
+                            <td class="px-4 py-2">{{ $color->user->name ?? 'N/A' }}</td>
+                            <td class="px-4 py-2">
+                                <a href="{{ route('admin.color.edit', $color->id) }}" class="text-blue-500 hover:underline">Edit</a>
+                                <form action="{{ route('admin.color.destroy', $color->id) }}" method="POST" style="display:inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="text-red-500 hover:underline" onclick="return confirm('Are you sure?')">Delete</button>
+                                </form>
                             </td>
                         </tr>
-                        <tr class="border-t">
-                            <td class="px-4 py-2 text-gray-900">Shafwah Holidays</td>
-                            <td class="px-4 py-2 text-gray-900">Description</td>
-                            <td class="px-4 py-2 text-gray-900">Text</td>
-                            <td class="px-4 py-2"></td>
-                            <td class="px-4 py-2">
-                                <div class="flex space-x-2">
-                                    <a href="#"
-                                        class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">Edit</a>
-                                    <a href="#"
-                                        class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">Delete</a>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr class="border-t">
-                            <td class="px-4 py-2 text-gray-900">Shafwah Property</td>
-                            <td class="px-4 py-2 text-gray-900">Description</td>
-                            <td class="px-4 py-2 text-gray-900">Text</td>
-                            <td class="px-4 py-2"></td>
-                            <td class="px-4 py-2">
-                                <div class="flex space-x-2">
-                                    <a href="#"
-                                        class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">Edit</a>
-                                    <a href="#"
-                                        class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">Delete</a>
-                                </div>
-                            </td>
-                        </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
         </main>
     </div>
 
-    <script src="{{ asset('js/admin/script.js') }}"></script>
+    <script src="{{ asset('js/admin/content/color-admin.js') }}"></script>
 </body>
 
 </html>
