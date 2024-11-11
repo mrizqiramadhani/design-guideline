@@ -103,3 +103,11 @@ Route::group(['middleware' => ['auth', 'startSessionByRole']], function () {
 });
 
 Route::delete('/admin/operator/{id}', [AdminController::class, 'deleteOperator'])->name('admin.deleteOperator');
+
+
+Route::get('/logo-primary', function () {
+    return view('');
+})->name('shafwah-property');
+Route::get('/shafwah-property', function () {
+    return view('shafwah-property.index-srp');
+})->name('shafwah-property');
