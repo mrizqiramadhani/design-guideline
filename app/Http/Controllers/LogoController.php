@@ -13,7 +13,7 @@ class LogoController extends Controller
     // Menampilkan semua logo
     public function index()
     {
-        $logos = Logo::with('logoPhotos')->get();
+        $logos = Logo::with(['logoPhotos', 'unit'])->get();
         $units = Unit::all();
         return view('admin.content.logo-admin', compact('logos', 'units'));
     }

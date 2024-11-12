@@ -172,27 +172,43 @@
                     </thead>
                     <tbody>
                         @foreach ($logos as $logo)
+                            {{-- {{ dd($logo->logoPhotos) }} --}}
                             <tr class="border-t">
                                 <td class="px-4 py-2 text-gray-900">{{ $logo->title }}</td>
-                                <td class="px-4 py-2 text-gray-900">
-                                    {{ $logo->unit->name ?? '' }}
-                                </td>
+                                <td class="px-4 py-2 text-gray-900">{{ $logo->unit->name ?? '' }}</td>
                                 <td class="px-4 py-2 text-gray-900">
                                     <img src="{{ asset('storage/thumbnails/' . basename($logo->thumbnail)) }}"
                                         alt="Thumbnail" class="w-16 h-16 object-cover">
                                 </td>
+
+                                <!-- Tema Primary -->
                                 <td class="px-4 py-2 text-gray-900">
-                                    @foreach ($logo->logoPhotos()->where('theme', 'theme_primary')->get() as $photo)
-                                        <img src="{{ asset('storage/logo_photos/' . $photo->path) }}"
-                                            alt="Theme Primary" class="w-16 h-16 object-cover">
-                                    @endforeach
+                                    @if ($logo->logoPhotos->where('theme', 'Primary')->count() === 0)
+                                        <span class="text-gray-500">No Primary Images</span>
+                                    @else
+                                        <div class="flex space-x-2">
+                                            @foreach ($logo->logoPhotos->where('theme', 'theme_primary') as $photo)
+                                                <img src="{{ asset('storage/logo_photos/' . basename($photo->path)) }}"
+                                                    alt="Theme Primary" class="w-10 h-10 object-cover rounded-md">
+                                            @endforeach
+                                        </div>
+                                    @endif
                                 </td>
+
+                                <!-- Tema White -->
                                 <td class="px-4 py-2 text-gray-900">
-                                    @foreach ($logo->logoPhotos()->where('theme', 'theme_white')->get() as $photo)
-                                        <img src="{{ asset('storage/logo_photos/' . $photo->path) }}"
-                                            alt="Theme White" class="w-16 h-16 object-cover">
-                                    @endforeach
+                                    @if ($logo->logoPhotos->where('theme', 'White')->count() === 0)
+                                        <span class="text-gray-500">No White Images</span>
+                                    @else
+                                        <div class="flex space-x-2">
+                                            @foreach ($logo->logoPhotos->where('theme', 'theme_white') as $photo)
+                                                <img src="{{ asset('storage/logo_photos/' . basename($photo->path)) }}"
+                                                    alt="Theme White" class="w-10 h-10 object-cover rounded-md">
+                                            @endforeach
+                                        </div>
+                                    @endif
                                 </td>
+
                                 <td class="px-4 py-2">
                                     <div class="flex space-x-2">
                                         <a href="{{ route('admin.logo.edit', $logo->id) }}"
@@ -209,6 +225,8 @@
                             </tr>
                         @endforeach
                     </tbody>
+
+
                 </table>
             </div>
         </main>

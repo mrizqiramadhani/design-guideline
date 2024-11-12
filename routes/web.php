@@ -53,11 +53,14 @@ Route::group(['middleware' => ['auth', 'startSessionByRole']], function () {
         })->name('admin.deskripsi');
 
 
+        //! Route admin Logo
         Route::get('admin/logo', [LogoController::class, 'index'])->name('admin.logo');
         Route::post('admin/logo', [LogoController::class, 'store'])->name('admin.logo.store');
         Route::get('admin/logo/{id}/edit', [LogoController::class, 'edit'])->name('admin.logo.edit');
         Route::put('admin/logo/{id}', [LogoController::class, 'update'])->name('admin.logo.update');
         Route::delete('admin/logo/{id}', [LogoController::class, 'destroy'])->name('admin.logo.destroy');
+
+
 
         Route::get('/admin/color-palette', function () {
             return view('admin.content.color-admin');
