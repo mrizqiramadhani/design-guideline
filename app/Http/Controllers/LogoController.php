@@ -75,36 +75,37 @@ class LogoController extends Controller
         return redirect()->route('admin.logo')->with('success', 'Logo and photos added successfully!');
     }
 
-    // Menampilkan form edit logo
     public function edit($id)
     {
-        $logo = Logo::with('logoPhotos')->findOrFail($id);
-        $units = Unit::all();
-        return view('admin.content.logo-admin', compact('logo', 'units'));
+        $logo = Logo::with('logoPhotos')->findOrFail($id); // Mendapatkan logo beserta foto-fotonya
+        $units = Unit::all(); // Mengambil semua unit untuk dropdown
+        return view('admin.content.logo-admin', compact('logo', 'units')); // Mengirim data logo ke view
     }
 
-    // Memperbarui logo dan foto-foto terkait
     public function update(Request $request, $id)
     {
-        // Validasi input
+        // Validasi input dari form
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
             'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'unit_id' => 'required|exists:units,id',
+            'unit_id' => 'required|exists:units,id', // Memastikan unit_id valid
             'theme_primary.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'theme_white.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
+        // Cari logo berdasarkan ID
         $logo = Logo::findOrFail($id);
 
         // Update thumbnail jika ada file baru
         if ($request->hasFile('thumbnail')) {
-            Storage::delete($logo->thumbnail);
-            $thumbnailPath = $request->file('thumbnail')->store('public/thumbnails');
-            $logo->thumbnail = $thumbnailPath;
+            if ($logo->thumbnail) {
+                Storage::delete($logo->thumbnail); // Hapus thumbnail lama
+            }
+            $thumbnailPath = $request->file('thumbnail')->store('public/thumbnails'); // Simpan file thumbnail baru
+            $logo->thumbnail = $thumbnailPath; // Perbarui path thumbnail
         }
 
-        // Update logo
+        // Update logo dengan data yang divalidasi
         $logo->update([
             'title' => $validatedData['title'],
             'unit_id' => $validatedData['unit_id'],
@@ -114,7 +115,7 @@ class LogoController extends Controller
         if ($request->hasFile('theme_primary')) {
             $logo->logoPhotos()->where('theme', 'Primary')->delete(); // Hapus foto Primary lama
             foreach ($request->file('theme_primary') as $primaryFile) {
-                $primaryPath = $primaryFile->store('public/logo_photos');
+                $primaryPath = $primaryFile->store('public/logo_photos'); // Simpan foto tema Primary baru
                 LogoPhoto::create([
                     'logo_id' => $logo->id,
                     'path' => $primaryPath,
@@ -127,7 +128,7 @@ class LogoController extends Controller
         if ($request->hasFile('theme_white')) {
             $logo->logoPhotos()->where('theme', 'White')->delete(); // Hapus foto White lama
             foreach ($request->file('theme_white') as $whiteFile) {
-                $whitePath = $whiteFile->store('public/logo_photos');
+                $whitePath = $whiteFile->store('public/logo_photos'); // Simpan foto tema White baru
                 LogoPhoto::create([
                     'logo_id' => $logo->id,
                     'path' => $whitePath,
@@ -136,7 +137,9 @@ class LogoController extends Controller
             }
         }
 
-        return redirect()->route('admin.logo')->with('success', 'Logo and photos updated successfully!');
+        // Redirect ke halaman logo dengan pesan sukses
+        return redirect()->route('admin.logo')
+            ->with('success', 'Logo and photos updated successfully!');
     }
 
     // Menghapus logo beserta foto-fotonya
