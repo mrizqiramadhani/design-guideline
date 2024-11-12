@@ -31,13 +31,15 @@
                 <ul class="flex space-x-12">
                     <li>
                         <!-- Menu Primary -->
-                        <a href="#primary" class="transition-colors duration-300 text-gray-800 hover:text-blue-500">
+                        <a href="{{ route('logo-primary') }}"
+                            class="transition-colors duration-300 text-gray-800 hover:text-blue-500">
                             Primary
                         </a>
                     </li>
                     <li>
                         <!-- Menu White -->
-                        <a href="#white" class="transition-colors duration-300 text-gray-800 hover:text-blue-500">
+                        <a href="{{ route('logo-white') }}"
+                            class="transition-colors duration-300 text-gray-800 hover:text-blue-500">
                             White
                         </a>
                     </li>
@@ -72,9 +74,6 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Add more static image cards as needed -->
-            <p>Gambar tidak tersedia</p>
         </div>
     </main>
 

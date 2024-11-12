@@ -10,12 +10,10 @@ return new class extends Migration
     {
         Schema::create('logos', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->string('thumbnail_path');
-            $table->string('path');
-            $table->enum('theme', ['Primary', 'White']);
-            $table->foreignId('unit_id')->constrained('units')->onDelete('cascade');
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->string('title'); // Judul logo
+            $table->string('thumbnail'); // Path thumbnail untuk logo
+            $table->foreignId('unit_id')->constrained('units')->onDelete('cascade'); // Relasi ke tabel units
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); // Relasi ke tabel users
             $table->timestamps();
         });
     }

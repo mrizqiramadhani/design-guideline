@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\OperatorController;
+use App\Http\Controllers\LogoController;
 
 Route::get('/', function () {
     return view('shafwah-group.index-sg');
@@ -50,9 +51,14 @@ Route::group(['middleware' => ['auth', 'startSessionByRole']], function () {
         Route::get('/admin/deskripsi', function () {
             return view('admin.dashboard-admin');
         })->name('admin.deskripsi');
-        Route::get('/admin/logo', function () {
-            return view('admin.content.logo-admin');
-        })->name('admin.logo');
+
+
+        Route::get('admin/logo', [LogoController::class, 'index'])->name('admin.logo');
+        Route::post('admin/logo', [LogoController::class, 'store'])->name('admin.logo.store');
+        Route::get('admin/logo/{id}/edit', [LogoController::class, 'edit'])->name('admin.logo.edit');
+        Route::put('admin/logo/{id}', [LogoController::class, 'update'])->name('admin.logo.update');
+        Route::delete('admin/logo/{id}', [LogoController::class, 'destroy'])->name('admin.logo.destroy');
+
         Route::get('/admin/color-palette', function () {
             return view('admin.content.color-admin');
         })->name('admin.color');
@@ -106,8 +112,8 @@ Route::delete('/admin/operator/{id}', [AdminController::class, 'deleteOperator']
 
 
 Route::get('/logo-primary', function () {
-    return view('');
-})->name('shafwah-property');
-Route::get('/shafwah-property', function () {
-    return view('shafwah-property.index-srp');
-})->name('shafwah-property');
+    return view('shafwah-group.logo.logo-primary');
+})->name('logo-primary');
+Route::get('/logo-white', function () {
+    return view('shafwah-group.logo.logo-white');
+})->name('logo-white');

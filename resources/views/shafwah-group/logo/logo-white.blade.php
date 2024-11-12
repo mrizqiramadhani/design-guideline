@@ -31,12 +31,16 @@
             <div class="relative flex space-x-4 mx-10">
                 <ul class="flex space-x-12">
                     <li>
-                        <a href="#primary" class="transition-colors duration-300 text-gray-800 hover:text-blue-500">
+                        <!-- Menu Primary -->
+                        <a href="{{ route('logo-primary') }}"
+                            class="transition-colors duration-300 text-gray-800 hover:text-blue-500">
                             Primary
                         </a>
                     </li>
                     <li>
-                        <a href="#white" class="transition-colors duration-300 text-gray-800 hover:text-blue-500">
+                        <!-- Menu White -->
+                        <a href="{{ route('logo-white') }}"
+                            class="transition-colors duration-300 text-gray-800 hover:text-blue-500">
                             White
                         </a>
                     </li>
