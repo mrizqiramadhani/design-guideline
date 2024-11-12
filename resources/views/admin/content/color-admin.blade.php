@@ -6,11 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Admin - Content Management</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="{{ asset('css/admin/style.css') }}" />
     <link rel="icon" href="{{ asset('img/SG 2023-04.png') }}">
 </head>
 
-<body>
+<body data-csrf-token="{{ csrf_token() }}">
     <!-- Header -->
     <header id="navbar" class="bg-black transition-colors duration-300 fixed top-0 left-0 right-0 z-10">
         <div class="mx-auto max-w-screen-xl px-4 py-3 sm:px-6 sm:py-4 lg:px-8">
@@ -80,7 +81,9 @@
             <div class="mt-20 mb-5 flex items-center justify-between">
                 <h2 class="text-4xl font-bold text-gray-900">Color Palette</h2>
                 <div class="flex space-x-4">
-                    <a href="{{ route('admin.color.create') }}" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">+ Add New Color</a>
+                    <button onclick="openModal()" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
+                        + Add New Color
+                    </button>
                 </div>
             </div>
 
@@ -106,12 +109,11 @@
                             <td class="px-4 py-2">{{ $color->color }}</td>
                             <td class="px-4 py-2">{{ $color->user->name ?? 'N/A' }}</td>
                             <td class="px-4 py-2">
-                                <a href="{{ route('admin.color.edit', $color->id) }}" class="text-blue-500 hover:underline">Edit</a>
-                                <form action="{{ route('admin.color.destroy', $color->id) }}" method="POST" style="display:inline;">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="text-red-500 hover:underline" onclick="return confirm('Are you sure?')">Delete</button>
-                                </form>
+                                <a href="{{ route('admin.color.edit', $color->id) }}" class="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600">Edit</a>
+                                <button type="button" onclick="openDeleteModal({{ $color->id }})" class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">
+                                    Delete
+                                </button>
+                                
                             </td>
                         </tr>
                         @endforeach
@@ -120,6 +122,78 @@
             </div>
         </main>
     </div>
+
+    <!-- Modal -->
+<div id="addColorModal" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 hidden">
+    <div class="bg-white w-1/3 rounded-lg shadow-lg p-6">
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="text-2xl font-bold">Add New Color</h2>
+            <button onclick="closeModal()" class="text-gray-500 hover:text-gray-700">&times;</button>
+        </div>
+
+        <!-- Form -->
+        <form action="{{ route('admin.color.store') }}" method="POST">
+            @csrf
+            <!-- Dropdown for Selecting Unit -->
+            <div class="mb-4">
+                <label for="unit_id" class="block text-sm font-semibold text-gray-700">Select Unit</label>
+                <select id="unit_id" name="unit_id" required
+                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-green-200">
+                    <option value="" disabled selected>Choose a unit</option>
+                    @foreach($units as $unit)
+                        <option value="{{ $unit->id }}">{{ $unit->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <!-- Input for Hex Code -->
+            <div class="mb-4">
+                <label for="color" class="block text-sm font-semibold text-gray-700">Color HEX Code</label>
+                <input type="text" id="color" name="color" required placeholder="#000000"
+                       class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-green-200"
+                       pattern="^#[A-Fa-f0-9]{6}$" title="Please enter a valid HEX code (e.g., #1A1A1A)" />
+            </div>
+
+            <!-- Submit Button -->
+            <div class="flex justify-end">
+                <button type="button" onclick="closeModal()" class="mr-2 px-4 py-2 bg-gray-400 text-white rounded hover:bg-gray-500">
+                    Cancel
+                </button>
+                <button type="submit" class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600">
+                    Save
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div id="deleteConfirmModal" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 hidden">
+    <div class="bg-white rounded-lg shadow-lg p-6 w-1/3">
+        <div class="mb-4">
+            <h2 class="text-xl font-bold">Confirm Delete</h2>
+            <p>Are you sure you want to delete this color?</p>
+        </div>
+        <div class="flex justify-end space-x-4">
+            <button onclick="closeDeleteModal()" class="px-4 py-2 bg-gray-400 text-white rounded hover:bg-gray-500">Cancel</button>
+            <button id="confirmDeleteBtn" class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">Delete</button>
+        </div>
+    </div>
+</div>
+
+
+
+@if(session('success'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: "{{ session('success') }}",
+                timer: 2000,
+                showConfirmButton: false
+            });
+        </script>
+    @endif
 
     <script src="{{ asset('js/admin/content/color-admin.js') }}"></script>
 </body>

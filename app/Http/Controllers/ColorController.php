@@ -15,16 +15,8 @@ class ColorController extends Controller
     public function index()
     {
         $colors = ColorPalette::with('unit')->latest()->get();
-        return view('admin.content.color-admin', compact('colors'));
-    }
-
-    /**
-     * Show the form for creating a new color.
-     */
-    public function create()
-    {
-        $units = Unit::all(); // Assuming Unit model represents Shafwah Group, Holidays, and Property
-        return view('admin.content.color-admin', compact('units'));
+        $units = Unit::all(); // Mengambil semua unit untuk digunakan di dropdown
+        return view('admin.content.color-admin', compact('colors', 'units'));
     }
 
     /**
@@ -40,10 +32,10 @@ class ColorController extends Controller
         ColorPalette::create([
             'color' => $request->color,
             'unit_id' => $request->unit_id,
-            'user_id' => Auth::id(), // Assuming the logged-in user is the creator
+            'user_id' => Auth::id(), // Pengguna yang sedang login sebagai pembuat
         ]);
 
-        return redirect()->route('admin.colors.index')->with('success', 'Color added successfully.');
+        return redirect()->route('admin.color')->with('success', 'Color added successfully.');
     }
 
     /**
@@ -70,7 +62,7 @@ class ColorController extends Controller
             'unit_id' => $request->unit_id,
         ]);
 
-        return redirect()->route('admin.colors.index')->with('success', 'Color updated successfully.');
+        return redirect()->route('admin.color')->with('success', 'Color updated successfully.');
     }
 
     /**
@@ -79,6 +71,6 @@ class ColorController extends Controller
     public function destroy(ColorPalette $color)
     {
         $color->delete();
-        return redirect()->route('admin.colors.index')->with('success', 'Color deleted successfully.');
+        return redirect()->route('admin.color')->with('success', 'Color deleted successfully.');
     }
 }
