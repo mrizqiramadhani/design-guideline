@@ -8,6 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="{{ asset('css/admin/style.css') }}" />
     <link rel="icon" href="{{ asset('img/SG 2023-04.png') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
@@ -157,6 +158,72 @@
                 </div>
             </div>
 
+            {{-- Modal edit logo --}}
+            <div id="editModal"
+                class="fixed inset-0 hidden bg-gray-800 bg-opacity-75 flex items-center justify-center">
+                <div class="bg-white p-6 rounded-lg w-full max-w-md mx-auto">
+                    <h2 class="text-xl font-semibold mb-4">Edit Logo</h2>
+                    <form id="editForm" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        @method('PUT')
+
+                        <!-- Input Title -->
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700">Title</label>
+                            <input type="text" id="editTitle" name="title"
+                                class="mt-1 block w-full border-gray-300 rounded-md" required>
+                        </div>
+
+                        <!-- Select Unit -->
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700">Unit</label>
+                            <select id="unit_id" name="unit_id"
+                                class="mt-1 block w-full border-gray-300 rounded-md">
+                                @foreach ($units as $unit)
+                                    <option value="{{ $unit->id }}">{{ $unit->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <!-- Thumbnail Input -->
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700">Thumbnail</label>
+                            <input type="file" name="thumbnail"
+                                class="mt-1 block w-full border-gray-300 rounded-md">
+                            <p class="text-xs text-gray-500 mt-1">Kosongkan jika tidak ingin mengubah thumbnail.</p>
+                        </div>
+
+                        <!-- Theme Primary Images -->
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700">Theme Primary Images</label>
+                            <input type="file" name="theme_primary[]"
+                                class="mt-1 block w-full border-gray-300 rounded-md" multiple>
+                            <p class="text-xs text-gray-500 mt-1">Kosongkan jika tidak ingin mengubah theme primary
+                                images.</p>
+                        </div>
+
+                        <!-- Theme White Images -->
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700">Theme White Images</label>
+                            <input type="file" name="theme_white[]"
+                                class="mt-1 block w-full border-gray-300 rounded-md" multiple>
+                            <p class="text-xs text-gray-500 mt-1">Kosongkan jika tidak ingin mengubah theme white
+                                images.</p>
+                        </div>
+
+                        <div class="flex justify-end">
+                            <button type="button" onclick="closeEditModal()"
+                                class="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400 mr-2">Cancel</button>
+                            <button type="submit"
+                                class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Update</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+
+
+
             <!-- Content Table -->
             <div class="overflow-x-auto">
                 <table class="min-w-full border border-gray-300 bg-white">
@@ -211,8 +278,10 @@
 
                                 <td class="px-4 py-2">
                                     <div class="flex space-x-2">
-                                        <a href="{{ route('admin.logo.edit', $logo->id) }}"
-                                            class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">Edit</a>
+                                        <button onclick="openEditModal({{ $logo->id }})"
+                                            class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">
+                                            Edit
+                                        </button>
                                         <form action="{{ route('admin.logo.destroy', $logo->id) }}" method="POST"
                                             onsubmit="return confirm('Are you sure?')">
                                             @csrf
