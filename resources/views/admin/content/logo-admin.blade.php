@@ -9,6 +9,9 @@
     <link rel="stylesheet" href="{{ asset('css/admin/style.css') }}" />
     <link rel="icon" href="{{ asset('img/SG 2023-04.png') }}">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.15/dist/sweetalert2.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.15/dist/sweetalert2.min.js"></script>
+
 </head>
 
 <body>
@@ -160,67 +163,91 @@
 
             {{-- Modal edit logo --}}
             <div id="editModal"
-                class="fixed inset-0 hidden bg-gray-800 bg-opacity-75 flex items-center justify-center">
-                <div class="bg-white p-6 rounded-lg w-full max-w-md mx-auto">
-                    <h2 class="text-xl font-semibold mb-4">Edit Logo</h2>
+                class="fixed inset-0 hidden bg-gray-500 bg-opacity-50 flex items-center justify-center z-50">
+                <div class="bg-white rounded-lg w-full max-w-md p-8 shadow-lg">
+                    <h2 class="text-2xl font-semibold mb-4">Edit Logo</h2>
                     <form id="editForm" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
 
                         <!-- Input Title -->
                         <div class="mb-4">
-                            <label class="block text-sm font-medium text-gray-700">Title</label>
+                            <label for="editTitle" class="block text-gray-700">Title:</label>
                             <input type="text" id="editTitle" name="title"
-                                class="mt-1 block w-full border-gray-300 rounded-md" required>
+                                class="w-full border border-gray-300 p-2 rounded" required>
                         </div>
 
-                        <!-- Select Unit -->
+                        <!-- Unit Bisnis -->
                         <div class="mb-4">
-                            <label class="block text-sm font-medium text-gray-700">Unit</label>
-                            <select id="unit_id" name="unit_id"
-                                class="mt-1 block w-full border-gray-300 rounded-md">
+                            <label for="unit_id" class="block text-gray-700">Unit Bisnis:</label>
+                            <select name="unit_id" id="unit_id" class="w-full border border-gray-300 p-2 rounded"
+                                required>
                                 @foreach ($units as $unit)
                                     <option value="{{ $unit->id }}">{{ $unit->name }}</option>
                                 @endforeach
                             </select>
                         </div>
 
-                        <!-- Thumbnail Input -->
+                        <!-- Thumbnail -->
                         <div class="mb-4">
-                            <label class="block text-sm font-medium text-gray-700">Thumbnail</label>
-                            <input type="file" name="thumbnail"
-                                class="mt-1 block w-full border-gray-300 rounded-md">
+                            <label for="thumbnail" class="block text-gray-700">Thumbnail:</label>
+                            <input type="file" name="thumbnail" id="thumbnail"
+                                class="w-full border border-gray-300 p-2 rounded">
                             <p class="text-xs text-gray-500 mt-1">Kosongkan jika tidak ingin mengubah thumbnail.</p>
                         </div>
 
-                        <!-- Theme Primary Images -->
+                        <!-- Photo Theme Primary (Multiple Upload) -->
                         <div class="mb-4">
-                            <label class="block text-sm font-medium text-gray-700">Theme Primary Images</label>
-                            <input type="file" name="theme_primary[]"
-                                class="mt-1 block w-full border-gray-300 rounded-md" multiple>
+                            <label for="theme_primary" class="block text-gray-700">Photo Theme Primary:</label>
+                            <input type="file" name="theme_primary[]" id="theme_primary"
+                                class="w-full border border-gray-300 p-2 rounded" multiple>
                             <p class="text-xs text-gray-500 mt-1">Kosongkan jika tidak ingin mengubah theme primary
                                 images.</p>
                         </div>
 
-                        <!-- Theme White Images -->
+                        <!-- Photo Theme White (Multiple Upload) -->
                         <div class="mb-4">
-                            <label class="block text-sm font-medium text-gray-700">Theme White Images</label>
-                            <input type="file" name="theme_white[]"
-                                class="mt-1 block w-full border-gray-300 rounded-md" multiple>
+                            <label for="theme_white" class="block text-gray-700">Photo Theme White:</label>
+                            <input type="file" name="theme_white[]" id="theme_white"
+                                class="w-full border border-gray-300 p-2 rounded" multiple>
                             <p class="text-xs text-gray-500 mt-1">Kosongkan jika tidak ingin mengubah theme white
                                 images.</p>
                         </div>
 
                         <div class="flex justify-end">
                             <button type="button" onclick="closeEditModal()"
-                                class="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400 mr-2">Cancel</button>
+                                class="mr-4 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Cancel</button>
                             <button type="submit"
                                 class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Update</button>
                         </div>
                     </form>
+
                 </div>
             </div>
 
+            <!-- Modal Konfirmasi Hapus Logo -->
+            <div id="deleteLogoModal"
+                class="fixed inset-0 bg-gray-500 bg-opacity-50 hidden flex items-center justify-center z-50">
+                <div class="bg-white rounded-lg w-full max-w-md p-8 shadow-lg">
+                    <h2 class="text-2xl font-semibold mb-4">Delete Logo</h2>
+
+                    <p class="mb-4">Are you sure you want to delete this logo and its associated photos?</p>
+
+                    <!-- Form penghapusan logo -->
+                    <form id="deleteForm" action="" method="POST">
+                        @csrf
+                        @method('DELETE')
+
+                        <!-- Action buttons -->
+                        <div class="flex justify-end">
+                            <button type="button" onclick="closeDeleteModal()"
+                                class="mr-4 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Cancel</button>
+                            <button type="submit"
+                                class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Delete</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
 
 
 
@@ -282,13 +309,10 @@
                                             class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">
                                             Edit
                                         </button>
-                                        <form action="{{ route('admin.logo.destroy', $logo->id) }}" method="POST"
-                                            onsubmit="return confirm('Are you sure?')">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit"
-                                                class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">Delete</button>
-                                        </form>
+                                        <!-- Tombol untuk memicu modal konfirmasi -->
+                                        <button type="button"
+                                            onclick="openDeleteModal('{{ route('admin.logo.destroy', $logo->id) }}')"
+                                            class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">Delete</button>
                                     </div>
                                 </td>
                             </tr>

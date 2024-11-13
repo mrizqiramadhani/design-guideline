@@ -6,8 +6,6 @@ function closeModal() {
   document.getElementById("addLogoModal").classList.add("hidden");
 }
 
-//* handle tambah logo
-
 //! Modal edit Logo
 function openEditModal(id) {
   $("#editForm").attr("action", `/admin/logo/${id}`);
@@ -47,4 +45,16 @@ function openEditModal(id) {
 
 function closeEditModal() {
   document.getElementById("editModal").classList.add("hidden");
+}
+
+//! open delete modal
+// Fungsi untuk membuka modal
+function openDeleteModal(actionUrl) {
+  document.getElementById("deleteLogoModal").classList.remove("hidden");
+  document.getElementById("deleteForm").action = actionUrl; // Set action URL form ke URL penghapusan yang sesuai
+}
+
+// Fungsi untuk menutup modal
+function closeDeleteModal() {
+  document.getElementById("deleteLogoModal").classList.add("hidden");
 }

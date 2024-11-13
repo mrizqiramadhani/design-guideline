@@ -11,6 +11,13 @@ use Illuminate\Support\Facades\Storage;
 
 class LogoController extends Controller
 {
+
+    public function __construct()
+    {
+        // Memastikan hanya admin dan operator yang dapat mengakses controller ini
+        $this->middleware(['auth']);
+    }
+
     // Menampilkan semua logo
     public function index()
     {
