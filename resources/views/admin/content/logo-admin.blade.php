@@ -324,7 +324,16 @@
             </div>
         </main>
     </div>
-
+    @if (session('success'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: '{{ session('success') }}', // Pesan dari controller
+                showConfirmButton: true,
+            });
+        </script>
+    @endif
     <script src="{{ asset('js/admin/content/logo-admin.js') }}"></script>
 </body>
 
