@@ -169,14 +169,13 @@ class LogoController extends Controller
             }
         }
 
-        // Simpan perubahan pada logo
         $logo->save();
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Logo updated successfully!',
-            'logo' => $logo,  // Mengembalikan data logo terbaru
-        ]);
+        return redirect()->route('admin.logo')->with('success', 'Logo and photos updated successfully!');
+        // return response()->json([
+        //     'success' => true,
+        //     'message' => 'Logo updated successfully!',
+        //     'logo' => $logo,  // Mengembalikan data logo terbaru
+        // ]);
     }
 
     // Menghapus logo beserta foto-fotonya

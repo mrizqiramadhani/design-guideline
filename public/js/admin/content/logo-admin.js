@@ -1,19 +1,9 @@
 //! Modal Tambah Logo
-// Fungsi untuk menampilkan modal
 function showModal() {
   document.getElementById("addLogoModal").classList.remove("hidden");
 }
-
-// Fungsi untuk menutup modal
 function closeModal() {
   document.getElementById("addLogoModal").classList.add("hidden");
-  Swal.fire({
-    icon: "success",
-    title: "Logo Successfully Added",
-    text: "The logo has been successfully created and added!",
-    showConfirmButton: false,
-    timer: 1500, // Pesan akan otomatis hilang setelah 1.5 detik
-  });
 }
 
 //! Modal edit Logo
