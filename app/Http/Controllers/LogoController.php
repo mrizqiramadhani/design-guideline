@@ -136,12 +136,14 @@ class LogoController extends Controller
             $logo->thumbnail = $request->file('thumbnail')->store('public/thumbnails');
         }
 
+        // Hapus gambar primary yang ditandai untuk dihapus jika ada
+        if ($request->filled('delete_primary_ids')) {
+            $primaryIds = explode(',', $request->input('delete_primary_ids'));
+            LogoPhoto::whereIn('id', $primaryIds)->delete();
+        }
+
         // Update tema primary jika ada file baru
         if ($request->hasFile('theme_primary')) {
-            // Hapus semua tema primary lama
-            LogoPhoto::where('logo_id', $logo->id)->where('theme', 'Primary')->delete();
-
-            // Simpan tema primary baru
             foreach ($request->file('theme_primary') as $primaryFile) {
                 $primaryPath = $primaryFile->store('public/logo_photos');
                 LogoPhoto::create([
@@ -152,12 +154,14 @@ class LogoController extends Controller
             }
         }
 
+        // Hapus gambar white yang ditandai untuk dihapus jika ada
+        if ($request->filled('delete_white_ids')) {
+            $whiteIds = explode(',', $request->input('delete_white_ids'));
+            LogoPhoto::whereIn('id', $whiteIds)->delete();
+        }
+
         // Update tema white jika ada file baru
         if ($request->hasFile('theme_white')) {
-            // Hapus semua tema white lama
-            LogoPhoto::where('logo_id', $logo->id)->where('theme', 'White')->delete();
-
-            // Simpan tema white baru
             foreach ($request->file('theme_white') as $whiteFile) {
                 $whitePath = $whiteFile->store('public/logo_photos');
                 LogoPhoto::create([
@@ -171,6 +175,7 @@ class LogoController extends Controller
         $logo->save();
         return redirect()->route('admin.logo')->with('success', 'Logo and photos updated successfully!');
     }
+
 
     // Menghapus logo beserta foto-fotonya
     public function destroy($id)

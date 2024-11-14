@@ -209,8 +209,8 @@
                                 class="w-full border border-gray-300 p-2 rounded" multiple>
                             <p class="text-xs text-gray-500 mt-1">Kosongkan jika tidak ingin mengubah theme primary
                                 images.</p>
-                            <!-- Preview images -->
-                            <div id="themePrimaryPreview" class="flex flex-wrap mt-2 space-x-2">
+                            <!-- Preview images with horizontal scroll -->
+                            <div id="themePrimaryPreview" class="flex flex-wrap mt-2 space-x-2 overflow-x-auto">
                                 <!-- Gambar yang sudah ada akan ditampilkan di sini -->
                             </div>
                         </div>
@@ -222,8 +222,8 @@
                                 class="w-full border border-gray-300 p-2 rounded" multiple>
                             <p class="text-xs text-gray-500 mt-1">Kosongkan jika tidak ingin mengubah theme white
                                 images.</p>
-                            <!-- Preview images -->
-                            <div id="themeWhitePreview" class="flex flex-wrap mt-2 space-x-2">
+                            <!-- Preview images with horizontal scroll -->
+                            <div id="themeWhitePreview" class="flex flex-wrap mt-2 space-x-2 overflow-x-auto">
                                 <!-- Gambar yang sudah ada akan ditampilkan di sini -->
                             </div>
                         </div>

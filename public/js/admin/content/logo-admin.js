@@ -111,23 +111,27 @@ function removeTag(button) {
 }
 
 //! Modal edit Logo
-//! Modal edit Logo
+// Variabel untuk menyimpan ID gambar yang ditandai untuk dihapus sementara
+let deletePrimaryIds = [];
+let deleteWhiteIds = [];
+
+// Fungsi untuk membuka modal edit dan mengisi data logo
 function openEditModal(id) {
-  // Set the form action for editing
+  // Set action form edit dengan ID yang benar
   $("#editForm").attr("action", `/admin/logo/${id}`);
 
-  // Make an AJAX call to get the data for the selected logo
+  // Panggil AJAX untuk mendapatkan data logo yang dipilih
   $.ajax({
     url: `/admin/logo/${id}/edit`,
     method: "GET",
     dataType: "json",
     success: function (data) {
-      // Set the title and other fields in the modal
+      // Set title dan field lainnya
       if ($("#editTitle").length > 0) {
         $("#editTitle").val(data.title);
       }
 
-      // Set the thumbnail preview in the modal
+      // Tampilkan preview thumbnail
       if (data.thumbnail) {
         $("#thumbnailPreview").attr(
           "src",
@@ -135,37 +139,35 @@ function openEditModal(id) {
         );
       }
 
-      // Set the theme primary images preview
+      // Tampilkan preview tema primary
       if (data.theme_primary.length > 0) {
         let preview = "";
         data.theme_primary.forEach(function (img) {
-          // Hapus 'public/' dari path jika ada
           let imgPath = img.path.replace(/^public\//, "");
           preview += `
-            <div class="relative inline-block">
+            <div id="primaryImage${img.id}" class="relative inline-block">
               <img src="/storage/${imgPath}" alt="theme-primary" class="w-16 h-16 object-cover mr-2 mb-2 rounded-md">
-              <button type="button" class="absolute top-0 right-0 text-white bg-red-600 rounded-full p-1" onclick="deleteImage('${img.id}', 'primary')">×</button>
+              <button type="button" class="absolute top-0 right-0 text-white bg-red-600 rounded-full p-1" onclick="deleteImageUI(${img.id}, 'primary')">×</button>
             </div>`;
         });
         $("#themePrimaryPreview").html(preview);
       }
 
-      // Set the theme white images preview
+      // Tampilkan preview tema white
       if (data.theme_white.length > 0) {
         let preview = "";
         data.theme_white.forEach(function (img) {
-          // Hapus 'public/' dari path jika ada
           let imgPath = img.path.replace(/^public\//, "");
           preview += `
-            <div class="relative inline-block">
+            <div id="whiteImage${img.id}" class="relative inline-block">
               <img src="/storage/${imgPath}" alt="theme-white" class="w-16 h-16 object-cover mr-2 mb-2 rounded-md">
-              <button type="button" class="absolute top-0 right-0 text-white bg-red-600 rounded-full p-1" onclick="deleteImage('${img.id}', 'white')">×</button>
+              <button type="button" class="absolute top-0 right-0 text-white bg-red-600 rounded-full p-1" onclick="deleteImageUI(${img.id}, 'white')">×</button>
             </div>`;
         });
         $("#themeWhitePreview").html(preview);
       }
 
-      // Show the modal
+      // Tampilkan modal edit
       $("#editModal").removeClass("hidden");
     },
     error: function (xhr, status, error) {
@@ -174,36 +176,72 @@ function openEditModal(id) {
   });
 }
 
-// Menambahkan token CSRF ke header untuk setiap permintaan AJAX
+// Fungsi untuk menandai gambar sebagai "dihapus" di UI tanpa langsung menghapus dari database
+function deleteImageUI(imageId, theme) {
+  if (theme === "primary") {
+    deletePrimaryIds.push(imageId);
+  } else if (theme === "white") {
+    deleteWhiteIds.push(imageId);
+  }
+  // Hilangkan gambar dari UI
+  $(`#${theme}Image${imageId}`).remove();
+}
+
+// Fungsi untuk menutup modal edit dan mengatur ulang data sementara
+function closeEditModal() {
+  $("#editModal").addClass("hidden");
+  // Reset data gambar yang ditandai untuk dihapus
+  deletePrimaryIds = [];
+  deleteWhiteIds = [];
+}
+
+// Tambahkan token CSRF ke header untuk setiap permintaan AJAX
 $.ajaxSetup({
   headers: {
     "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
   },
 });
 
-// Function to delete image
-function deleteImage(imageId, theme) {
+// Fungsi untuk submit form update
+$("#editForm").on("submit", function (e) {
+  e.preventDefault();
+
+  // Ambil data dari form
+  let formData = new FormData(this);
+  formData.append("delete_primary_ids", deletePrimaryIds.join(","));
+  formData.append("delete_white_ids", deleteWhiteIds.join(","));
+
+  // Lakukan submit via AJAX
   $.ajax({
-    url: `/admin/logo/photo/${imageId}/delete`,
-    method: "DELETE",
-    data: { theme: theme },
+    url: $(this).attr("action"), // Ambil URL dari action form
+    method: "POST",
+    data: formData,
+    processData: false,
+    contentType: false,
     success: function (response) {
-      if (response.success) {
-        // Remove the image from the preview
-        $(`#${theme}Image${imageId}`).remove();
-      } else {
-        alert("Failed to delete image");
-      }
+      Swal.fire({
+        icon: "success",
+        title: "success",
+        text: "Logo and photos deleted successfully!",
+        confirmButtonText: "OK",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // Setelah konfirmasi, redirect ke halaman logo
+          window.location.href = "/admin/logo"; // Pastikan URL benar
+        }
+      });
     },
     error: function (xhr, status, error) {
-      console.error("Error deleting image:", error);
+      console.error("Error updating data:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Gagal!",
+        text: "Data gagal diperbarui. Silakan coba lagi.",
+        confirmButtonText: "OK",
+      });
     },
   });
-}
-
-function closeEditModal() {
-  document.getElementById("editModal").classList.add("hidden");
-}
+});
 
 //! open delete modal
 // Fungsi untuk membuka modal
