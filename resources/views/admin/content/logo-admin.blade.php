@@ -11,7 +11,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.15/dist/sweetalert2.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.15/dist/sweetalert2.min.js"></script>
-
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 
 <body>
@@ -141,6 +141,9 @@
                             <label for="theme_primary" class="block text-gray-700">Photo Theme Primary:</label>
                             <input type="file" name="theme_primary[]" id="theme_primary"
                                 class="w-full border border-gray-300 p-2 rounded" multiple>
+                            <div id="themePrimaryTags"
+                                class="mt-2 flex space-x-2 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+                            </div>
                         </div>
 
                         <!-- Photo Theme White (Multiple Upload) -->
@@ -148,6 +151,9 @@
                             <label for="theme_white" class="block text-gray-700">Photo Theme White:</label>
                             <input type="file" name="theme_white[]" id="theme_white"
                                 class="w-full border border-gray-300 p-2 rounded" multiple>
+                            <div id="themeWhiteTags"
+                                class="mt-2 flex space-x-2 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+                            </div>
                         </div>
 
                         <!-- Action buttons -->
@@ -203,6 +209,10 @@
                                 class="w-full border border-gray-300 p-2 rounded" multiple>
                             <p class="text-xs text-gray-500 mt-1">Kosongkan jika tidak ingin mengubah theme primary
                                 images.</p>
+                            <!-- Preview images -->
+                            <div id="themePrimaryPreview" class="flex flex-wrap mt-2 space-x-2">
+                                <!-- Gambar yang sudah ada akan ditampilkan di sini -->
+                            </div>
                         </div>
 
                         <!-- Photo Theme White (Multiple Upload) -->
@@ -212,6 +222,10 @@
                                 class="w-full border border-gray-300 p-2 rounded" multiple>
                             <p class="text-xs text-gray-500 mt-1">Kosongkan jika tidak ingin mengubah theme white
                                 images.</p>
+                            <!-- Preview images -->
+                            <div id="themeWhitePreview" class="flex flex-wrap mt-2 space-x-2">
+                                <!-- Gambar yang sudah ada akan ditampilkan di sini -->
+                            </div>
                         </div>
 
                         <div class="flex justify-end">
@@ -221,9 +235,10 @@
                                 class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Update</button>
                         </div>
                     </form>
-
                 </div>
             </div>
+
+
 
             <!-- Modal Konfirmasi Hapus Logo -->
             <div id="deleteLogoModal"

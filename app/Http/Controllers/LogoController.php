@@ -104,7 +104,6 @@ class LogoController extends Controller
             ]);
         }
 
-        // Jika bukan AJAX, arahkan ke halaman lain
         return redirect()->route('admin.logo')->with('error', 'Invalid request');
     }
 
@@ -171,11 +170,6 @@ class LogoController extends Controller
 
         $logo->save();
         return redirect()->route('admin.logo')->with('success', 'Logo and photos updated successfully!');
-        // return response()->json([
-        //     'success' => true,
-        //     'message' => 'Logo updated successfully!',
-        //     'logo' => $logo,  // Mengembalikan data logo terbaru
-        // ]);
     }
 
     // Menghapus logo beserta foto-fotonya
@@ -194,5 +188,24 @@ class LogoController extends Controller
         $logo->delete();
 
         return redirect()->route('admin.logo')->with('success', 'Logo and photos deleted successfully!');
+    }
+
+    public function deleteLogoPhoto($id)
+    {
+        // Mendapatkan gambar berdasarkan ID
+        $logoPhoto = LogoPhoto::findOrFail($id);
+
+        // Cek apakah gambar terkait dengan logo
+        if ($logoPhoto) {
+            // Hapus file gambar dari storage
+            Storage::delete($logoPhoto->path);
+
+            // Hapus entri gambar dari database
+            $logoPhoto->delete();
+
+            return response()->json(['success' => true]);
+        }
+
+        return response()->json(['success' => false, 'message' => 'Image not found']);
     }
 }

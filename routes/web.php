@@ -59,6 +59,8 @@ Route::group(['middleware' => ['auth', 'startSessionByRole']], function () {
         Route::get('admin/logo/{id}/edit', [LogoController::class, 'edit'])->name('admin.logo.edit');
         Route::put('admin/logo/{id}', [LogoController::class, 'update'])->name('admin.logo.update');
         Route::delete('admin/logo/{id}', [LogoController::class, 'destroy'])->name('admin.logo.destroy');
+        Route::delete('/admin/logo/photo/{id}/delete', [LogoController::class, 'deleteLogoPhoto'])->name('logo.deletePhoto');
+
 
 
 
