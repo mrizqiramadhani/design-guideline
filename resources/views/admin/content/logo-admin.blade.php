@@ -266,7 +266,6 @@
                     </thead>
                     <tbody>
                         @foreach ($logos as $logo)
-                            {{-- {{ dd($logo->logoPhotos) }} --}}
                             <tr class="border-t">
                                 <td class="px-4 py-2 text-gray-900">{{ $logo->title }}</td>
                                 <td class="px-4 py-2 text-gray-900">{{ $logo->unit->name ?? '' }}</td>
@@ -280,8 +279,8 @@
                                     @if ($logo->logoPhotos->where('theme', 'Primary')->count() === 0)
                                         <span class="text-gray-500">No Primary Images</span>
                                     @else
-                                        <div class="flex space-x-2">
-                                            @foreach ($logo->logoPhotos->where('theme', 'theme_primary') as $photo)
+                                        <div class="flex flex-wrap justify-start gap-2">
+                                            @foreach ($logo->logoPhotos->where('theme', 'Primary') as $photo)
                                                 <img src="{{ asset('storage/logo_photos/' . basename($photo->path)) }}"
                                                     alt="Theme Primary" class="w-10 h-10 object-cover rounded-md">
                                             @endforeach
@@ -294,8 +293,8 @@
                                     @if ($logo->logoPhotos->where('theme', 'White')->count() === 0)
                                         <span class="text-gray-500">No White Images</span>
                                     @else
-                                        <div class="flex space-x-2">
-                                            @foreach ($logo->logoPhotos->where('theme', 'theme_white') as $photo)
+                                        <div class="flex flex-wrap justify-start gap-2">
+                                            @foreach ($logo->logoPhotos->where('theme', 'White') as $photo)
                                                 <img src="{{ asset('storage/logo_photos/' . basename($photo->path)) }}"
                                                     alt="Theme White" class="w-10 h-10 object-cover rounded-md">
                                             @endforeach
@@ -309,7 +308,6 @@
                                             class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">
                                             Edit
                                         </button>
-                                        <!-- Tombol untuk memicu modal konfirmasi -->
                                         <button type="button"
                                             onclick="openDeleteModal('{{ route('admin.logo.destroy', $logo->id) }}')"
                                             class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">Delete</button>
@@ -318,8 +316,6 @@
                             </tr>
                         @endforeach
                     </tbody>
-
-
                 </table>
             </div>
         </main>

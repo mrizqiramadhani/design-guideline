@@ -8,34 +8,30 @@ function closeModal() {
 
 //! Modal edit Logo
 function openEditModal(id) {
+  // Set the form action for editing
   $("#editForm").attr("action", `/admin/logo/${id}`);
 
+  // Make an AJAX call to get the data for the selected logo
   $.ajax({
     url: `/admin/logo/${id}/edit`,
     method: "GET",
     dataType: "json",
     success: function (data) {
-      // console.log("Response data:", data);
-      // console.log("Title to insert:", data.title);
-
+      // Set the title and other fields in the modal
       if ($("#editTitle").length > 0) {
         $("#editTitle").val(data.title);
       }
 
-      if (data.theme_white && data.theme_white.length > 0) {
-        $("#themeWhiteContainer").empty();
-        data.theme_white.forEach((image) => {
-          $("#themeWhiteContainer").append(`
-            <img src="/storage/${image.path}" class="w-16 h-16 object-cover rounded border">
-          `);
-        });
-      } else {
-        $("#themeWhiteContainer").empty();
+      // Set the thumbnail preview in the modal
+      if (data.thumbnail) {
+        $("#thumbnailPreview").attr(
+          "src",
+          `/storage/thumbnails/${data.thumbnail}`
+        );
       }
 
-      setTimeout(function () {
-        $("#editModal").removeClass("hidden");
-      }, 100);
+      // Show the modal
+      $("#editModal").removeClass("hidden");
     },
     error: function (xhr, status, error) {
       console.error("Error fetching logo data:", error);
