@@ -1,0 +1,11 @@
+#themePrimaryPreview,
+#themeWhitePreview {
+  display: flex;
+  overflow-x: auto;
+  white-space: nowrap; /* Cegah gambar turun ke bawah */
+}
+
+#themePrimaryPreview div,
+#themeWhitePreview div {
+  flex: 0 0 auto; /* Mencegah gambar terhimpit */
+}

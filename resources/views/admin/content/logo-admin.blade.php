@@ -7,6 +7,7 @@
     <title>Admin - Content Management</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="{{ asset('css/admin/style.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/admin/content/logo.css') }}" />
     <link rel="icon" href="{{ asset('img/SG 2023-04.png') }}">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.15/dist/sweetalert2.min.css" rel="stylesheet">
@@ -209,9 +210,10 @@
                                 class="w-full border border-gray-300 p-2 rounded" multiple>
                             <p class="text-xs text-gray-500 mt-1">Kosongkan jika tidak ingin mengubah theme primary
                                 images.</p>
-                            <!-- Preview images with horizontal scroll -->
-                            <div id="themePrimaryPreview" class="flex flex-wrap mt-2 space-x-2 overflow-x-auto">
-                                <!-- Gambar yang sudah ada akan ditampilkan di sini -->
+                            <!-- Theme Primary Preview dengan scrollbar -->
+                            <div id="themePrimaryPreview"
+                                class="flex mt-2 space-x-2 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+                                <!-- Gambar yang sudah ada akan ditampilkan di sini melalui JavaScript -->
                             </div>
                         </div>
 
@@ -222,9 +224,10 @@
                                 class="w-full border border-gray-300 p-2 rounded" multiple>
                             <p class="text-xs text-gray-500 mt-1">Kosongkan jika tidak ingin mengubah theme white
                                 images.</p>
-                            <!-- Preview images with horizontal scroll -->
-                            <div id="themeWhitePreview" class="flex flex-wrap mt-2 space-x-2 overflow-x-auto">
-                                <!-- Gambar yang sudah ada akan ditampilkan di sini -->
+                            <!-- Theme White Preview dengan scrollbar -->
+                            <div id="themeWhitePreview"
+                                class="flex mt-2 space-x-2 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+                                <!-- Gambar yang sudah ada akan ditampilkan di sini melalui JavaScript -->
                             </div>
                         </div>
 
