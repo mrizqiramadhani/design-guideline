@@ -94,7 +94,9 @@
             <!-- Modal tambah logo -->
             <div id="addLogoModal"
                 class="fixed inset-0 bg-gray-500 bg-opacity-50 hidden flex items-center justify-center z-50">
-                <div class="bg-white rounded-lg w-full max-w-md p-8 shadow-lg">
+                <div class="bg-white rounded-lg w-full max-w-md p-8 shadow-lg relative">
+
+                    <!-- Header Modal -->
                     <h2 class="text-2xl font-semibold mb-4">Add New Logo</h2>
 
                     <form id="addLogoForm" method="POST" action="{{ route('admin.logo.store') }}"
@@ -112,48 +114,51 @@
                             </div>
                         @endif
 
-                        <!-- Title -->
-                        <div class="mb-4">
-                            <label for="title" class="block text-gray-700">Title:</label>
-                            <input type="text" name="title" id="title"
-                                class="w-full border border-gray-300 p-2 rounded" required>
-                        </div>
-
-                        <!-- Thumbnail -->
-                        <div class="mb-4">
-                            <label for="thumbnail" class="block text-gray-700">Thumbnail:</label>
-                            <input type="file" name="thumbnail" id="thumbnail"
-                                class="w-full border border-gray-300 p-2 rounded" required>
-                        </div>
-
-                        <!-- Unit Bisnis -->
-                        <div class="mb-4">
-                            <label for="unit_id" class="block text-gray-700">Unit Bisnis:</label>
-                            <select name="unit_id" id="unit_id" class="w-full border border-gray-300 p-2 rounded"
-                                required>
-                                @foreach ($units as $unit)
-                                    <option value="{{ $unit->id }}">{{ $unit->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        <!-- Photo Theme Primary (Multiple Upload) -->
-                        <div class="mb-4">
-                            <label for="theme_primary" class="block text-gray-700">Photo Theme Primary:</label>
-                            <input type="file" name="theme_primary[]" id="theme_primary"
-                                class="w-full border border-gray-300 p-2 rounded" multiple>
-                            <div id="themePrimaryTags"
-                                class="mt-2 flex space-x-2 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+                        <!-- Modal Scrollable Content -->
+                        <div class="modal-content max-h-[400px] overflow-y-auto pr-4 pb-8 relative">
+                            <!-- Title -->
+                            <div class="mb-4">
+                                <label for="title" class="block text-gray-700">Title:</label>
+                                <input type="text" name="title" id="title"
+                                    class="w-full border border-gray-300 p-2 rounded" required>
                             </div>
-                        </div>
 
-                        <!-- Photo Theme White (Multiple Upload) -->
-                        <div class="mb-4">
-                            <label for="theme_white" class="block text-gray-700">Photo Theme White:</label>
-                            <input type="file" name="theme_white[]" id="theme_white"
-                                class="w-full border border-gray-300 p-2 rounded" multiple>
-                            <div id="themeWhiteTags"
-                                class="mt-2 flex space-x-2 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+                            <!-- Thumbnail -->
+                            <div class="mb-4">
+                                <label for="thumbnail" class="block text-gray-700">Thumbnail:</label>
+                                <input type="file" name="thumbnail" id="thumbnail"
+                                    class="w-full border border-gray-300 p-2 rounded" required>
+                            </div>
+
+                            <!-- Unit Bisnis -->
+                            <div class="mb-4">
+                                <label for="unit_id" class="block text-gray-700">Unit Bisnis:</label>
+                                <select name="unit_id" id="unit_id" class="w-full border border-gray-300 p-2 rounded"
+                                    required>
+                                    @foreach ($units as $unit)
+                                        <option value="{{ $unit->id }}">{{ $unit->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <!-- Photo Theme Primary (Multiple Upload) -->
+                            <div class="mb-4">
+                                <label for="theme_primary" class="block text-gray-700">Photo Theme Primary:</label>
+                                <input type="file" name="theme_primary[]" id="theme_primary"
+                                    class="w-full border border-gray-300 p-2 rounded" multiple>
+                                <div id="themePrimaryTags"
+                                    class="mt-2 flex space-x-2 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+                                </div>
+                            </div>
+
+                            <!-- Photo Theme White (Multiple Upload) -->
+                            <div class="mb-4">
+                                <label for="theme_white" class="block text-gray-700">Photo Theme White:</label>
+                                <input type="file" name="theme_white[]" id="theme_white"
+                                    class="w-full border border-gray-300 p-2 rounded" multiple>
+                                <div id="themeWhiteTags"
+                                    class="mt-2 flex space-x-2 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+                                </div>
                             </div>
                         </div>
 
@@ -168,69 +173,78 @@
                 </div>
             </div>
 
+
             {{-- Modal edit logo --}}
             <div id="editModal"
                 class="fixed inset-0 hidden bg-gray-500 bg-opacity-50 flex items-center justify-center z-50">
-                <div class="bg-white rounded-lg w-full max-w-md p-8 shadow-lg">
+                <div class="bg-white rounded-lg w-full max-w-md p-8 shadow-lg relative">
+
+                    <!-- Header Modal -->
                     <h2 class="text-2xl font-semibold mb-4">Edit Logo</h2>
+
                     <form id="editForm" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
 
-                        <!-- Input Title -->
-                        <div class="mb-4">
-                            <label for="editTitle" class="block text-gray-700">Title:</label>
-                            <input type="text" id="editTitle" name="title"
-                                class="w-full border border-gray-300 p-2 rounded" required>
-                        </div>
+                        <!-- Modal Scrollable Content -->
+                        <div class="modal-content max-h-[400px] overflow-y-auto pr-4 pb-8 relative">
+                            <!-- Input Title -->
+                            <div class="mb-4">
+                                <label for="editTitle" class="block text-gray-700">Title:</label>
+                                <input type="text" id="editTitle" name="title"
+                                    class="w-full border border-gray-300 p-2 rounded" required>
+                            </div>
 
-                        <!-- Unit Bisnis -->
-                        <div class="mb-4">
-                            <label for="unit_id" class="block text-gray-700">Unit Bisnis:</label>
-                            <select name="unit_id" id="unit_id" class="w-full border border-gray-300 p-2 rounded"
-                                required>
-                                @foreach ($units as $unit)
-                                    <option value="{{ $unit->id }}">{{ $unit->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
+                            <!-- Unit Bisnis -->
+                            <div class="mb-4">
+                                <label for="unit_id" class="block text-gray-700">Unit Bisnis:</label>
+                                <select name="unit_id" id="unit_id"
+                                    class="w-full border border-gray-300 p-2 rounded" required>
+                                    @foreach ($units as $unit)
+                                        <option value="{{ $unit->id }}">{{ $unit->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
 
-                        <!-- Thumbnail -->
-                        <div class="mb-4">
-                            <label for="thumbnail" class="block text-gray-700">Thumbnail:</label>
-                            <input type="file" name="thumbnail" id="thumbnail"
-                                class="w-full border border-gray-300 p-2 rounded">
-                            <p class="text-xs text-gray-500 mt-1">Kosongkan jika tidak ingin mengubah thumbnail.</p>
-                        </div>
+                            <!-- Thumbnail -->
+                            <div class="mb-4">
+                                <label for="thumbnail" class="block text-gray-700">Thumbnail:</label>
+                                <input type="file" name="thumbnail" id="thumbnail"
+                                    class="w-full border border-gray-300 p-2 rounded">
+                                <p class="text-xs text-gray-500 mt-1">Kosongkan jika tidak ingin mengubah thumbnail.
+                                </p>
+                            </div>
 
-                        <!-- Photo Theme Primary (Multiple Upload) -->
-                        <div class="mb-4">
-                            <label for="theme_primary" class="block text-gray-700">Photo Theme Primary:</label>
-                            <input type="file" name="theme_primary[]" id="theme_primary"
-                                class="w-full border border-gray-300 p-2 rounded" multiple>
-                            <p class="text-xs text-gray-500 mt-1">Kosongkan jika tidak ingin mengubah theme primary
-                                images.</p>
-                            <!-- Theme Primary Preview dengan scrollbar -->
-                            <div id="themePrimaryPreview"
-                                class="flex mt-2 space-x-2 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
-                                <!-- Gambar yang sudah ada akan ditampilkan di sini melalui JavaScript -->
+                            <!-- Photo Theme Primary (Multiple Upload) -->
+                            <div class="mb-4">
+                                <label for="theme_primary" class="block text-gray-700">Photo Theme Primary:</label>
+                                <input type="file" name="theme_primary[]" id="theme_primary"
+                                    class="w-full border border-gray-300 p-2 rounded" multiple>
+                                <p class="text-xs text-gray-500 mt-1">Kosongkan jika tidak ingin mengubah theme primary
+                                    images.</p>
+                                <!-- Theme Primary Preview dengan scrollbar -->
+                                <div id="themePrimaryPreview"
+                                    class="flex mt-2 space-x-2 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+                                    <!-- Gambar yang sudah ada akan ditampilkan di sini melalui JavaScript -->
+                                </div>
+                            </div>
+
+                            <!-- Photo Theme White (Multiple Upload) -->
+                            <div class="mb-4">
+                                <label for="theme_white" class="block text-gray-700">Photo Theme White:</label>
+                                <input type="file" name="theme_white[]" id="theme_white"
+                                    class="w-full border border-gray-300 p-2 rounded" multiple>
+                                <p class="text-xs text-gray-500 mt-1">Kosongkan jika tidak ingin mengubah theme white
+                                    images.</p>
+                                <!-- Theme White Preview dengan scrollbar -->
+                                <div id="themeWhitePreview"
+                                    class="flex mt-2 space-x-2 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+                                    <!-- Gambar yang sudah ada akan ditampilkan di sini melalui JavaScript -->
+                                </div>
                             </div>
                         </div>
 
-                        <!-- Photo Theme White (Multiple Upload) -->
-                        <div class="mb-4">
-                            <label for="theme_white" class="block text-gray-700">Photo Theme White:</label>
-                            <input type="file" name="theme_white[]" id="theme_white"
-                                class="w-full border border-gray-300 p-2 rounded" multiple>
-                            <p class="text-xs text-gray-500 mt-1">Kosongkan jika tidak ingin mengubah theme white
-                                images.</p>
-                            <!-- Theme White Preview dengan scrollbar -->
-                            <div id="themeWhitePreview"
-                                class="flex mt-2 space-x-2 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
-                                <!-- Gambar yang sudah ada akan ditampilkan di sini melalui JavaScript -->
-                            </div>
-                        </div>
-
+                        <!-- Modal Footer (Buttons) -->
                         <div class="flex justify-end">
                             <button type="button" onclick="closeEditModal()"
                                 class="mr-4 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Cancel</button>
@@ -240,8 +254,6 @@
                     </form>
                 </div>
             </div>
-
-
 
             <!-- Modal Konfirmasi Hapus Logo -->
             <div id="deleteLogoModal"

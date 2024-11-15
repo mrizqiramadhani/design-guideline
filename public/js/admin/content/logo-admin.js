@@ -35,7 +35,7 @@ document
           "min-w-max"
         );
         tag.innerHTML = `
-              <img src="${e.target.result}" alt="Thumbnail" class="w-16 h-16 object-cover rounded-md">
+              <img src="${e.target.result}" alt="Thumbnail" class="w-12 h-12 object-cover rounded-md">
               <span class="text-sm text-gray-700 truncate w-32">${file.name}</span>
               <button type="button" onclick="removeTag(this)" class="absolute top-0 right-0 text-gray-600 hover:text-red-500 p-1">×</button>
           `;
@@ -75,7 +75,7 @@ document
           "min-w-max"
         );
         tag.innerHTML = `
-              <img src="${e.target.result}" alt="Thumbnail" class="w-16 h-16 object-cover rounded-md">
+              <img src="${e.target.result}" alt="Thumbnail" class="w-12 h-12 object-cover rounded-md">
               <span class="text-sm text-gray-700 truncate w-32">${file.name}</span>
               <button type="button" onclick="removeTag(this)" class="absolute top-0 right-0 text-gray-600 hover:text-red-500 p-1">×</button>
           `;
