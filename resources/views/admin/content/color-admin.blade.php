@@ -7,7 +7,7 @@
     <title>Admin - Content Management</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link rel="stylesheet" href="{{ asset('css/admin/style.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/admin/color.css') }}" />
     <link rel="icon" href="{{ asset('img/SG 2023-04.png') }}">
 </head>
 
@@ -109,11 +109,12 @@
                             <td class="px-4 py-2">{{ $color->color }}</td>
                             <td class="px-4 py-2">{{ $color->user->name ?? 'N/A' }}</td>
                             <td class="px-4 py-2">
-                                <a href="{{ route('admin.color.edit', $color->id) }}" class="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600">Edit</a>
+                                <button type="button" onclick="openEditModal({{ $color->id }}, '{{ $color->unit_id }}', '{{ $color->color }}')" class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">
+                                    Edit
+                                </button>
                                 <button type="button" onclick="openDeleteModal({{ $color->id }})" class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">
                                     Delete
                                 </button>
-                                
                             </td>
                         </tr>
                         @endforeach
@@ -123,7 +124,7 @@
         </main>
     </div>
 
-    <!-- Modal -->
+    <!-- Add Modal -->
 <div id="addColorModal" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 hidden">
     <div class="bg-white w-1/3 rounded-lg shadow-lg p-6">
         <div class="flex justify-between items-center mb-4">
@@ -146,14 +147,17 @@
                 </select>
             </div>
 
-            <!-- Input for Hex Code -->
+            <!-- Input for Hex Code with add Color Picker -->
             <div class="mb-4">
-                <label for="color" class="block text-sm font-semibold text-gray-700">Color HEX Code</label>
-                <input type="text" id="color" name="color" required placeholder="#000000"
-                       class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-green-200"
-                       pattern="^#[A-Fa-f0-9]{6}$" title="Please enter a valid HEX code (e.g., #1A1A1A)" />
+                <label for="colorHex" class="block text-sm font-semibold text-gray-700">Color HEX Code</label>
+                <div class="input-group">
+                    <input type="text" id="colorHex" name="color" required placeholder="#000000"
+                           class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-green-200"
+                           pattern="^#[A-Fa-f0-9]{6}$" title="Please enter a valid HEX code (e.g., #1A1A1A)" />
+                    <input type="color" id="colorPicker" class="p-1">
+                </div>
             </div>
-
+            
             <!-- Submit Button -->
             <div class="flex justify-end">
                 <button type="button" onclick="closeModal()" class="mr-2 px-4 py-2 bg-gray-400 text-white rounded hover:bg-gray-500">
@@ -181,6 +185,51 @@
     </div>
 </div>
 
+<!-- Modal Edit Color -->
+<div id="editColorModal" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 hidden">
+    <div class="bg-white w-1/3 rounded-lg shadow-lg p-6">
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="text-2xl font-bold">Edit Color</h2>
+            <button onclick="closeEditModal()" class="text-gray-500 hover:text-gray-700">&times;</button>
+        </div>
+
+        <!-- Form Edit -->
+        <form id="editColorForm" method="POST">
+            @csrf
+            @method('PUT') <!-- Ini penting untuk emulasi PUT -->
+            
+            <div class="mb-4">
+                <label for="edit_unit_id" class="block text-sm font-semibold text-gray-700">Select Unit</label>
+                <select id="edit_unit_id" name="unit_id" required
+                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-green-200">
+                    <option value="" disabled>Choose a unit</option>
+                    @foreach($units as $unit)
+                        <option value="{{ $unit->id }}">{{ $unit->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <!-- Input for Hex Code with edit Color Picker -->
+            <div class="mb-4">
+                <label for="editColorHex" class="block text-sm font-semibold text-gray-700">Color HEX Code</label>
+                <div class="input-group">
+                <input type="text" id="editColorHex" name="color" required placeholder="#000000"
+                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-green-200"
+                pattern="^#[A-Fa-f0-9]{6}$" title="Please enter a valid HEX code (e.g., #1A1A1A)" />
+                <input type="color" id="editColorPicker" class="p-1">
+                </div>
+            </div>
+      
+            <div class="flex justify-end">
+                <button type="button" onclick="closeEditModal()" class="mr-2 px-4 py-2 bg-gray-400 text-white rounded hover:bg-gray-500">
+                    Cancel
+                </button>
+                <button type="submit" class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600">
+                    Update
+                </button>
+            </div>
+        </form>                        
+    </div>
+</div>
 
 
 @if(session('success'))

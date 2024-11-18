@@ -1,0 +1,26 @@
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;700&display=swap");
+@import url(https://db.onlinewebfonts.com/c/29ddb4605533a38e086b48fa105e0d12?family=Nohemi);
+
+* {
+  font-family: Nohemi;
+}
+
+
+.input-group {
+    display: flex;
+    justify-content: space-between; /* Elemen dipisahkan antara kiri dan kanan */
+    align-items: center; /* Sejajarkan elemen secara vertikal */
+    gap: 8px; /* Tambahkan jarak antar elemen */
+}
+
+.input-group input[type="text"] {
+    flex: 1; /* Inputan teks menyesuaikan lebar */
+    margin-right: 8px; /* Jarak antara input dan color picker */
+}
+
+.input-group input[type="color"] {
+    width: 50px; /* Ukuran tetap untuk color picker */
+    height: 50px; /* Tinggi tetap */
+    border-radius: 4px; /* Tambahkan sudut membulat */
+    border: 1px solid #d1d5db; /* Tambahkan border abu-abu */
+}

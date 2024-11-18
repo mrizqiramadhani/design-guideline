@@ -40,3 +40,48 @@ function deleteColor(colorId) {
     document.body.appendChild(form);
     form.submit();
 }
+
+// Buka modal edit dengan data yang ada
+function openEditModal(id, unitId, colorHex) {
+    document.getElementById("editColorModal").classList.remove("hidden");
+
+    // Isi form dengan data dari database
+    document.getElementById("edit_unit_id").value = unitId;
+    document.getElementById("editColorHex").value = colorHex; // Perbaikan ID
+    document.getElementById("editColorPicker").value = colorHex;
+
+    // Update form action URL untuk request edit
+    document.getElementById("editColorForm").action = `/admin/color-palette/${id}`;
+}
+
+// Tutup modal edit
+function closeEditModal() {
+    document.getElementById("editColorModal").classList.add("hidden");
+}
+
+// Menyinkronkan color picker dan input kode hex pada modal tambah
+document.getElementById("colorHex").addEventListener("input", function () {
+    document.getElementById("colorPicker").value = this.value;
+});
+
+document.getElementById("colorPicker").addEventListener("input", function () {
+    document.getElementById("colorHex").value = this.value;
+});
+
+// Menyinkronkan color picker dan input kode hex pada modal edit
+document.getElementById("editColorHex").addEventListener("input", function () {
+    document.getElementById("editColorPicker").value = this.value;
+});
+
+document.getElementById("editColorPicker").addEventListener("input", function () {
+    document.getElementById("editColorHex").value = this.value;
+});
+
+// Sinkronkan nilai sebelum form dikirim
+document.querySelector("#editColorForm").addEventListener("submit", function () {
+    const colorPicker = document.getElementById("editColorPicker");
+    const colorHex = document.getElementById("editColorHex");
+
+    // Sinkronkan nilai terakhir
+    colorHex.value = colorPicker.value;
+});

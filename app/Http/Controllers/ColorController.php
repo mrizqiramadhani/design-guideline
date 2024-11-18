@@ -56,14 +56,15 @@ class ColorController extends Controller
             'color' => 'required|string|max:7|regex:/^#[a-fA-F0-9]{6}$/',
             'unit_id' => 'required|exists:units,id',
         ]);
-
+    
         $color->update([
             'color' => $request->color,
             'unit_id' => $request->unit_id,
         ]);
-
+    
         return redirect()->route('admin.color')->with('success', 'Color updated successfully.');
     }
+    
 
     /**
      * Remove the specified color from storage.
