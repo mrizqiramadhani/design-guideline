@@ -1,3 +1,11 @@
+//* Spinnder Loading
+document.getElementById("addLogoForm").addEventListener("submit", function () {
+  document.getElementById("loadingSpinner").classList.remove("hidden");
+});
+document.getElementById("editForm").addEventListener("submit", function () {
+  document.getElementById("loadingSpinnerEdit").classList.remove("hidden");
+});
+
 //! Modal Tambah Logo
 function showModal() {
   document.getElementById("addLogoModal").classList.remove("hidden");
@@ -7,6 +15,7 @@ function closeModal() {
   document.getElementById("addLogoModal").classList.add("hidden");
 }
 
+//!  Menangani upload gambar theme primary
 document
   .getElementById("theme_primary")
   .addEventListener("change", function (event) {
@@ -46,7 +55,7 @@ document
     }
   });
 
-// Menangani upload gambar theme white
+//! Menangani upload gambar theme white
 document
   .getElementById("theme_white")
   .addEventListener("change", function (event) {
@@ -86,7 +95,7 @@ document
     }
   });
 
-// Fungsi untuk menghapus tag
+//! Fungsi untuk menghapus tag
 function removeTag(button) {
   const tag = button.parentElement;
   const fileInput =

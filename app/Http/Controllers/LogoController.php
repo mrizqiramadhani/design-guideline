@@ -39,10 +39,10 @@ class LogoController extends Controller
         // Validasi input
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
-            'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:5048',
             'unit_id' => 'required|exists:units,id',
-            'theme_primary.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'theme_white.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'theme_primary.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5048',
+            'theme_white.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5048',
         ]);
 
         // Menyimpan thumbnail
@@ -117,9 +117,9 @@ class LogoController extends Controller
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
             'unit_id' => 'required|exists:units,id',
-            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'theme_primary.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'theme_white.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5048',
+            'theme_primary.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5048',
+            'theme_white.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5048',
         ]);
 
         // Update title dan unit_id

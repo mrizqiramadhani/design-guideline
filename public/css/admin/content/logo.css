@@ -20,3 +20,55 @@
   scrollbar-width: none; /* Untuk Firefox */
   -ms-overflow-style: none; /* Untuk Internet Explorer/Edge */
 }
+
+/* CSS */
+.loader {
+  width: 100px;
+  aspect-ratio: 1;
+  padding: 10px;
+  box-sizing: border-box;
+  display: grid;
+  mix-blend-mode: darken;
+}
+
+.loader:before,
+.loader:after {
+  content: "";
+  grid-area: 1/1;
+  margin: 20px 0;
+  border-radius: 50%; /* Mempertahankan bentuk blob */
+  background: #ff00ff; /* Warna awal */
+  animation: l4 2s infinite linear, colorChange 2s infinite linear;
+  width: 50px; /* Lebar sedikit lebih kecil */
+  height: 130px; /* Tinggi lebih besar */
+}
+
+.loader:after {
+  --s: -1;
+}
+
+/* Animasi putaran */
+@keyframes l4 {
+  100% {
+    transform: rotate(calc(var(--s, 1) * 1turn));
+  }
+}
+
+/* Animasi perubahan warna */
+@keyframes colorChange {
+  0% {
+    background: #00235b; /* Warna awal */
+  }
+  25% {
+    background: #e21818; /* Warna di putaran pertama */
+  }
+  50% {
+    background: #ffdd83; /* Warna di putaran kedua */
+  }
+  75% {
+    background: #98dfd6; /* Warna di putaran ketiga */
+  }
+  100% {
+    background: #00235b; /* Kembali ke warna awal */
+  }
+}

@@ -96,6 +96,11 @@
                 class="fixed inset-0 bg-gray-500 bg-opacity-50 hidden flex items-center justify-center z-50">
                 <div class="bg-white rounded-lg w-full max-w-md p-8 shadow-lg relative">
 
+                    <div id="loadingSpinner"
+                        class="hidden absolute inset-0 bg-gray-900 bg-opacity-25 flex items-center justify-center z-10">
+                        <div class="loader"></div>
+                    </div>
+
                     <!-- Header Modal -->
                     <h2 class="text-2xl font-semibold mb-4">Add New Logo</h2>
 
@@ -178,6 +183,11 @@
             <div id="editModal"
                 class="fixed inset-0 hidden bg-gray-500 bg-opacity-50 flex items-center justify-center z-50">
                 <div class="bg-white rounded-lg w-full max-w-md p-8 shadow-lg relative">
+
+                    <div id="loadingSpinnerEdit"
+                        class="hidden absolute inset-0 bg-gray-900 bg-opacity-25 flex items-center justify-center z-10">
+                        <div class="loader"></div>
+                    </div>
 
                     <!-- Header Modal -->
                     <h2 class="text-2xl font-semibold mb-4">Edit Logo</h2>
