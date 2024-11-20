@@ -25,15 +25,23 @@ class LogoController extends Controller
         $logos = Logo::with(['logoPhotos', 'unit'])->paginate(3);
         $units = Unit::all();
 
+        // Dapatkan role pengguna
+        $userRole = auth()->user()->role;
+
+        // Tentukan view berdasarkan role
+        $view = $userRole === 'admin'
+            ? 'admin.content.logo-admin'
+            : 'operator.content.logo-operator'; // View untuk operator
+
         // Jika request menggunakan AJAX, hanya kirimkan konten tabel
         if ($request->ajax()) {
             return response()->json([
-                'html' => view('admin.content.logo-admin', compact('logos', 'units'))->render()
+                'html' => view($view, compact('logos', 'units'))->render()
             ]);
         }
 
         // Jika bukan AJAX, kembalikan halaman dengan data lengkap
-        return view('admin.content.logo-admin', compact('logos', 'units'));
+        return view($view, compact('logos', 'units'));
     }
 
 
@@ -41,8 +49,16 @@ class LogoController extends Controller
     // Menampilkan form tambah logo
     public function create()
     {
+        // Ambil data unit untuk dropdown atau kebutuhan lainnya
         $units = Unit::all();
-        return view('admin.content.logo-admin', compact('units'));
+
+        // Tentukan view berdasarkan role pengguna
+        $view = auth()->user()->role === 'admin'
+            ? 'admin.content.logo-admin'
+            : 'operator.content.logo-operator';
+
+        // Kembalikan view dengan data unit
+        return view($view, compact('units'));
     }
 
     // Menyimpan logo dan foto
@@ -59,7 +75,7 @@ class LogoController extends Controller
 
         // Menyimpan thumbnail
         $thumbnailPath = $request->file('thumbnail')->store('public/thumbnails');
-        // $logo->thumbnail = $thumbnailPath;
+
         // Menyimpan logo
         $logo = Logo::create([
             'title' => $validatedData['title'],
@@ -92,9 +108,13 @@ class LogoController extends Controller
             }
         }
 
-        return redirect()->route('admin.logo')->with('success', 'Logo and photos added successfully!');
+        // Redirect berdasarkan role
+        return redirect()->route(auth()->user()->role === 'admin' ? 'admin.logo' : 'operator.logo')
+            ->with('success', 'Logo and photos added successfully!');
     }
 
+
+    // Menampilkan form edit logo
     public function edit($id)
     {
         // Mendapatkan logo dengan relasi logoPhotos dan unit
@@ -104,11 +124,18 @@ class LogoController extends Controller
         $themePrimaryImages = $logo->logoPhotos->where('theme', 'Primary')->values();
         $themeWhiteImages = $logo->logoPhotos->where('theme', 'White')->values();
 
-        // Cek jika request menggunakan AJAX
+        // Ambil data unit untuk dropdown
+        $units = Unit::all();
+
+        // Tentukan view berdasarkan role pengguna
+        $view = auth()->user()->role === 'admin'
+            ? 'admin.content.logo-admin'
+            : 'operator.content.logo-operator';
+
+        // Cek jika request menggunakan AJAX untuk mengambil data logo
         if (request()->ajax()) {
-            Log::info($logo);
             return response()->json([
-                'title' => $logo->title, // Pastikan title dikirim
+                'title' => $logo->title,
                 'unit_id' => $logo->unit_id,
                 'thumbnail' => $logo->thumbnail,
                 'theme_primary' => $themePrimaryImages,
@@ -116,13 +143,14 @@ class LogoController extends Controller
             ]);
         }
 
-        return redirect()->route('admin.logo')->with('error', 'Invalid request');
+        // Kembalikan view dengan data logo, unit, dan gambar tema
+        return view($view, compact('logo', 'units', 'themePrimaryImages', 'themeWhiteImages'));
     }
 
-
-
+    // Update logo dan foto
     public function update(Request $request, $id)
     {
+        // Mendapatkan logo yang akan diperbarui
         $logo = Logo::findOrFail($id);
 
         // Validasi input
@@ -184,11 +212,16 @@ class LogoController extends Controller
             }
         }
 
+        // Simpan perubahan logo
         $logo->save();
-        return redirect()->route('admin.logo')->with('success', 'Logo and photos updated successfully!');
+
+        // Redirect berdasarkan role pengguna
+        return redirect()->route(auth()->user()->role === 'admin' ? 'admin.logo' : 'operator.logo')
+            ->with('success', 'Logo and photos updated successfully!');
     }
 
 
+    // Menghapus logo beserta foto-fotonya
     // Menghapus logo beserta foto-fotonya
     public function destroy($id)
     {
@@ -202,9 +235,12 @@ class LogoController extends Controller
             Storage::delete($photo->path);
         }
 
+        // Hapus logo dari database
         $logo->delete();
 
-        return redirect()->route('admin.logo')->with('success', 'Logo and photos deleted successfully!');
+        // Redirect berdasarkan role pengguna
+        return redirect()->route(auth()->user()->role === 'admin' ? 'admin.logo' : 'operator.logo')
+            ->with('success', 'Logo and photos deleted successfully!');
     }
 
     public function deleteLogoPhoto($id)

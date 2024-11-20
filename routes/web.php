@@ -89,9 +89,18 @@ Route::group(['middleware' => ['auth', 'startSessionByRole']], function () {
         Route::get('/operator/deskripsi', function () {
             return view('operator.dashboard-operator');
         })->name('operator.deskripsi');
-        Route::get('/operator/logo', function () {
-            return view('operator.content.logo-operator');
-        })->name('operator.logo');
+        // Route::get('/operator/logo', function () {
+        //     return view('operator.content.logo-operator');
+        // })->name('operator.logo');
+
+        //! Route operator Logo
+        Route::get('operator/logo', [LogoController::class, 'index'])->name('operator.logo');
+        Route::post('operator/logo', [LogoController::class, 'store'])->name('operator.logo.store');
+        Route::get('operator/logo/{id}/edit', [LogoController::class, 'edit'])->name('operator.logo.edit');
+        Route::put('operator/logo/{id}', [LogoController::class, 'update'])->name('operator.logo.update');
+        Route::delete('operator/logo/{id}', [LogoController::class, 'destroy'])->name('operator.logo.destroy');
+        Route::delete('/operator/logo/photo/{id}/delete', [LogoController::class, 'deleteLogoPhoto'])->name('logo.deletePhoto');
+
         Route::get('/operator/color-palette', function () {
             return view('operator.content.color-operator');
         })->name('operator.color');
