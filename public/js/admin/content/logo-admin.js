@@ -174,7 +174,7 @@ function openEditModal(id) {
         data.theme_white.forEach(function (img) {
           let imgPath = img.path.replace(/^public\//, "");
           preview += `
-      <div id="whiteImage${img.id}" class="relative inline-block p-2 rounded-md shadow-md">
+      <div id="whiteImage${img.id}" class="relative inline-block p-2 rounded-md shadow-md bg-black">
         <img src="/storage/${imgPath}" alt="theme-white" class="w-16 h-16 object-cover rounded-md">
         <button type="button" class="absolute top-1 right-1 text-white bg-red-500 hover:bg-red-600 focus:ring-2 focus:ring-red-300 rounded-full p-2" onclick="deleteImageUI(${img.id}, 'white')">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -242,14 +242,13 @@ $("#editForm").on("submit", function (e) {
     success: function (response) {
       Swal.fire({
         icon: "success",
-        title: "success",
+        title: "Success",
         text: "Logo and photos deleted successfully!",
-        confirmButtonText: "OK",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          // Setelah konfirmasi, redirect ke halaman logo
-          window.location.href = "/admin/logo"; // Pastikan URL benar
-        }
+        showConfirmButton: false, // Menyembunyikan tombol konfirmasi
+        timer: 2000, // Timer untuk 2 detik
+      }).then(() => {
+        // Redirect ke halaman logo setelah alert
+        window.location.href = "/admin/logo"; // Pastikan URL benar
       });
     },
     error: function (xhr, status, error) {

@@ -4,15 +4,26 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Admin - Content Management</title>
-    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="{{ asset('css/admin/style.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/admin/content/logo.css') }}" />
     <link rel="icon" href="{{ asset('img/SG 2023-04.png') }}">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.15/dist/sweetalert2.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.15/dist/sweetalert2.min.js"></script>
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <!-- Owl Carousel CSS -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" />
+    <!-- Owl Carousel JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+
 </head>
 
 <body>
@@ -75,12 +86,7 @@
         </aside>
 
         <main class="w-4/5 p-8 bg-gray-100">
-            <!-- Success Notification -->
-            @if (session('success'))
-                <div class="bg-green-500 text-white p-3 rounded mb-4">
-                    {{ session('success') }}
-                </div>
-            @endif
+
 
             <div class="mt-20 mb-5 flex items-center justify-between">
                 <h2 class="text-4xl font-bold text-gray-900">Logo</h2>
@@ -138,8 +144,8 @@
                             <!-- Unit Bisnis -->
                             <div class="mb-4">
                                 <label for="unit_id" class="block text-gray-700">Unit Bisnis:</label>
-                                <select name="unit_id" id="unit_id" class="w-full border border-gray-300 p-2 rounded"
-                                    required>
+                                <select name="unit_id" id="unit_id"
+                                    class="w-full border border-gray-300 p-2 rounded" required>
                                     @foreach ($units as $unit)
                                         <option value="{{ $unit->id }}">{{ $unit->name }}</option>
                                     @endforeach
@@ -307,55 +313,75 @@
                     <tbody>
                         @foreach ($logos as $logo)
                             <tr class="border-t">
+                                <!-- Logo Title -->
                                 <td class="px-4 py-2 text-gray-900">{{ $logo->title }}</td>
+
+                                <!-- Unit Name -->
                                 <td class="px-4 py-2 text-gray-900">{{ $logo->unit->name ?? '' }}</td>
+
+                                <!-- Thumbnail -->
                                 <td class="px-4 py-2 text-gray-900">
                                     <img src="{{ asset('storage/thumbnails/' . basename($logo->thumbnail)) }}"
-                                        alt="Thumbnail" class="w-16 h-16 object-cover">
+                                        alt="Thumbnail" class="max-w-full h-32 p-2 object-contain rounded-md">
                                 </td>
 
                                 <!-- Tema Primary -->
                                 <td class="px-4 py-2 text-gray-900">
-                                    @if ($logo->logoPhotos->where('theme', 'Primary')->count() === 0)
+                                    @if ($logo->logoPhotos->where('theme', 'Primary')->isEmpty())
                                         <span class="text-gray-500">No Primary Images</span>
                                     @else
-                                        <div class="flex flex-wrap justify-start gap-2">
-                                            @foreach ($logo->logoPhotos->where('theme', 'Primary') as $photo)
-                                                <img src="{{ asset('storage/logo_photos/' . basename($photo->path)) }}"
-                                                    alt="Theme Primary" class="w-10 h-10 object-cover rounded-md">
-                                            @endforeach
+                                        <div class="relative flex gap-2 overflow-hidden custom-scrollbar-wrapper">
+                                            <div class="flex gap-2 overflow-x-auto custom-scrollbar-content">
+                                                @foreach ($logo->logoPhotos->where('theme', 'Primary') as $photo)
+                                                    <img src="{{ asset('storage/logo_photos/' . basename($photo->path)) }}"
+                                                        alt="Theme Primary"
+                                                        class="max-w-full h-24 object-contain rounded-md bg-slate-200">
+                                                @endforeach
+                                            </div>
                                         </div>
                                     @endif
                                 </td>
+
+
 
                                 <!-- Tema White -->
                                 <td class="px-4 py-2 text-gray-900">
-                                    @if ($logo->logoPhotos->where('theme', 'White')->count() === 0)
+                                    @if ($logo->logoPhotos->where('theme', 'White')->isEmpty())
                                         <span class="text-gray-500">No White Images</span>
                                     @else
-                                        <div class="flex flex-wrap justify-start gap-2">
-                                            @foreach ($logo->logoPhotos->where('theme', 'White') as $photo)
-                                                <img src="{{ asset('storage/logo_photos/' . basename($photo->path)) }}"
-                                                    alt="Theme White" class="w-10 h-10 object-cover rounded-md">
-                                            @endforeach
+                                        <div class="relative flex gap-2 overflow-hidden custom-scrollbar-wrapper">
+                                            <div class="flex gap-2 overflow-x-auto custom-scrollbar-content">
+                                                @foreach ($logo->logoPhotos->where('theme', 'White') as $photo)
+                                                    <img src="{{ asset('storage/logo_photos/' . basename($photo->path)) }}"
+                                                        alt="Theme White"
+                                                        class="max-w-full h-24 object-contain rounded-md bg-black">
+                                                @endforeach
+                                            </div>
                                         </div>
                                     @endif
                                 </td>
 
+                                <!-- Action Buttons -->
                                 <td class="px-4 py-2">
                                     <div class="flex space-x-2">
+                                        <!-- Edit Button -->
                                         <button onclick="openEditModal({{ $logo->id }})"
                                             class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">
                                             Edit
                                         </button>
+
+                                        <!-- Delete Button -->
                                         <button type="button"
                                             onclick="openDeleteModal('{{ route('admin.logo.destroy', $logo->id) }}')"
-                                            class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">Delete</button>
+                                            class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">
+                                            Delete
+                                        </button>
                                     </div>
                                 </td>
                             </tr>
                         @endforeach
                     </tbody>
+
                 </table>
             </div>
         </main>
@@ -365,11 +391,13 @@
             Swal.fire({
                 icon: 'success',
                 title: 'Success!',
-                text: '{{ session('success') }}', // Pesan dari controller
-                showConfirmButton: true,
+                text: '{{ session('success') }}',
+                timer: 2000, // Pesan dari controller
+                showConfirmButton: false,
             });
         </script>
     @endif
+
     <script src="{{ asset('js/admin/content/logo-admin.js') }}"></script>
 </body>
 
