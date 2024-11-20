@@ -279,3 +279,21 @@ function openDeleteModal(actionUrl) {
 function closeDeleteModal() {
   document.getElementById("deleteLogoModal").classList.add("hidden");
 }
+
+// Fungsi untuk menampilkan overlay loading
+function showLoading() {
+  const loadingOverlay = document.getElementById("loading-overlay");
+  loadingOverlay.classList.remove("hidden"); // Tampilkan overlay loading
+
+  // Setelah beberapa detik, sembunyikan loading (contohnya setelah 2 detik)
+  setTimeout(function () {
+    loadingOverlay.classList.add("hidden"); // Sembunyikan overlay setelah loading selesai
+  }, 2000); // 2 detik atau sesuaikan dengan waktu yang diperlukan untuk memuat data
+}
+
+// Event listener untuk memunculkan overlay saat klik pagination link
+document.querySelectorAll("a[href]").forEach((link) => {
+  link.addEventListener("click", function (e) {
+    showLoading(); // Tampilkan loader saat pagination diklik
+  });
+});

@@ -67,10 +67,10 @@
     </header>
 
     <!-- Content -->
-    <div class="flex mt-20">
+    <div class="flex min-h-screen">
         <aside class="w-1/5 bg-white border-r border-gray-200">
-            <div class="px-5 py-20">
-                <nav>
+            <div class="px-10 py-20">
+                <nav class="my-8">
                     <ul class="space-y-6 text-lg text-gray-900">
                         <li><a href="{{ route('admin.deskripsi') }}">Deskripsi</a></li>
                         <li><a href="{{ route('admin.logo') }}">Logo</a></li>
@@ -86,8 +86,6 @@
         </aside>
 
         <main class="w-4/5 p-8 bg-gray-100">
-
-
             <div class="mt-20 mb-5 flex items-center justify-between">
                 <h2 class="text-4xl font-bold text-gray-900">Logo</h2>
                 <div class="flex space-x-4">
@@ -342,8 +340,6 @@
                                     @endif
                                 </td>
 
-
-
                                 <!-- Tema White -->
                                 <td class="px-4 py-2 text-gray-900">
                                     @if ($logo->logoPhotos->where('theme', 'White')->isEmpty())
@@ -381,11 +377,98 @@
                             </tr>
                         @endforeach
                     </tbody>
-
                 </table>
             </div>
+
+            <div id="loading-overlay"
+                class="hidden fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
+                <span class="loader-paginate"></span>
+            </div>
+
+            <!-- Pagination -->
+            @if ($logos->count() > 0)
+                <!-- Cek apakah ada data untuk dipaginasi -->
+                <div class="flex justify-center mt-5">
+                    <ol class="flex justify-center gap-2 text-xs font-medium">
+                        <!-- Previous Page -->
+                        @if ($logos->onFirstPage())
+                            <li>
+                                <a href="{{ $logos->previousPageUrl() }}"
+                                    class="inline-flex items-center justify-center rounded border border-gray-200 bg-white text-black dark:border-gray-800 dark:bg-gray-900 dark:text-white"
+                                    onclick="showLoading()">
+                                    <span class="sr-only">Prev Page</span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" viewBox="0 0 20 20"
+                                        fill="currentColor">
+                                        <path fill-rule="evenodd"
+                                            d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+                                </a>
+                            </li>
+                        @else
+                            <li>
+                                <a href="{{ $logos->previousPageUrl() }}"
+                                    class="inline-flex items-center justify-center rounded border border-gray-200 bg-white text-black dark:border-gray-800 dark:bg-gray-900 dark:text-white">
+                                    <span class="sr-only">Prev Page</span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" viewBox="0 0 20 20"
+                                        fill="currentColor">
+                                        <path fill-rule="evenodd"
+                                            d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+                                </a>
+                            </li>
+                        @endif
+
+                        <!-- Page Numbers -->
+                        @foreach ($logos->links()->elements[0] as $page => $url)
+                            <li>
+                                @if ($page == $logos->currentPage())
+                                    <span
+                                        class="block w-8 h-8 rounded bg-black text-center leading-8 text-white">{{ $page }}</span>
+                                @else
+                                    <a href="{{ $url }}"
+                                        class="block w-8 h-8 rounded border border-gray-200 bg-white text-center leading-8 text-black">
+                                        {{ $page }}
+                                    </a>
+                                @endif
+                            </li>
+                        @endforeach
+
+                        <!-- Next Page -->
+                        @if ($logos->hasMorePages())
+                            <li>
+                                <a href="{{ $logos->nextPageUrl() }}"
+                                    class="inline-flex items-center justify-center rounded border border-gray-200 bg-white text-black dark:border-gray-800 dark:bg-gray-900 dark:text-white">
+                                    <span class="sr-only">Next Page</span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" viewBox="0 0 20 20"
+                                        fill="currentColor">
+                                        <path fill-rule="evenodd"
+                                            d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+                                </a>
+                            </li>
+                        @else
+                            <li class="disabled">
+                                <span
+                                    class="inline-flex items-center justify-center rounded border border-gray-200 bg-white text-black dark:border-gray-800 dark:bg-gray-900 dark:text-white">
+                                    <span class="sr-only">Next Page</span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" viewBox="0 0 20 20"
+                                        fill="currentColor">
+                                        <path fill-rule="evenodd"
+                                            d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+                                </span>
+                            </li>
+                        @endif
+                    </ol>
+                </div>
+            @endif
         </main>
     </div>
+
     @if (session('success'))
         <script>
             Swal.fire({
@@ -397,7 +480,11 @@
             });
         </script>
     @endif
-
+    <footer class="absolute bottom-0 left-0 w-full bg-black text-center text-white p-4">
+        <aside>
+            <p>Copyright © 2024 - All rights reserved by Shafwah Group</p>
+        </aside>
+    </footer>
     <script src="{{ asset('js/admin/content/logo-admin.js') }}"></script>
 </body>
 

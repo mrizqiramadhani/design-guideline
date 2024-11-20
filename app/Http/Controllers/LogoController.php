@@ -19,12 +19,24 @@ class LogoController extends Controller
     }
 
     // Menampilkan semua logo
-    public function index()
+    public function index(Request $request)
     {
-        $logos = Logo::with(['logoPhotos', 'unit'])->get();
+        // Ambil data logos dengan pagination
+        $logos = Logo::with(['logoPhotos', 'unit'])->paginate(3);
         $units = Unit::all();
+
+        // Jika request menggunakan AJAX, hanya kirimkan konten tabel
+        if ($request->ajax()) {
+            return response()->json([
+                'html' => view('admin.content.logo-admin', compact('logos', 'units'))->render()
+            ]);
+        }
+
+        // Jika bukan AJAX, kembalikan halaman dengan data lengkap
         return view('admin.content.logo-admin', compact('logos', 'units'));
     }
+
+
 
     // Menampilkan form tambah logo
     public function create()
