@@ -140,6 +140,11 @@ function openEditModal(id) {
         $("#editTitle").val(data.title);
       }
 
+      if ($("#unit_id").length > 0) {
+        $("#unit_id option").prop("selected", false); // Hapus atribut selected dari semua opsi
+        $(`#unit_id option[value='${data.unit_id}']`).prop("selected", true);
+      }
+
       // Tampilkan preview thumbnail
       if (data.thumbnail) {
         $("#thumbnailPreview").attr(
@@ -154,14 +159,14 @@ function openEditModal(id) {
         data.theme_primary.forEach(function (img) {
           let imgPath = img.path.replace(/^public\//, "");
           preview += `
-      <div id="primaryImage${img.id}" class="relative inline-block p-2 rounded-md shadow-md">
-        <img src="/storage/${imgPath}" alt="theme-primary" class="w-16 h-16 object-cover rounded-md">
-        <button type="button" class="absolute top-1 right-1 text-white bg-red-500 hover:bg-red-600 focus:ring-2 focus:ring-red-300 rounded-full p-2" onclick="deleteImageUI(${img.id}, 'primary')">
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
-      </div>`;
+          <div id="primaryImage${img.id}" class="relative inline-block p-2 rounded-md shadow-md">
+            <img src="/storage/${imgPath}" alt="theme-primary" class="w-16 h-16 object-cover rounded-md">
+            <button type="button" class="absolute top-1 right-1 text-white bg-red-500 hover:bg-red-600 focus:ring-2 focus:ring-red-300 rounded-full p-2" onclick="deleteImageUI(${img.id}, 'primary')">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>`;
         });
 
         // Set preview HTML langsung ke kontainer
@@ -174,14 +179,14 @@ function openEditModal(id) {
         data.theme_white.forEach(function (img) {
           let imgPath = img.path.replace(/^public\//, "");
           preview += `
-      <div id="whiteImage${img.id}" class="relative inline-block p-2 rounded-md shadow-md bg-black">
-        <img src="/storage/${imgPath}" alt="theme-white" class="w-16 h-16 object-cover rounded-md">
-        <button type="button" class="absolute top-1 right-1 text-white bg-red-500 hover:bg-red-600 focus:ring-2 focus:ring-red-300 rounded-full p-2" onclick="deleteImageUI(${img.id}, 'white')">
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
-      </div>`;
+          <div id="whiteImage${img.id}" class="relative inline-block p-2 rounded-md shadow-md bg-black">
+            <img src="/storage/${imgPath}" alt="theme-white" class="w-16 h-16 object-cover rounded-md">
+            <button type="button" class="absolute top-1 right-1 text-white bg-red-500 hover:bg-red-600 focus:ring-2 focus:ring-red-300 rounded-full p-2" onclick="deleteImageUI(${img.id}, 'white')">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>`;
         });
 
         // Set preview HTML langsung ke kontainer
