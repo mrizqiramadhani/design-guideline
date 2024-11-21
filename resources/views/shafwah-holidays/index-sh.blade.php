@@ -94,66 +94,19 @@
                 {{-- download section --}}
                 <h3 class="font-semibold text-2xl text-black mt-5 mb-10">Downloads</h3>
                 <div class="flex flex-wrap -mx-2">
-                    <div class="w-1/4 px-2 mb-4">
-                        <div class="relative block h-52 rounded-lg overflow-hidden">
-                            <img src="{{ asset('img/main-SG.png') }}" alt="Shafwah Group Logo"
-                                class="h-full w-auto max-h object-contain" />
-                            <div
-                                class="absolute inset-0 bg-black opacity-0 hover:opacity-80 transition-opacity duration-300 flex items-center justify-center">
-                                <a href="#" class="button-custom">See More</a>
+                    @foreach ($logos as $logo)
+                        <div class="w-1/4 px-2 mb-4">
+                            <div class="relative block h-52 rounded-lg overflow-hidden">
+                                <img src="{{ asset('storage/thumbnails/' . basename($logo->thumbnail)) }}"
+                                    alt="{{ $logo->name }} Logo" class="h-full w-auto max-h object-contain" />
+                                <div
+                                    class="absolute inset-0 bg-black opacity-0 hover:opacity-80 transition-opacity duration-300 flex items-center justify-center">
+                                    <a href="{{ route('logo-primary-sh', $logo->id) }}" class="button-custom">See
+                                        More</a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="w-1/4 px-2 mb-4">
-                        <div class="relative block h-52 rounded-lg overflow-hidden">
-                            <img src="{{ asset('img/main-SH.png') }}" alt="Shafwah Holidays Logo"
-                                class="h-full w-auto max-h object-contain" />
-                            <div
-                                class="absolute inset-0 bg-black opacity-0 hover:opacity-80 transition-opacity duration-300 flex items-center justify-center">
-                                <a href="#" class="button-custom">See More</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="w-1/4 px-2 mb-4">
-                        <div class="relative block h-52 rounded-lg overflow-hidden">
-                            <img src="{{ asset('img/main-SRP.png') }}" alt="Shafwah Property Logo"
-                                class="h-full w-auto max-h object-contain" />
-                            <div
-                                class="absolute inset-0 bg-black opacity-0 hover:opacity-80 transition-opacity duration-300 flex items-center justify-center">
-                                <a href="#" class="button-custom">See More</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="w-1/4 px-2 mb-4">
-                        <div class="relative block h-52 rounded-lg overflow-hidden">
-                            <img src="{{ asset('img/main-SG.png') }}" alt="Shafwah Group Logo"
-                                class="h-full w-auto max-h object-contain" />
-                            <div
-                                class="absolute inset-0 bg-black opacity-0 hover:opacity-80 transition-opacity duration-300 flex items-center justify-center">
-                                <a href="#" class="button-custom">See More</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="w-1/4 px-2 mb-4">
-                        <div class="relative block h-52 rounded-lg overflow-hidden">
-                            <img src="{{ asset('img/main-SH.png') }}" alt="Shafwah Holidays Logo"
-                                class="h-full w-auto max-h object-contain" />
-                            <div
-                                class="absolute inset-0 bg-black opacity-0 hover:opacity-80 transition-opacity duration-300 flex items-center justify-center">
-                                <a href="#" class="button-custom">See More</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="w-1/4 px-2 mb-4">
-                        <div class="relative block h-52 rounded-lg overflow-hidden">
-                            <img src="{{ asset('img/main-SRP.png') }}" alt="Shafwah Property Logo"
-                                class="h-full w-auto max-h object-contain" />
-                            <div
-                                class="absolute inset-0 bg-black opacity-0 hover:opacity-80 transition-opacity duration-300 flex items-center justify-center">
-                                <a href="#" class="button-custom">See More</a>
-                            </div>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
 
                 <!-- Color Palette Section -->

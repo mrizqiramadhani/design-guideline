@@ -22,7 +22,7 @@
     <!-- Navigation Header -->
     <nav class="bg-white py-0 flex items-center justify-between">
         <div class="flex items-center">
-            <a href="{{ route('shafwah-group') }}"><img src="{{ asset('img/main-SG.png') }}" alt="Logo"
+            <a href="{{ route('shafwah-property') }}"><img src="{{ asset('img/main-SRP.png') }}" alt="Logo"
                     class="h-40 mr-4 bg-white-300"></a>
         </div>
     </nav>
@@ -33,14 +33,14 @@
                 <ul class="flex space-x-12">
                     <li>
                         <!-- Menu Primary -->
-                        <a href="{{ route('logo-primary-sg', $logo->id) }}"
+                        <a href="{{ route('logo-primary-srp', $logo->id) }}"
                             class="transition-colors duration-300 text-gray-800 hover:text-blue-500">
                             Primary
                         </a>
                     </li>
                     <li>
                         <!-- Menu White -->
-                        <a href="{{ route('logo-white-sg', $logo->id) }}"
+                        <a href="{{ route('logo-white-srp', $logo->id) }}"
                             class="transition-colors duration-300 text-gray-800 hover:text-blue-500">
                             White
                         </a>

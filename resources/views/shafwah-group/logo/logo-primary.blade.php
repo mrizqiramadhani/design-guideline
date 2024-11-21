@@ -21,7 +21,9 @@
     <!-- Navigation Header -->
     <nav class="bg-white py-0 flex items-center justify-between">
         <div class="flex items-center">
-            <a href="#downloads"><img src="img/main-SG.png" alt="Logo" class="h-40 mr-4 bg-white-300"></a>
+            <a href="{{ route('shafwah-group') }}">
+                <img src="{{ asset('img/main-SG.png') }}" alt="Logo" class="h-40 mr-4 bg-white-300">
+            </a>
         </div>
     </nav>
 
@@ -31,14 +33,14 @@
                 <ul class="flex space-x-12">
                     <li>
                         <!-- Menu Primary -->
-                        <a href="{{ route('logo-primary') }}"
+                        <a href="{{ route('logo-primary-sg', $logo->id) }}"
                             class="transition-colors duration-300 text-gray-800 hover:text-blue-500">
                             Primary
                         </a>
                     </li>
                     <li>
                         <!-- Menu White -->
-                        <a href="{{ route('logo-white') }}"
+                        <a href="{{ route('logo-white-sg', $logo->id) }}"
                             class="transition-colors duration-300 text-gray-800 hover:text-blue-500">
                             White
                         </a>
@@ -52,30 +54,44 @@
 
     <main class="px-20 py-12">
         <div class="grid grid-cols-5 gap-4">
-            <!-- Card for each image -->
-            <div
-                class="border border-gray-200 rounded-lg shadow-lg p-5 min-h-[210px] w-full hover:shadow-xl hover:bg-gray-50 transition duration-200 ease-in-out">
-                <div class="flex justify-between items-center mb-4">
-                    <i class="fa-solid fa-image"></i>
-                    <div class="flex-grow text-center">
-                        <span class="font-medium text-gray-800">Nama Foto</span>
-                    </div>
-                    <button
-                        class="ml-2 text-gray-600 hover:text-gray-800 p-2 rounded-full hover:bg-gray-100 transition duration-200"
-                        onclick="openModal()">
-                        <i class="fas fa-ellipsis-v"></i>
-                    </button>
-                </div>
+            @php
+                $photos = $logo->logoPhotos->where('theme', 'Primary');
+            @endphp
+
+            @foreach ($photos as $photo)
                 <div
-                    class="bg-gray-100 p-2 rounded-lg overflow-hidden w-full h-[120px] flex items-center justify-center transition-transform duration-300 hover:scale-105">
-                    <div class="rounded-lg overflow-hidden">
-                        <img src="img/example.jpg" alt="Uploaded Photo"
-                            class="h-auto object-cover max-h-full max-w-full rounded-lg shadow-md mb-2">
+                    class="border border-gray-200 rounded-lg shadow-lg p-5 min-h-[210px] w-full hover:shadow-xl hover:bg-gray-50 transition duration-200 ease-in-out">
+                    <div class="flex justify-between items-center mb-4">
+                        <i class="fa-solid fa-image"></i>
+                        <div class="flex-grow text-center">
+                            <span class="font-medium text-gray-800">{{ $logo->name }}</span>
+                        </div>
+                    </div>
+                    <div
+                        class="bg-gray-100 p-2 rounded-lg overflow-hidden w-full h-[120px] flex items-center justify-center transition-transform duration-300 hover:scale-105">
+                        <img src="{{ asset('storage/logo_photos/' . basename($photo->path)) }}" alt="Logo Photo"
+                            class="h-auto object-cover max-h-full max-w-full rounded-lg shadow-md">
                     </div>
                 </div>
-            </div>
+            @endforeach
+
+            @if ($photos->isEmpty())
+                <!-- Centering the content in the grid when no photos are available -->
+                <div class="col-span-5 flex items-center justify-center h-full min-h-[210px]">
+                    <div class="flex flex-col items-center text-center">
+                        <!-- GIF -->
+                        <div class="w-full mb-3">
+                            <img src="https://i.pinimg.com/originals/6a/f3/71/6af371f102361c0fd47619eb524bf4bb.gif"
+                                alt="No Photo Available" class="h-32 w-auto rounded-lg mx-auto">
+                        </div>
+                        <!-- Text -->
+                        <p class="text-gray-600 font-medium">Maaf, Photo Primary tidak ada :3</p>
+                    </div>
+                </div>
+            @endif
         </div>
     </main>
+
 
     <script src="js/admin/content/logo-admin.js"></script>
 

@@ -8,7 +8,6 @@
     <title>Download Logo</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="css/admin/content/deskripsi.css">
 </head>
 
 <style>
@@ -22,8 +21,9 @@
     <!-- Navigation Header -->
     <nav class="bg-white py-0 flex items-center justify-between">
         <div class="flex items-center">
-            <a href="{{ route('shafwah-group') }}"><img src="{{ asset('img/main-SG.png') }}" alt="Logo"
-                    class="h-40 mr-4 bg-white-300"></a>
+            <a href="{{ route('shafwah-property') }}">
+                <img src="{{ asset('img/main-SRP.png') }}" alt="Logo" class="h-40 mr-4 bg-white-300">
+            </a>
         </div>
     </nav>
 
@@ -33,21 +33,21 @@
                 <ul class="flex space-x-12">
                     <li>
                         <!-- Menu Primary -->
-                        <a href="{{ route('logo-primary-sg', $logo->id) }}"
+                        <a href="{{ route('logo-primary-srp', $logo->id) }}"
                             class="transition-colors duration-300 text-gray-800 hover:text-blue-500">
                             Primary
                         </a>
                     </li>
                     <li>
                         <!-- Menu White -->
-                        <a href="{{ route('logo-white-sg', $logo->id) }}"
+                        <a href="{{ route('logo-white-srp', $logo->id) }}"
                             class="transition-colors duration-300 text-gray-800 hover:text-blue-500">
                             White
                         </a>
                     </li>
                 </ul>
             </div>
-            <hr class="border-t-4 border-blue-500 mx-28 mt-7 z-10 w-32">
+            <hr class="border-t-4 border-blue-500 mt-7 z-10 w-32">
             <hr>
         </div>
     </header>
@@ -55,7 +55,7 @@
     <main class="px-20 py-12">
         <div class="grid grid-cols-5 gap-4">
             @php
-                $photos = $logo->logoPhotos->where('theme', 'White');
+                $photos = $logo->logoPhotos->where('theme', 'Primary');
             @endphp
 
             @foreach ($photos as $photo)
@@ -85,12 +85,14 @@
                                 alt="No Photo Available" class="h-32 w-auto rounded-lg mx-auto">
                         </div>
                         <!-- Text -->
-                        <p class="text-gray-600 font-medium">Maaf, Photo White tidak ada :3</p>
+                        <p class="text-gray-600 font-medium">Maaf, Photo Primary tidak ada :3</p>
                     </div>
                 </div>
             @endif
         </div>
     </main>
+
+
     <script src="js/admin/content/logo-admin.js"></script>
 
 </body>
