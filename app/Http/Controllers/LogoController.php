@@ -290,7 +290,7 @@ class LogoController extends Controller
             ->with(['logoPhotos' => function ($query) {
                 $query->where('theme', 'Primary'); // Filter berdasarkan tema "primary"
             }])
-            ->first(); // Tidak gunakan firstOrFail() agar tidak 404 jika data tidak ditemukan
+            ->firstOrFail(); // Tidak gunakan firstOrFail() agar tidak 404 jika data tidak ditemukan
 
         // Jika logo tidak ditemukan, buat response kosong
         if (!$logo) {
@@ -312,7 +312,7 @@ class LogoController extends Controller
             ->with(['logoPhotos' => function ($query) {
                 $query->where('theme', 'White'); // Filter berdasarkan tema "White"
             }])
-            ->first(); // Tidak gunakan firstOrFail() agar tidak 404 jika data tidak ditemukan
+            ->firstOrFail(); // Tidak gunakan firstOrFail() agar tidak 404 jika data tidak ditemukan
 
         // Jika logo tidak ditemukan, buat response kosong
         if (!$logo) {
@@ -333,7 +333,7 @@ class LogoController extends Controller
         return view('shafwah-holidays.index-sh', compact('logos', 'unit'));
     }
 
-    public function showPrimaryLogosShafwahholidays($id)
+    public function showPrimaryLogosShafwahHolidays($id)
     {
         $unit = Unit::where('name', 'Shafwah holidays')->firstOrFail();
 
@@ -343,7 +343,7 @@ class LogoController extends Controller
             ->with(['logoPhotos' => function ($query) {
                 $query->where('theme', 'Primary'); // Filter berdasarkan tema "primary"
             }])
-            ->first(); // Tidak gunakan firstOrFail() agar tidak 404 jika data tidak ditemukan
+            ->firstOrFail(); // Tidak gunakan firstOrFail() agar tidak 404 jika data tidak ditemukan
 
         // Jika logo tidak ditemukan, buat response kosong
         if (!$logo) {
@@ -355,7 +355,7 @@ class LogoController extends Controller
     }
 
 
-    public function showWhiteLogosShafwahholidays($id)
+    public function showWhiteLogosShafwahHolidays($id)
     {
         $unit = Unit::where('name', 'Shafwah holidays')->firstOrFail();
 
@@ -365,7 +365,7 @@ class LogoController extends Controller
             ->with(['logoPhotos' => function ($query) {
                 $query->where('theme', 'White'); // Filter berdasarkan tema "White"
             }])
-            ->first(); // Tidak gunakan firstOrFail() agar tidak 404 jika data tidak ditemukan
+            ->firstOrFail(); // Tidak gunakan firstOrFail() agar tidak 404 jika data tidak ditemukan
 
         // Jika logo tidak ditemukan, buat response kosong
         if (!$logo) {
@@ -396,7 +396,7 @@ class LogoController extends Controller
             ->with(['logoPhotos' => function ($query) {
                 $query->where('theme', 'Primary'); // Filter berdasarkan tema "primary"
             }])
-            ->first(); // Tidak gunakan firstOrFail() agar tidak 404 jika data tidak ditemukan
+            ->firstOrFail(); // Tidak gunakan firstOrFail() agar tidak 404 jika data tidak ditemukan
 
         // Jika logo tidak ditemukan, buat response kosong
         if (!$logo) {
@@ -418,7 +418,7 @@ class LogoController extends Controller
             ->with(['logoPhotos' => function ($query) {
                 $query->where('theme', 'White'); // Filter berdasarkan tema "White"
             }])
-            ->first(); // Tidak gunakan firstOrFail() agar tidak 404 jika data tidak ditemukan
+            ->firstOrFail(); // Tidak gunakan firstOrFail() agar tidak 404 jika data tidak ditemukan
 
         // Jika logo tidak ditemukan, buat response kosong
         if (!$logo) {

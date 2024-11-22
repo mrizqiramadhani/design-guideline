@@ -90,12 +90,12 @@
                     bentuk logo disesuaikan untuk memberikan kesan terpercaya, inovatif, dan berorientasi pada
                     pelanggan dalam setiap aspek bisnis kami.
                 </p>
+
                 <img src="{{ asset('img/main-SG.png') }}" alt="Logo Shafwah Group"
                     class="w-full h-auto max-w-full mx-auto mt-4">
 
-
                 {{-- download section --}}
-                <h3 class="font-semibold text-2xl text-black mt-5 mb-10">Downloads</h3>
+                <h3 id="downloads" class="font-semibold text-2xl text-black mt-5 mb-10 download-anchor">Downloads</h3>
                 <div class="flex flex-wrap -mx-2">
                     @foreach ($logos as $logo)
                         <div class="w-1/4 px-2 mb-4">

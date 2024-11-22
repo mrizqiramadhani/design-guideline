@@ -160,3 +160,8 @@
   opacity: 1;
   transform: translateY(0);
 }
+
+.download-anchor {
+  scroll-behavior: smooth;
+  scroll-margin-top: 90px; /* Sesuaikan dengan tinggi navbar */
+}

@@ -8,6 +8,8 @@
     <title>Download Logo</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://code.iconify.design/2/2.0.3/iconify.min.js"></script>
+
 </head>
 
 <style>
@@ -21,8 +23,9 @@
     <!-- Navigation Header -->
     <nav class="bg-white py-0 flex items-center justify-between">
         <div class="flex items-center">
-            <a href="{{ route('shafwah-holidays') }}">
-                <img src="{{ asset('img/main-SH.png') }}" alt="Logo" class="h-40 mr-4 bg-white-300">
+            <a href="{{ route('shafwah-holidays') }}#downloads">
+                <img src="{{ asset('img/main-SH.png') }}" alt="Logo"
+                    class="max-h-32 w-auto mr-4 m bg-white-200 mx-12 my-4 object-contain">
             </a>
         </div>
     </nav>
@@ -34,7 +37,7 @@
                     <li>
                         <!-- Menu Primary -->
                         <a href="{{ route('logo-primary-sh', $logo->id) }}"
-                            class="transition-colors duration-300 text-gray-800 hover:text-blue-500">
+                            class="transition-colors duration-300 text-blue-500 hover:text-blue-500">
                             Primary
                         </a>
                     </li>
@@ -60,17 +63,29 @@
 
             @foreach ($photos as $photo)
                 <div
-                    class="border border-gray-200 rounded-lg shadow-lg p-5 min-h-[210px] w-full hover:shadow-xl hover:bg-gray-50 transition duration-200 ease-in-out">
-                    <div class="flex justify-between items-center mb-4">
-                        <i class="fa-solid fa-image"></i>
-                        <div class="flex-grow text-center">
-                            <span class="font-medium text-gray-800">{{ $logo->name }}</span>
+                    class="border border-gray-200 rounded-lg shadow-lg p-2 w-full hover:shadow-2xl hover:bg-gray-50 transition duration-200 ease-in-out">
+                    <!-- Header card -->
+                    <div class="flex items-center justify-between mb-2">
+                        <!-- Ikon Add Photo menggunakan Iconify -->
+                        <div class="flex items-center space-x-2">
+                            <div class="p-1">
+                                <span class="iconify" data-icon="material-symbols:add-photo-alternate-rounded"
+                                    style="color: #000000; font-size: 1.5rem;"></span>
+                            </div>
+                            <!-- Nama -->
+                            <span class="font-medium text-gray-800">{{ $logo->title }}</span>
                         </div>
+                        <!-- Titik tiga menggunakan Iconify -->
+                        <button class="text-black text-2xl hover:bg-gray-200 rounded-full p-2">
+                            <span class="iconify" data-icon="mdi:dots-vertical" data-inline="false"></span>
+                        </button>
                     </div>
+
+                    <!-- Konten gambar -->
                     <div
-                        class="bg-gray-100 p-2 rounded-lg overflow-hidden w-full h-[120px] flex items-center justify-center transition-transform duration-300 hover:scale-105">
+                        class="bg-slate-100 rounded-lg overflow-hidden w-full h-[140px] flex items-center justify-center transition-transform duration-300 hover:scale-105">
                         <img src="{{ asset('storage/logo_photos/' . basename($photo->path)) }}" alt="Logo Photo"
-                            class="h-auto object-cover max-h-full max-w-full rounded-lg shadow-md">
+                            class="h-auto object-cover max-h-full max-w-full" />
                     </div>
                 </div>
             @endforeach
@@ -85,7 +100,7 @@
                                 alt="No Photo Available" class="h-32 w-auto rounded-lg mx-auto">
                         </div>
                         <!-- Text -->
-                        <p class="text-gray-600 font-medium">Maaf, Photo Primary tidak ada :3</p>
+                        <p class="text-gray-600 font-medium">Maaf, Photo Primary tidak ada 😭</p>
                     </div>
                 </div>
             @endif
@@ -93,7 +108,6 @@
     </main>
 
 
-    <script src="js/admin/content/logo-admin.js"></script>
 
 </body>
 
