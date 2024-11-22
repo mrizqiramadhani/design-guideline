@@ -280,6 +280,7 @@ function closeDeleteModal() {
   document.getElementById("deleteLogoModal").classList.add("hidden");
 }
 
+//! paginate js
 // Fungsi untuk menampilkan overlay loading
 function showLoading() {
   const loadingOverlay = document.getElementById("loading-overlay");

@@ -380,24 +380,11 @@
                 <div class="flex justify-center mt-5">
                     <ol class="flex justify-center gap-2 text-xs font-medium">
                         <!-- Previous Page -->
-                        @if ($logos->onFirstPage())
+                        @if (!$logos->onFirstPage())
                             <li>
                                 <a href="{{ $logos->previousPageUrl() }}"
                                     class="inline-flex items-center justify-center rounded border border-gray-200 bg-white text-black dark:border-gray-800 dark:bg-gray-900 dark:text-white"
                                     onclick="showLoading()">
-                                    <span class="sr-only">Prev Page</span>
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" viewBox="0 0 20 20"
-                                        fill="currentColor">
-                                        <path fill-rule="evenodd"
-                                            d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-                                            clip-rule="evenodd" />
-                                    </svg>
-                                </a>
-                            </li>
-                        @else
-                            <li>
-                                <a href="{{ $logos->previousPageUrl() }}"
-                                    class="inline-flex items-center justify-center rounded border border-gray-200 bg-white text-black dark:border-gray-800 dark:bg-gray-900 dark:text-white">
                                     <span class="sr-only">Prev Page</span>
                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" viewBox="0 0 20 20"
                                         fill="currentColor">
@@ -438,22 +425,17 @@
                                     </svg>
                                 </a>
                             </li>
-                        @else
-                            <li class="disabled">
-                                <span
-                                    class="inline-flex items-center justify-center rounded border border-gray-200 bg-white text-black dark:border-gray-800 dark:bg-gray-900 dark:text-white">
-                                    <span class="sr-only">Next Page</span>
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" viewBox="0 0 20 20"
-                                        fill="currentColor">
-                                        <path fill-rule="evenodd"
-                                            d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                                            clip-rule="evenodd" />
-                                    </svg>
-                                </span>
-                            </li>
                         @endif
                     </ol>
                 </div>
+            @else
+                <!-- Tampilkan pesan jika tidak ada data -->
+                <div class="flex flex-col items-center justify-center mt-5">
+                    <img src="https://i.pinimg.com/originals/6a/f3/71/6af371f102361c0fd47619eb524bf4bb.gif"
+                        alt="Empty Content" class="w-32 h-32">
+                    <p class="text-gray-500 mt-3">Tidak ada konten untuk ditampilkan</p>
+                </div>
+
             @endif
         </main>
     </div>

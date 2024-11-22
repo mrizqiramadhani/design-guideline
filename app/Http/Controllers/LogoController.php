@@ -27,7 +27,6 @@ class LogoController extends Controller
         );;
     }
 
-    // Menampilkan semua logo
     public function index(Request $request)
     {
         // Ambil data logos dengan pagination
@@ -49,9 +48,24 @@ class LogoController extends Controller
             ]);
         }
 
-        // Jika bukan AJAX, kembalikan halaman dengan data lengkap
+        // Jika halaman lebih besar dari jumlah halaman yang tersedia, redirect ke halaman terakhir yang valid
+        if ($logos->currentPage() > $logos->lastPage()) {
+            return redirect()->route('admin.logo', ['page' => $logos->lastPage()]);
+        }
+
+        // // Jika tidak ada konten sama sekali di halaman pertama
+        // if ($logos->total() == 0 && $logos->currentPage() == 1) {
+        //     return view($view, [
+        //         'logos' => $logos,
+        //         'units' => $units,
+        //         'error_message' => 'Tidak Ada Konten'
+        //     ]);
+        // }
+
+        // Jika data ada, kembalikan halaman dengan data lengkap
         return view($view, compact('logos', 'units'));
     }
+
 
 
 

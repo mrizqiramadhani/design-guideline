@@ -34,6 +34,7 @@ Route::get('/', [LogoController::class, 'showShafwahGroupPage']);
 Route::get('/shafwah-group', [LogoController::class, 'showShafwahGroupPage'])->name('shafwah-group');
 Route::get('/shafwah-holidays', [LogoController::class, 'showShafwahHolidaysPage'])->name('shafwah-holidays');
 Route::get('/shafwah-property', [LogoController::class, 'showShafwahPropertyPage'])->name('shafwah-property');
+
 //! route logo primary dan white
 Route::get('/shafwah-group/logo-primary/{id}', [LogoController::class, 'showPrimaryLogosShafwahGroup'])->name('logo-primary-sg');
 Route::get('/shafwah-group/logo-white/{id}', [LogoController::class, 'showWhiteLogosShafwahGroup'])->name('logo-white-sg');
@@ -82,7 +83,6 @@ Route::group(['middleware' => ['auth', 'startSessionByRole']], function () {
         Route::put('admin/logo/{id}', [LogoController::class, 'update'])->name('admin.logo.update');
         Route::delete('admin/logo/{id}', [LogoController::class, 'destroy'])->name('admin.logo.destroy');
         Route::delete('/admin/logo/photo/{id}/delete', [LogoController::class, 'deleteLogoPhoto'])->name('logo.deletePhoto');
-
 
 
 
