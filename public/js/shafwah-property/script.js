@@ -134,3 +134,27 @@ document.querySelectorAll(".color-item").forEach((item) => {
     tooltip.style.opacity = "0";
   });
 });
+
+//! downloads logo smooth
+document.addEventListener("DOMContentLoaded", function () {
+  const hash = window.location.hash;
+
+  if (hash) {
+    const target = document.querySelector(hash);
+    if (target) {
+      const navbarHeight = document.querySelector("#navbar").offsetHeight;
+      const elementPosition =
+        target.getBoundingClientRect().top + window.scrollY;
+      const offsetPosition = elementPosition - navbarHeight;
+
+      // Scroll ke posisi yang disesuaikan
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth",
+      });
+
+      // Hapus hash dari URL tanpa refresh
+      history.replaceState(null, null, " ");
+    }
+  }
+});

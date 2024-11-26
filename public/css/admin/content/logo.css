@@ -1,0 +1,182 @@
+#themePrimaryPreview,
+#themeWhitePreview {
+  display: flex;
+  overflow-x: auto;
+  white-space: nowrap; /* Cegah gambar turun ke bawah */
+}
+
+#themePrimaryPreview div,
+#themeWhitePreview div {
+  flex: 0 0 auto; /* Mencegah gambar terhimpit */
+}
+
+/* Menyembunyikan scrollbar secara visual */
+.modal-content::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+.modal-content {
+  scrollbar-width: none; /* Untuk Firefox */
+  -ms-overflow-style: none; /* Untuk Internet Explorer/Edge */
+}
+
+.loader {
+  width: 64px;
+  height: 64px;
+  position: relative;
+  background: #fff;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.loader:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 40px;
+  height: 40px;
+  transform: rotate(45deg) translate(30%, 40%);
+  background: #ff9371;
+  box-shadow: 32px -34px 0 5px #ff3d00;
+  animation: slide 2s infinite ease-in-out alternate;
+}
+.loader:after {
+  content: "";
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #ff3d00;
+  transform: rotate(0deg);
+  transform-origin: 35px 145px;
+  animation: rotate 2s infinite ease-in-out;
+}
+
+@keyframes slide {
+  0%,
+  100% {
+    bottom: -35px;
+  }
+  25%,
+  75% {
+    bottom: -2px;
+  }
+  20%,
+  80% {
+    bottom: 2px;
+  }
+}
+@keyframes rotate {
+  0% {
+    transform: rotate(-15deg);
+  }
+  25%,
+  75% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(25deg);
+  }
+}
+
+/* Wrapper untuk menangani scrollbar */
+.custom-scrollbar-wrapper {
+  position: relative;
+  padding-bottom: 8px; /* Beri ruang untuk scrollbar */
+}
+
+.custom-scrollbar-content {
+  overflow-x: hidden; /* Scrollbar tersembunyi */
+  padding-bottom: 8px; /* Pastikan ruang untuk scrollbar konsisten */
+}
+
+/* Hover: scrollbar muncul */
+.custom-scrollbar-wrapper:hover .custom-scrollbar-content {
+  overflow-x: auto; /* Aktifkan scrollbar */
+}
+
+/* Style scrollbar modern */
+.custom-scrollbar-content::-webkit-scrollbar {
+  height: 4px; /* Ukuran scrollbar */
+  background: transparent; /* Transparan jika tidak di-hover */
+}
+
+.custom-scrollbar-content:hover::-webkit-scrollbar {
+  background: #e5e7eb; /* Warna track saat di-hover */
+}
+
+.custom-scrollbar-content::-webkit-scrollbar-thumb {
+  background: #a0aec0; /* Warna scrollbar */
+  border-radius: 10px; /* Rounded edges */
+}
+
+.custom-scrollbar-content::-webkit-scrollbar-thumb:hover {
+  background: #718096; /* Warna scrollbar saat di-hover */
+}
+
+/* Untuk Firefox */
+.custom-scrollbar-content {
+  scrollbar-width: none; /* Hilangkan scrollbar */
+}
+
+.custom-scrollbar-wrapper:hover .custom-scrollbar-content {
+  scrollbar-width: thin; /* Tampilkan scrollbar tipis saat di-hover */
+  scrollbar-color: #a0aec0 transparent;
+}
+
+.loader-paginate {
+  width: 48px;
+  height: 48px;
+  display: inline-block;
+  position: relative;
+  border: 2px solid #fff;
+  box-sizing: border-box;
+  animation: rotation 2s linear infinite;
+}
+.loader-paginate::after,
+.loader-paginate::before {
+  content: "";
+  box-sizing: border-box;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  border: 2px solid #ff3d00;
+  width: 38px;
+  height: 38px;
+  animation: rotationBack 1.5s linear infinite;
+  transform-origin: center center;
+}
+.loader-paginate::before {
+  width: 28px;
+  height: 28px;
+  border-color: #fff;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@keyframes rotationBack {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(-360deg);
+  }
+}

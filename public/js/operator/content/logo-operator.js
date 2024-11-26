@@ -44,10 +44,10 @@ document
           "min-w-max"
         );
         tag.innerHTML = `
-              <img src="${e.target.result}" alt="Thumbnail" class="w-12 h-12 object-cover rounded-md">
-              <span class="text-sm text-gray-700 truncate w-32">${file.name}</span>
-              <button type="button" onclick="removeTag(this)" class="absolute top-0 right-0 text-gray-600 hover:text-red-500 p-1">×</button>
-          `;
+                <img src="${e.target.result}" alt="Thumbnail" class="w-12 h-12 object-cover rounded-md">
+                <span class="text-sm text-gray-700 truncate w-32">${file.name}</span>
+                <button type="button" onclick="removeTag(this)" class="absolute top-0 right-0 text-gray-600 hover:text-red-500 p-1">×</button>
+            `;
         tagsContainer.appendChild(tag);
       };
 
@@ -84,10 +84,10 @@ document
           "min-w-max"
         );
         tag.innerHTML = `
-              <img src="${e.target.result}" alt="Thumbnail" class="w-12 h-12 object-cover rounded-md">
-              <span class="text-sm text-gray-700 truncate w-32">${file.name}</span>
-              <button type="button" onclick="removeTag(this)" class="absolute top-0 right-0 text-gray-600 hover:text-red-500 p-1">×</button>
-          `;
+                <img src="${e.target.result}" alt="Thumbnail" class="w-12 h-12 object-cover rounded-md">
+                <span class="text-sm text-gray-700 truncate w-32">${file.name}</span>
+                <button type="button" onclick="removeTag(this)" class="absolute top-0 right-0 text-gray-600 hover:text-red-500 p-1">×</button>
+            `;
         tagsContainer.appendChild(tag);
       };
 
@@ -127,11 +127,11 @@ let deleteWhiteIds = [];
 // Fungsi untuk membuka modal edit dan mengisi data logo
 function openEditModal(id) {
   // Set action form edit dengan ID yang benar
-  $("#editForm").attr("action", `/admin/logo/${id}`);
+  $("#editForm").attr("action", `/operator/logo/${id}`);
 
   // Panggil AJAX untuk mendapatkan data logo yang dipilih
   $.ajax({
-    url: `/admin/logo/${id}/edit`,
+    url: `/operator/logo/${id}/edit`,
     method: "GET",
     dataType: "json",
     success: function (data) {
@@ -159,14 +159,14 @@ function openEditModal(id) {
         data.theme_primary.forEach(function (img) {
           let imgPath = img.path.replace(/^public\//, "");
           preview += `
-          <div id="primaryImage${img.id}" class="relative inline-block p-2 rounded-md shadow-md">
-            <img src="/storage/${imgPath}" alt="theme-primary" class="w-16 h-16 object-cover rounded-md">
-            <button type="button" class="absolute top-1 right-1 text-white bg-red-500 hover:bg-red-600 focus:ring-2 focus:ring-red-300 rounded-full p-2" onclick="deleteImageUI(${img.id}, 'primary')">
-              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-          </div>`;
+            <div id="primaryImage${img.id}" class="relative inline-block p-2 rounded-md shadow-md">
+              <img src="/storage/${imgPath}" alt="theme-primary" class="w-16 h-16 object-cover rounded-md">
+              <button type="button" class="absolute top-1 right-1 text-white bg-red-500 hover:bg-red-600 focus:ring-2 focus:ring-red-300 rounded-full p-2" onclick="deleteImageUI(${img.id}, 'primary')">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>`;
         });
 
         // Set preview HTML langsung ke kontainer
@@ -179,14 +179,14 @@ function openEditModal(id) {
         data.theme_white.forEach(function (img) {
           let imgPath = img.path.replace(/^public\//, "");
           preview += `
-          <div id="whiteImage${img.id}" class="relative inline-block p-2 rounded-md shadow-md bg-black">
-            <img src="/storage/${imgPath}" alt="theme-white" class="w-16 h-16 object-cover rounded-md">
-            <button type="button" class="absolute top-1 right-1 text-white bg-red-500 hover:bg-red-600 focus:ring-2 focus:ring-red-300 rounded-full p-2" onclick="deleteImageUI(${img.id}, 'white')">
-              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-          </div>`;
+            <div id="whiteImage${img.id}" class="relative inline-block p-2 rounded-md shadow-md bg-black">
+              <img src="/storage/${imgPath}" alt="theme-white" class="w-16 h-16 object-cover rounded-md">
+              <button type="button" class="absolute top-1 right-1 text-white bg-red-500 hover:bg-red-600 focus:ring-2 focus:ring-red-300 rounded-full p-2" onclick="deleteImageUI(${img.id}, 'white')">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>`;
         });
 
         // Set preview HTML langsung ke kontainer
@@ -253,7 +253,7 @@ $("#editForm").on("submit", function (e) {
         timer: 2000, // Timer untuk 2 detik
       }).then(() => {
         // Redirect ke halaman logo setelah alert
-        window.location.href = "/admin/logo"; // Pastikan URL benar
+        window.location.href = "/operator/logo"; // Pastikan URL benar
       });
     },
     error: function (xhr, status, error) {
@@ -280,7 +280,6 @@ function closeDeleteModal() {
   document.getElementById("deleteLogoModal").classList.add("hidden");
 }
 
-//! paginate js
 // Fungsi untuk menampilkan overlay loading
 function showLoading() {
   const loadingOverlay = document.getElementById("loading-overlay");

@@ -5,22 +5,47 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\OperatorController;
 use App\Http\Controllers\ColorController;
+use App\Http\Controllers\LogoController;
 
-Route::get('/', function () {
-    return view('shafwah-group.index-sg');
-});
 
-Route::get('/shafwah-group', function () {
-    return view('shafwah-group.index-sg');
-})->name('shafwah-group');
+// Route::get('/', function () {
+//     return view('shafwah-group.index-sg');
+// });
 
-Route::get('/shafwah-holidays', function () {
-    return view('shafwah-holidays.index-sh');
-})->name('shafwah-holidays');
+// Route::get('/shafwah-group', function () {
+//     return view('shafwah-group.index-sg');
+// })->name('shafwah-group');
 
-Route::get('/shafwah-property', function () {
-    return view('shafwah-property.index-srp');
-})->name('shafwah-property');
+// Route::get('/shafwah-holidays', function () {
+//     return view('shafwah-holidays.index-sh');
+// })->name('shafwah-holidays');
+
+// Route::get('/shafwah-property', function () {
+//     return view('shafwah-property.index-srp');
+// })->name('shafwah-property');
+
+// Route::get('shafwah-group/logo-primary', function () {
+//     return view('shafwah-group.logo.logo-primary');
+// })->name('logo-primary-sg');
+// Route::get('shafwah-group/logo-white', function () {
+//     return view('shafwah-group.logo.logo-white');
+// })->name('logo-white-sg');
+
+//* route Logo Unit bisnis
+Route::get('/', [LogoController::class, 'showShafwahGroupPage']);
+Route::get('/shafwah-group', [LogoController::class, 'showShafwahGroupPage'])->name('shafwah-group');
+Route::get('/shafwah-holidays', [LogoController::class, 'showShafwahHolidaysPage'])->name('shafwah-holidays');
+Route::get('/shafwah-property', [LogoController::class, 'showShafwahPropertyPage'])->name('shafwah-property');
+
+//! route logo primary dan white
+Route::get('/shafwah-group/logo-primary/{id}', [LogoController::class, 'showPrimaryLogosShafwahGroup'])->name('logo-primary-sg');
+Route::get('/shafwah-group/logo-white/{id}', [LogoController::class, 'showWhiteLogosShafwahGroup'])->name('logo-white-sg');
+Route::get('/shafwah-holidays/logo-primary/{id}', [LogoController::class, 'showPrimaryLogosShafwahHolidays'])->name('logo-primary-sh');
+Route::get('/shafwah-holidays/logo-white/{id}', [LogoController::class, 'showWhiteLogosShafwahHolidays'])->name('logo-white-sh');
+Route::get('/shafwah-property/logo-primary/{id}', [LogoController::class, 'showPrimaryLogosShafwahProperty'])->name('logo-primary-srp');
+Route::get('/shafwah-property/logo-white/{id}', [LogoController::class, 'showWhiteLogosShafwahProperty'])->name('logo-white-srp');
+
+
 
 Route::get('/login', function () {
     return view('auth.login');
@@ -51,9 +76,18 @@ Route::group(['middleware' => ['auth', 'startSessionByRole']], function () {
         Route::get('/admin/deskripsi', function () {
             return view('admin.dashboard-admin');
         })->name('admin.deskripsi');
-        Route::get('/admin/logo', function () {
-            return view('admin.content.logo-admin');
-        })->name('admin.logo');
+
+
+        //! Route admin Logo
+        Route::get('admin/logo', [LogoController::class, 'index'])->name('admin.logo');
+        Route::post('admin/logo', [LogoController::class, 'store'])->name('admin.logo.store');
+        Route::get('admin/logo/{id}/edit', [LogoController::class, 'edit'])->name('admin.logo.edit');
+        Route::put('admin/logo/{id}', [LogoController::class, 'update'])->name('admin.logo.update');
+        Route::delete('admin/logo/{id}', [LogoController::class, 'destroy'])->name('admin.logo.destroy');
+        Route::delete('/admin/logo/photo/{id}/delete', [LogoController::class, 'deleteLogoPhoto'])->name('logo.deletePhoto');
+
+
+
         Route::get('/admin/color-palette', function () {
             return view('admin.content.color-admin');
         })->name('admin.color');
@@ -87,9 +121,18 @@ Route::group(['middleware' => ['auth', 'startSessionByRole']], function () {
         Route::get('/operator/deskripsi', function () {
             return view('operator.dashboard-operator');
         })->name('operator.deskripsi');
-        Route::get('/operator/logo', function () {
-            return view('operator.content.logo-operator');
-        })->name('operator.logo');
+        // Route::get('/operator/logo', function () {
+        //     return view('operator.content.logo-operator');
+        // })->name('operator.logo');
+
+        //! Route operator Logo
+        Route::get('operator/logo', [LogoController::class, 'index'])->name('operator.logo');
+        Route::post('operator/logo', [LogoController::class, 'store'])->name('operator.logo.store');
+        Route::get('operator/logo/{id}/edit', [LogoController::class, 'edit'])->name('operator.logo.edit');
+        Route::put('operator/logo/{id}', [LogoController::class, 'update'])->name('operator.logo.update');
+        Route::delete('operator/logo/{id}', [LogoController::class, 'destroy'])->name('operator.logo.destroy');
+        Route::delete('/operator/logo/photo/{id}/delete', [LogoController::class, 'deleteLogoPhoto'])->name('logo.deletePhoto');
+
         Route::get('/operator/color-palette', function () {
             return view('operator.content.color-operator');
         })->name('operator.color');
