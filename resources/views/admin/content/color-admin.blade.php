@@ -52,10 +52,10 @@
     </header>
 
     <!-- Content -->
-    <div class="flex mt-20">
+    <div class="flex min-h-screen">
         <aside class="w-1/5 bg-white border-r border-gray-200">
-            <div class="px-5 py-20">
-                <nav>
+            <div class="px-10 py-20">
+                <nav class="my-8">
                     <ul class="space-y-6 text-lg text-gray-900">
                         <li><a href="{{ route('admin.deskripsi') }}">Deskripsi</a></li>
                         <li><a href="{{ route('admin.logo') }}">Logo</a></li>
@@ -117,6 +117,7 @@
             </div>
         </main>
     </div>
+<<<<<<< HEAD
 
     <!-- Add Modal -->
 <div id="addColorModal" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 hidden">
@@ -239,6 +240,14 @@
     @endif
 
     <script src="{{ asset('js/admin/content/color-admin.js') }}"></script>
+=======
+    <footer class="absolute bottom-0 left-0 w-full bg-black text-center text-white p-4">
+        <aside>
+            <p>Copyright © 2024 - All rights reserved by Shafwah Group</p>
+        </aside>
+    </footer>
+    <script src="{{ asset('js/admin/script.js') }}"></script>
+>>>>>>> main
 </body>
 
 </html>

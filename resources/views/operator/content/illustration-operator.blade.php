@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,6 +9,7 @@
     <link rel="stylesheet" href="{{ asset('css/admin/style.css') }}" />
     <link rel="icon" href="{{ asset('img/SG 2023-04.png') }}">
 </head>
+
 <body>
     <!-- Header -->
     <header id="navbar" class="bg-black transition-colors duration-300 fixed top-0 left-0 right-0 z-10">
@@ -24,16 +26,21 @@
                     <!-- User Icon with Dropdown -->
                     <div class="relative">
                         <button id="userMenuButton" class="focus:outline-none">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A9 9 0 0112 2a9 9 0 016.879 15.804M12 12a3 3 0 100-6 3 3 0 000 6zm-5 7a5 5 0 0110 0H7z" />
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white cursor-pointer"
+                                fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5.121 17.804A9 9 0 0112 2a9 9 0 016.879 15.804M12 12a3 3 0 100-6 3 3 0 000 6zm-5 7a5 5 0 0110 0H7z" />
                             </svg>
                         </button>
 
-                        <div id="userDropdown" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-20">
-                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile</a>
+                        <div id="userDropdown"
+                            class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-20">
+                            <a href="#"
+                                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile</a>
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
-                                <button type="submit" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Logout</button>
+                                <button type="submit"
+                                    class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Logout</button>
                             </form>
                         </div>
                     </div>
@@ -43,11 +50,11 @@
     </header>
 
     <!-- Content -->
-    <div class="flex mt-20">
+    <div class="flex min-h-screen">
         <aside class="w-1/5 bg-white border-r border-gray-200">
-            <div class="px-5 py-20">
-                <nav>
-                <ul class="space-y-6 text-lg text-gray-900">
+            <div class="px-10 py-20">
+                <nav class="my-8">
+                    <ul class="space-y-6 text-lg text-gray-900">
                         <li><a href="{{ route('operator.deskripsi') }}">Deskripsi</a></li>
                         <li><a href="{{ route('operator.logo') }}">Logo</a></li>
                         <li><a href="{{ route('operator.color') }}">Color Palette</a></li>
@@ -60,18 +67,18 @@
                 </nav>
             </div>
         </aside>
-
         <main class="w-4/5 p-8 bg-gray-100">
-             <!-- Success Notification -->
-                @if (session('success'))
+            <!-- Success Notification -->
+            @if (session('success'))
                 <div class="bg-green-500 text-white p-3 rounded mb-4">
-                {{ session('success') }}
-                    </div>
-                @endif
+                    {{ session('success') }}
+                </div>
+            @endif
             <div class="mt-20 mb-5 flex items-center justify-between">
                 <h2 class="text-4xl font-bold text-gray-900">Illustration</h2>
                 <div class="flex space-x-4">
-                <a href="#" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">+ Add New Content</a>
+                    <a href="#" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">+ Add New
+                        Content</a>
                 </div>
             </div>
 
@@ -96,8 +103,10 @@
                             <td class="px-4 py-2"></td>
                             <td class="px-4 py-2">
                                 <div class="flex space-x-2">
-                                    <a href="#" class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">Edit</a>
-                                    <a href="#" class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">Delete</a>
+                                    <a href="#"
+                                        class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">Edit</a>
+                                    <a href="#"
+                                        class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">Delete</a>
                                 </div>
                             </td>
                         </tr>
@@ -108,8 +117,10 @@
                             <td class="px-4 py-2"></td>
                             <td class="px-4 py-2">
                                 <div class="flex space-x-2">
-                                    <a href="#" class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">Edit</a>
-                                    <a href="#" class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">Delete</a>
+                                    <a href="#"
+                                        class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">Edit</a>
+                                    <a href="#"
+                                        class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">Delete</a>
                                 </div>
                             </td>
                         </tr>
@@ -120,8 +131,10 @@
                             <td class="px-4 py-2"></td>
                             <td class="px-4 py-2">
                                 <div class="flex space-x-2">
-                                    <a href="#" class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">Edit</a>
-                                    <a href="#" class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">Delete</a>
+                                    <a href="#"
+                                        class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">Edit</a>
+                                    <a href="#"
+                                        class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">Delete</a>
                                 </div>
                             </td>
                         </tr>
@@ -130,7 +143,12 @@
             </div>
         </main>
     </div>
-
-    <script src="{{asset('js/admin/script.js')}}"></script>
+    <footer class="absolute bottom-0 left-0 w-full bg-black text-center text-white p-4">
+        <aside>
+            <p>Copyright © 2024 - All rights reserved by Shafwah Group</p>
+        </aside>
+    </footer>
+    <script src="{{ asset('js/admin/script.js') }}"></script>
 </body>
+
 </html>
