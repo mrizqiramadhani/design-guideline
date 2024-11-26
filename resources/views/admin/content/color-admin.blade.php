@@ -117,7 +117,6 @@
             </div>
         </main>
     </div>
-<<<<<<< HEAD
 
     <!-- Add Modal -->
 <div id="addColorModal" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 hidden">
@@ -240,14 +239,13 @@
     @endif
 
     <script src="{{ asset('js/admin/content/color-admin.js') }}"></script>
-=======
     <footer class="absolute bottom-0 left-0 w-full bg-black text-center text-white p-4">
         <aside>
             <p>Copyright © 2024 - All rights reserved by Shafwah Group</p>
         </aside>
     </footer>
     <script src="{{ asset('js/admin/script.js') }}"></script>
->>>>>>> main
+
 </body>
 
 </html>
