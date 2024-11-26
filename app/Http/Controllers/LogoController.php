@@ -50,7 +50,10 @@ class LogoController extends Controller
 
         // Jika halaman lebih besar dari jumlah halaman yang tersedia, redirect ke halaman terakhir yang valid
         if ($logos->currentPage() > $logos->lastPage()) {
-            return redirect()->route('admin.logo', ['page' => $logos->lastPage()]);
+            // Tentukan rute berdasarkan role
+            $routeName = $userRole === 'admin' ? 'admin.logo' : 'operator.logo';
+
+            return redirect()->route($routeName, ['page' => $logos->lastPage()]);
         }
 
         // // Jika tidak ada konten sama sekali di halaman pertama
