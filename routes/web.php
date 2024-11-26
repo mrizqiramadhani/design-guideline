@@ -136,7 +136,7 @@ Route::group(['middleware' => ['auth', 'startSessionByRole']], function () {
             return view('operator.content.sosmed-operator');
         })->name('operator.social');
         Route::get('/operator/iconography', function () {
-            return view('operator.icontent.conography-operator');
+            return view('operator.content.iconography-operator');
         })->name('operator.iconography');
         Route::get('/operator/campaign', function () {
             return view('operator.content.campaign-operator');
