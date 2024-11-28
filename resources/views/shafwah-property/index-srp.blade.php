@@ -122,43 +122,14 @@
 
                     <!-- Color Palette Display -->
                     <div class="flex flex-wrap -mx-2">
-                        <!-- Color Circle with HEX code below -->
-                        <div class="w-1/4 px-2 mb-4 text-center color-item" data-color="#FFC300">
-                            <div class="color-circle rounded-full mx-auto" style="background-color: #FFC300;">
-                                <span class="copy-tooltip hidden"></i>Copy Code</span>
+                        @foreach ($colors as $color)
+                            <div class="w-1/4 px-2 mb-4 text-center color-item" data-color="{{ $color->color }}">
+                                <div class="color-circle rounded-full mx-auto" style="background-color: {{ $color->color }};">
+                                    <span class="copy-tooltip hidden">Copy Code</span>
+                                </div>
+                                <p class="text-lg mt-2 text-gray-600">{{ $color->color }}</p>
                             </div>
-                            <p class="text-lg mt-2 text-gray-600">#FFC300</p>
-                        </div>
-                        <div class="w-1/4 px-2 mb-4 text-center color-item" data-color="#581845">
-                            <div class="color-circle rounded-full mx-auto" style="background-color: #581845;">
-                                <span class="copy-tooltip hidden"></i>Copy Code</span>
-                            </div>
-                            <p class="text-lg mt-2 text-gray-600">#581845</p>
-                        </div>
-                        <div class="w-1/4 px-2 mb-4 text-center color-item" data-color="#DAF7A6">
-                            <div class="color-circle rounded-full mx-auto" style="background-color: #DAF7A6;">
-                                <span class="copy-tooltip hidden"></i>Copy Code</span>
-                            </div>
-                            <p class="text-lg mt-2 text-gray-600">#DAF7A6</p>
-                        </div>
-                        <div class="w-1/4 px-2 mb-4 text-center color-item" data-color="#C70039">
-                            <div class="color-circle rounded-full mx-auto" style="background-color: #C70039;">
-                                <span class="copy-tooltip hidden"></i>Copy Code</span>
-                            </div>
-                            <p class="text-lg mt-2 text-gray-600">#C70039</p>
-                        </div>
-                        <div class="w-1/4 px-2 mb-4 text-center color-item" data-color="#C4E1F6">
-                            <div class="color-circle rounded-full mx-auto" style="background-color: #C4E1F6;">
-                                <span class="copy-tooltip hidden"></i>Copy Code</span>
-                            </div>
-                            <p class="text-lg mt-2 text-gray-600">#C4E1F6</p>
-                        </div>
-                        <div class="w-1/4 px-2 mb-4 text-center color-item" data-color="#536493">
-                            <div class="color-circle rounded-full mx-auto" style="background-color: #536493;">
-                                <span class="copy-tooltip hidden"></i>Copy Code</span>
-                            </div>
-                            <p class="text-lg mt-2 text-gray-600">#536493</p>
-                        </div>
+                        @endforeach
                     </div>
 
                     <!-- Notification -->

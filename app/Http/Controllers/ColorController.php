@@ -13,11 +13,33 @@ class ColorController extends Controller
      * Display a listing of the color palettes.
      */
     public function index()
-    {
-        $colors = ColorPalette::with('unit')->latest()->get();
-        $units = Unit::all(); // Mengambil semua unit untuk digunakan di dropdown
-        return view('admin.content.color-admin', compact('colors', 'units'));
+{
+    // Dapatkan semua unit untuk dropdown
+    $units = Unit::all();
+
+    // Tentukan role pengguna
+    $userRole = auth()->user()->role;
+
+    // Ambil data color palette dengan relasi 'unit' dan urutkan berdasarkan terbaru, dengan pagination
+    $colors = ColorPalette::with('unit')->latest()->paginate(7);
+
+    // Jika halaman lebih besar dari jumlah halaman yang tersedia, redirect ke halaman terakhir yang valid
+    if ($colors->currentPage() > $colors->lastPage()) {
+        // Tentukan rute berdasarkan role
+        $routeName = $userRole === 'admin' ? 'admin.color' : 'operator.color';
+
+        // Redirect ke halaman terakhir yang valid
+        return redirect()->route($routeName, ['page' => $colors->lastPage()]);
     }
+
+    // Tentukan view berdasarkan role
+    $view = $userRole === 'admin'
+        ? 'admin.content.color-admin'
+        : 'operator.content.color-operator';
+
+    // Kirimkan data ke view
+    return view($view, compact('colors', 'units'));
+}
 
     /**
      * Store a newly created color in storage.
@@ -35,7 +57,8 @@ class ColorController extends Controller
             'user_id' => Auth::id(), // Pengguna yang sedang login sebagai pembuat
         ]);
 
-        return redirect()->route('admin.color')->with('success', 'Color added successfully.');
+        return redirect()->route(auth()->user()->role === 'admin' ? 'admin.color' : 'operator.color')
+        ->with('success', 'Color added successfully.');
     }
 
     /**
@@ -44,7 +67,16 @@ class ColorController extends Controller
     public function edit(ColorPalette $color)
     {
         $units = Unit::all();
-        return view('admin.colors.edit', compact('color', 'units'));
+
+        // Dapatkan role pengguna
+        $userRole = auth()->user()->role;
+
+        // Tentukan view berdasarkan role
+        $view = $userRole === 'admin'
+            ? 'admin.colors.edit'
+            : 'operator.colors.edit';
+
+        return view($view, compact('color', 'units'));
     }
 
     /**
@@ -56,15 +88,15 @@ class ColorController extends Controller
             'color' => 'required|string|max:7|regex:/^#[a-fA-F0-9]{6}$/',
             'unit_id' => 'required|exists:units,id',
         ]);
-    
+
         $color->update([
             'color' => $request->color,
             'unit_id' => $request->unit_id,
         ]);
-    
-        return redirect()->route('admin.color')->with('success', 'Color updated successfully.');
+
+        return redirect()->route(auth()->user()->role === 'admin' ? 'admin.color' : 'operator.color')
+        ->with('success', 'Color updated successfully.');
     }
-    
 
     /**
      * Remove the specified color from storage.
@@ -72,6 +104,7 @@ class ColorController extends Controller
     public function destroy(ColorPalette $color)
     {
         $color->delete();
-        return redirect()->route('admin.color')->with('success', 'Color deleted successfully.');
+        return redirect()->route(auth()->user()->role === 'admin' ? 'admin.color' : 'operator.color')
+        ->with('success', 'Color deleted successfully.');
     }
 }

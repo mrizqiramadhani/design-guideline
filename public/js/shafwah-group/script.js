@@ -90,8 +90,7 @@ navLinks.forEach((link) => {
     scrambleNextChar(); // Mulai animasi
   });
 });
-
-//* Copy code shafwah group
+//* Copy code shafwah holidays
 // Show notification function
 function showNotification(message) {
   const notification = document.getElementById("notification");
@@ -114,7 +113,7 @@ document.querySelectorAll(".color-item").forEach((item) => {
     navigator.clipboard
       .writeText(colorCode)
       .then(() => {
-        showNotification(`Kode warna ${colorCode} berhasil disalin!`);
+        showNotification(`Color code ${colorCode} copied successfully!`);
       })
       .catch((err) => {
         console.error("Gagal menyalin kode warna:", err);
