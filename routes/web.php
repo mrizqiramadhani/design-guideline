@@ -4,7 +4,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\OperatorController;
+use App\Http\Controllers\ColorController;
 use App\Http\Controllers\LogoController;
+use App\Http\Controllers\ShowUnitController;
+
 
 // Route::get('/', function () {
 //     return view('shafwah-group.index-sg');
@@ -30,19 +33,19 @@ use App\Http\Controllers\LogoController;
 // })->name('logo-white-sg');
 
 //* route Logo Unit bisnis
-Route::get('/', [LogoController::class, 'showShafwahGroupPage']);
-Route::get('/shafwah-group', [LogoController::class, 'showShafwahGroupPage'])->name('shafwah-group');
-Route::get('/shafwah-holidays', [LogoController::class, 'showShafwahHolidaysPage'])->name('shafwah-holidays');
-Route::get('/shafwah-property', [LogoController::class, 'showShafwahPropertyPage'])->name('shafwah-property');
+Route::get('/', [ShowunitController::class, 'showShafwahGroupPage']);
+Route::get('/shafwah-group', [ShowunitController::class, 'showShafwahGroupPage'])->name('shafwah-group');
+Route::get('/shafwah-holidays', [ShowunitController::class, 'showShafwahHolidaysPage'])->name('shafwah-holidays');
+Route::get('/shafwah-property', [ShowunitController::class, 'showShafwahPropertyPage'])->name('shafwah-property');
 
 //! route logo primary dan white
-Route::get('/shafwah-group/logo-primary/{id}', [LogoController::class, 'showPrimaryLogosShafwahGroup'])->name('logo-primary-sg');
-Route::get('/shafwah-group/logo-white/{id}', [LogoController::class, 'showWhiteLogosShafwahGroup'])->name('logo-white-sg');
-Route::get('/shafwah-holidays/logo-primary/{id}', [LogoController::class, 'showPrimaryLogosShafwahHolidays'])->name('logo-primary-sh');
-Route::get('/shafwah-holidays/logo-white/{id}', [LogoController::class, 'showWhiteLogosShafwahHolidays'])->name('logo-white-sh');
-Route::get('/shafwah-property/logo-primary/{id}', [LogoController::class, 'showPrimaryLogosShafwahProperty'])->name('logo-primary-srp');
-Route::get('/shafwah-property/logo-white/{id}', [LogoController::class, 'showWhiteLogosShafwahProperty'])->name('logo-white-srp');
-
+Route::get('/shafwah-group/logo-primary/{id}', [ShowunitController::class, 'showPrimaryLogosShafwahGroup'])->name('logo-primary-sg');
+Route::get('/shafwah-group/logo-white/{id}', [ShowunitController::class, 'showWhiteLogosShafwahGroup'])->name('logo-white-sg');
+Route::get('/shafwah-holidays/logo-primary/{id}', [ShowunitController::class, 'showPrimaryLogosShafwahHolidays'])->name('logo-primary-sh');
+Route::get('/shafwah-holidays/logo-white/{id}', [ShowunitController::class, 'showWhiteLogosShafwahHolidays'])->name('logo-white-sh');
+Route::get('/shafwah-property/logo-primary/{id}', [ShowunitController::class, 'showPrimaryLogosShafwahProperty'])->name('logo-primary-srp');
+Route::get('/shafwah-property/logo-white/{id}', [ShowunitController::class, 'showWhiteLogosShafwahProperty'])->name('logo-white-srp');
+ 
 
 
 Route::get('/login', function () {
@@ -86,9 +89,14 @@ Route::group(['middleware' => ['auth', 'startSessionByRole']], function () {
 
 
 
-        Route::get('/admin/color-palette', function () {
-            return view('admin.content.color-admin');
-        })->name('admin.color');
+        // Color Palette Routes
+        Route::get('/admin/color-palette', [ColorController::class, 'index'])->name('admin.color');
+        Route::get('/admin/color-palette/create', [ColorController::class, 'create'])->name('admin.color.create');
+        Route::post('/admin/color-palette', [ColorController::class, 'store'])->name('admin.color.store');
+        Route::get('/admin/color-palette/{color}/edit', [ColorController::class, 'edit'])->name('admin.color.edit');
+        Route::put('/admin/color-palette/{color}', [ColorController::class, 'update'])->name('admin.color.update');
+        Route::delete('/admin/color-palette/{color}', [ColorController::class, 'destroy'])->name('admin.color.destroy');
+        
         Route::get('/admin/typography', function () {
             return view('admin.content.typography-admin');
         })->name('admin.typography');
@@ -104,6 +112,7 @@ Route::group(['middleware' => ['auth', 'startSessionByRole']], function () {
         Route::get('/admin/campaign', function () {
             return view('admin.content.campaign-admin');
         })->name('admin.campaign');
+
     });
 
     Route::group(['middleware' => ['checkOperator']], function () {
@@ -123,9 +132,14 @@ Route::group(['middleware' => ['auth', 'startSessionByRole']], function () {
         Route::delete('operator/logo/{id}', [LogoController::class, 'destroy'])->name('operator.logo.destroy');
         Route::delete('/operator/logo/photo/{id}/delete', [LogoController::class, 'deleteLogoPhoto'])->name('logo.deletePhoto');
 
-        Route::get('/operator/color-palette', function () {
-            return view('operator.content.color-operator');
-        })->name('operator.color');
+        // Color Palette Routes
+        Route::get('/operator/color-palette', [ColorController::class, 'index'])->name('operator.color');
+        Route::get('/operator/color-palette/create', [ColorController::class, 'create'])->name('operator.color.create');
+        Route::post('/operator/color-palette', [ColorController::class, 'store'])->name('operator.color.store');
+        Route::get('/operator/color-palette/{color}/edit', [ColorController::class, 'edit'])->name('operator.color.edit');
+        Route::put('/operator/color-palette/{color}', [ColorController::class, 'update'])->name('operator.color.update');
+        Route::delete('/operator/color-palette/{color}', [ColorController::class, 'destroy'])->name('admin.color.destroy');
+
         Route::get('/operator/typography', function () {
             return view('operator.content.typography-operator');
         })->name('operator.typography');

@@ -113,7 +113,7 @@ document.querySelectorAll(".color-item").forEach((item) => {
     navigator.clipboard
       .writeText(colorCode)
       .then(() => {
-        showNotification(`Kode warna ${colorCode} berhasil disalin!`);
+        showNotification(`Color code ${colorCode} copied successfully!`);
       })
       .catch((err) => {
         console.error("Gagal menyalin kode warna:", err);
