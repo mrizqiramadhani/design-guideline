@@ -5,9 +5,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Admin - Content Management</title>
-    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="{{ asset('css/admin/style.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/admin/content/illustration.css') }}" />
     <link rel="icon" href="{{ asset('img/SG 2023-04.png') }}">
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.15/dist/sweetalert2.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.15/dist/sweetalert2.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
@@ -50,6 +54,67 @@
         </div>
     </header>
 
+    <!-- Modal Add Illustration -->
+    <div id="addIllustration"
+        class="fixed inset-0 bg-gray-500 bg-opacity-50 hidden flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg w-full max-w-md p-8 shadow-lg relative">
+            <h2 class="text-2xl font-semibold mb-4">Add New Illustration</h2>
+            <form action="{{ route('admin.illustration.store') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="mb-4">
+                    <label for="unit_id" class="block text-gray-700">Unit Name:</label>
+                    <select id="unit_id" name="unit_id" class="w-full border border-gray-300 p-2 rounded">
+                        @foreach ($units as $unit)
+                            <option value="{{ $unit->id }}">{{ $unit->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <label for="path" class="block text-gray-700">Image Illustration:</label>
+                    <input type="file" id="path" name="path"
+                        class="w-full border border-gray-300 p-2 rounded">
+                </div>
+                <div class="flex justify-end">
+                    <button type="button" onclick="closeModal('addIllustration')"
+                        class="mr-4 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">
+                        Cancel
+                    </button>
+                    <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
+                        Save
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Delete Illustration -->
+    <div id="deleteIllustrationModal"
+        class="fixed inset-0 hidden bg-gray-500 bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg w-full max-w-md p-8 shadow-lg">
+            <!-- Header Modal -->
+            <h2 class="text-2xl font-semibold mb-4">Delete Illustration</h2>
+
+            <!-- Informasi Hapus -->
+            <p class="mb-4">Are you sure you want to delete this illustration and its associated images?</p>
+
+            <!-- Action buttons -->
+            <div class="flex justify-end">
+                <button type="button" onclick="closeModal('deleteIllustrationModal')"
+                    class="mr-4 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">
+                    Cancel
+                </button>
+                <form id="deleteIllustrationForm" action="" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
+                        Delete
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
     <!-- Content -->
     <div class="flex min-h-screen">
         <aside class="w-1/5 bg-white border-r border-gray-200">
@@ -70,17 +135,13 @@
         </aside>
 
         <main class="w-4/5 p-8 bg-gray-100">
-            <!-- Success Notification -->
-            @if (session('success'))
-                <div class="bg-green-500 text-white p-3 rounded mb-4">
-                    {{ session('success') }}
-                </div>
-            @endif
             <div class="mt-20 mb-5 flex items-center justify-between">
                 <h2 class="text-4xl font-bold text-gray-900">Illustration</h2>
                 <div class="flex space-x-4">
-                    <a href="#" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">+ Add New
-                        Content</a>
+                    <button onclick="openModal('addIllustration')"
+                        class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
+                        + Add New Illustration
+                    </button>
                 </div>
             </div>
 
@@ -90,57 +151,33 @@
                 <table class="min-w-full border border-gray-300 bg-white">
                     <thead class="bg-gray-50">
                         <tr>
-                            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Name</th>
-                            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Category</th>
-                            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Content Type</th>
-                            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Last Updated By</th>
+                            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Unit</th>
+                            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Image Illustration</th>
                             <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="border-t">
-                            <td class="px-4 py-2 text-gray-900">Shafwah Group</td>
-                            <td class="px-4 py-2 text-gray-900">Description</td>
-                            <td class="px-4 py-2 text-gray-900">Text</td>
-                            <td class="px-4 py-2"></td>
-                            <td class="px-4 py-2">
-                                <div class="flex space-x-2">
-                                    <a href="#"
-                                        class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">Edit</a>
-                                    <a href="#"
-                                        class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">Delete</a>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr class="border-t">
-                            <td class="px-4 py-2 text-gray-900">Shafwah Holidays</td>
-                            <td class="px-4 py-2 text-gray-900">Description</td>
-                            <td class="px-4 py-2 text-gray-900">Text</td>
-                            <td class="px-4 py-2"></td>
-                            <td class="px-4 py-2">
-                                <div class="flex space-x-2">
-                                    <a href="#"
-                                        class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">Edit</a>
-                                    <a href="#"
-                                        class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">Delete</a>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr class="border-t">
-                            <td class="px-4 py-2 text-gray-900">Shafwah Property</td>
-                            <td class="px-4 py-2 text-gray-900">Description</td>
-                            <td class="px-4 py-2 text-gray-900">Text</td>
-                            <td class="px-4 py-2"></td>
-                            <td class="px-4 py-2">
-                                <div class="flex space-x-2">
-                                    <a href="#"
-                                        class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">Edit</a>
-                                    <a href="#"
-                                        class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">Delete</a>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
+                        @foreach ($illustrations as $illustration)
+                            <tr class="border-t">
+                                <td class="px-4 py-2 text-gray-900">{{ $illustration->unit->name ?? '' }}</td>
+                                <!-- Menampilkan nama unit -->
+                                <td class="px-4 py-2 text-gray-900">
+                                    <img src="{{ asset('storage/' . $illustration->path) }}" alt="Illustration Image"
+                                        class="w-32 h-20 object-cover">
+                                </td>
+                                <td class="px-4 py-2">
+                                    <div class="flex space-x-2">
+                                        <!-- Edit Button -->
+                                        <button onclick="openEditModal('editIllustration')"
+                                            class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">Edit</button>
+                                        <button onclick="openDeleteModal({{ $illustration->id }})"
+                                            class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">
+                                            Delete
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
                 </table>
             </div>
         </main>
@@ -150,7 +187,35 @@
             <p>Copyright © 2024 - All rights reserved by Shafwah Group</p>
         </aside>
     </footer>
-    <script src="{{ asset('js/admin/script.js') }}"></script>
+    <script src="{{ asset('js/admin/content/illustration-admin.js') }}"></script>
+
+    <!-- JavaScript Functions -->
+    <script>
+        function openModal(id) {
+            document.getElementById(id).classList.remove('hidden');
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.add('hidden');
+        }
+
+        function openDeleteModal(id) {
+            const deleteForm = document.getElementById('deleteIllustrationForm');
+            deleteForm.action = `/admin/illustration/${id}`;
+            document.getElementById('deleteIllustrationModal').classList.remove('hidden');
+        }
+    </script>
+    @if (session('success'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: '{{ session('success') }}',
+                timer: 2000, // Pesan dari controller
+                showConfirmButton: false,
+            });
+        </script>
+    @endif
 </body>
 
 </html>

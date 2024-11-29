@@ -7,6 +7,7 @@ use App\Http\Controllers\OperatorController;
 use App\Http\Controllers\ColorController;
 use App\Http\Controllers\LogoController;
 use App\Http\Controllers\ShowUnitController;
+use App\Http\Controllers\IllustrationController;
 
 
 // Route::get('/', function () {
@@ -45,7 +46,7 @@ Route::get('/shafwah-holidays/logo-primary/{id}', [ShowunitController::class, 's
 Route::get('/shafwah-holidays/logo-white/{id}', [ShowunitController::class, 'showWhiteLogosShafwahHolidays'])->name('logo-white-sh');
 Route::get('/shafwah-property/logo-primary/{id}', [ShowunitController::class, 'showPrimaryLogosShafwahProperty'])->name('logo-primary-srp');
 Route::get('/shafwah-property/logo-white/{id}', [ShowunitController::class, 'showWhiteLogosShafwahProperty'])->name('logo-white-srp');
- 
+
 
 
 Route::get('/login', function () {
@@ -89,20 +90,30 @@ Route::group(['middleware' => ['auth', 'startSessionByRole']], function () {
 
 
 
-        // Color Palette Routes
+        // ! Color Palette Admin Routes
         Route::get('/admin/color-palette', [ColorController::class, 'index'])->name('admin.color');
         Route::get('/admin/color-palette/create', [ColorController::class, 'create'])->name('admin.color.create');
         Route::post('/admin/color-palette', [ColorController::class, 'store'])->name('admin.color.store');
         Route::get('/admin/color-palette/{color}/edit', [ColorController::class, 'edit'])->name('admin.color.edit');
         Route::put('/admin/color-palette/{color}', [ColorController::class, 'update'])->name('admin.color.update');
         Route::delete('/admin/color-palette/{color}', [ColorController::class, 'destroy'])->name('admin.color.destroy');
-        
+
         Route::get('/admin/typography', function () {
             return view('admin.content.typography-admin');
         })->name('admin.typography');
-        Route::get('/admin/illustration', function () {
-            return view('admin.content.illustration-admin');
-        })->name('admin.illustration');
+
+
+        // Route::get('/admin/illustration', function () {
+        //     return view('admin.content.illustration-admin');
+        // })->name('admin.illustration');
+
+        //! illustration Admin Routes
+        Route::get('admin/illustration', [illustrationController::class, 'index'])->name('admin.illustration');
+        Route::post('admin/illustration', [illustrationController::class, 'store'])->name('admin.illustration.store');
+        Route::get('admin/illustration/{id}/edit', [illustrationController::class, 'edit'])->name('admin.illustration.edit');
+        Route::put('admin/illustration/{id}', [illustrationController::class, 'update'])->name('admin.illustration.update');
+        Route::delete('admin/illustration/{id}', [illustrationController::class, 'destroy'])->name('admin.illustration.destroy');
+
         Route::get('/admin/social-media', function () {
             return view('admin.content.sosmed-admin');
         })->name('admin.social');
@@ -112,7 +123,6 @@ Route::group(['middleware' => ['auth', 'startSessionByRole']], function () {
         Route::get('/admin/campaign', function () {
             return view('admin.content.campaign-admin');
         })->name('admin.campaign');
-
     });
 
     Route::group(['middleware' => ['checkOperator']], function () {
@@ -132,7 +142,7 @@ Route::group(['middleware' => ['auth', 'startSessionByRole']], function () {
         Route::delete('operator/logo/{id}', [LogoController::class, 'destroy'])->name('operator.logo.destroy');
         Route::delete('/operator/logo/photo/{id}/delete', [LogoController::class, 'deleteLogoPhoto'])->name('logo.deletePhoto');
 
-        // Color Palette Routes
+        //! Color Palette Admin Routes
         Route::get('/operator/color-palette', [ColorController::class, 'index'])->name('operator.color');
         Route::get('/operator/color-palette/create', [ColorController::class, 'create'])->name('operator.color.create');
         Route::post('/operator/color-palette', [ColorController::class, 'store'])->name('operator.color.store');
@@ -143,9 +153,15 @@ Route::group(['middleware' => ['auth', 'startSessionByRole']], function () {
         Route::get('/operator/typography', function () {
             return view('operator.content.typography-operator');
         })->name('operator.typography');
-        Route::get('/operator/illustration', function () {
-            return view('operator.content.illustration-operator');
-        })->name('operator.illustration');
+
+
+        //! illustration operator Routes
+        Route::get('operator/illustration', [illustrationController::class, 'index'])->name('operator.illustration');
+        Route::post('operator/illustration', [illustrationController::class, 'store'])->name('operator.illustration.store');
+        Route::get('operator/illustration/{id}/edit', [illustrationController::class, 'edit'])->name('operator.illustration.edit');
+        Route::put('operator/illustration/{id}', [illustrationController::class, 'update'])->name('operator.illustration.update');
+        Route::delete('operator/illustration/{id}', [illustrationController::class, 'destroy'])->name('operator.illustration.destroy');
+
         Route::get('/operator/social-media', function () {
             return view('operator.content.sosmed-operator');
         })->name('operator.social');
