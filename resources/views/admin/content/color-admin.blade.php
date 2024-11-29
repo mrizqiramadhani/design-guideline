@@ -94,200 +94,210 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($colors as $color)
-                        <tr class="border-b border-gray-200">
-                            <td class="px-4 py-2">{{ $color->unit->name }}</td>
-                            <td class="px-4 py-2">
-                                <span class="inline-block w-6 h-6 rounded-full" style="background-color: {{ $color->color }};"></span>
-                            </td>
-                            <td class="px-4 py-2">{{ $color->color }}</td>
-                            <td class="px-4 py-2">{{ $color->user->name ?? 'N/A' }}</td>
-                            <td class="px-4 py-2">
-                                <button type="button" onclick="openEditModal({{ $color->id }}, '{{ $color->unit_id }}', '{{ $color->color }}')" class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">
-                                    Edit
-                                </button>
-                                <button type="button" onclick="openDeleteModal({{ $color->id }})" class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">
-                                    Delete
-                                </button>
-                            </td>
-                        </tr>
+                        @foreach ($colors as $color)
+                            <tr class="border-b border-gray-200">
+                                <td class="px-4 py-2">{{ $color->unit->name }}</td>
+                                <td class="px-4 py-2">
+                                    <span class="inline-block w-6 h-6 rounded-full"
+                                        style="background-color: {{ $color->color }};"></span>
+                                </td>
+                                <td class="px-4 py-2">{{ $color->color }}</td>
+                                <td class="px-4 py-2">{{ $color->user->name ?? 'N/A' }}</td>
+                                <td class="px-4 py-2">
+                                    <button type="button"
+                                        onclick="openEditModal({{ $color->id }}, '{{ $color->unit_id }}', '{{ $color->color }}')"
+                                        class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">
+                                        Edit
+                                    </button>
+                                    <button type="button" onclick="openDeleteModal({{ $color->id }})"
+                                        class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">
+                                        Delete
+                                    </button>
+                                </td>
+                            </tr>
                         @endforeach
                     </tbody>
                 </table>
             </div>
+            @if ($colors->count() > 0)
+                <!-- Cek apakah ada data untuk dipaginasi -->
+                <div class="flex justify-center mt-5">
+                    <ol class="flex justify-center gap-2 text-xs font-medium">
+                        <!-- Previous Page -->
+                        @if (!$colors->onFirstPage())
+                            <li>
+                                <a href="{{ $colors->previousPageUrl() }}"
+                                    class="inline-flex items-center justify-center rounded border border-gray-200 bg-white text-black dark:border-gray-800 dark:bg-gray-900 dark:text-white">
+                                    <span class="sr-only">Prev Page</span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" viewBox="0 0 20 20"
+                                        fill="currentColor">
+                                        <path fill-rule="evenodd"
+                                            d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+                                </a>
+                            </li>
+                        @endif
+
+                        <!-- Page Numbers -->
+                        @foreach ($colors->links()->elements[0] as $page => $url)
+                            <li>
+                                @if ($page == $colors->currentPage())
+                                    <span
+                                        class="block w-8 h-8 rounded bg-black text-center leading-8 text-white">{{ $page }}</span>
+                                @else
+                                    <a href="{{ $url }}"
+                                        class="block w-8 h-8 rounded border border-gray-200 bg-white text-center leading-8 text-black">
+                                        {{ $page }}
+                                    </a>
+                                @endif
+                            </li>
+                        @endforeach
+
+                        <!-- Next Page -->
+                        @if ($colors->hasMorePages())
+                            <li>
+                                <a href="{{ $colors->nextPageUrl() }}"
+                                    class="inline-flex items-center justify-center rounded border border-gray-200 bg-white text-black dark:border-gray-800 dark:bg-gray-900 dark:text-white">
+                                    <span class="sr-only">Next Page</span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" viewBox="0 0 20 20"
+                                        fill="currentColor">
+                                        <path fill-rule="evenodd"
+                                            d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+                                </a>
+                            </li>
+                        @endif
+                    </ol>
+                </div>
+            @else
+                <!-- Tampilkan pesan jika tidak ada data -->
+                <div class="flex flex-col items-center justify-center mt-5">
+                    <img src="https://i.pinimg.com/originals/6a/f3/71/6af371f102361c0fd47619eb524bf4bb.gif"
+                        alt="Empty Content" class="w-32 h-32">
+                    <p class="text-gray-500 mt-3">Tidak ada konten untuk ditampilkan</p>
+                </div>
+            @endif
         </main>
     </div>
 
     <!-- Add Modal -->
-<div id="addColorModal" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 hidden">
-    <div class="bg-white w-1/3 rounded-lg shadow-lg p-6">
-        <div class="flex justify-between items-center mb-4">
-            <h2 class="text-2xl font-bold">Add New Color</h2>
-            <button onclick="closeModal()" class="text-gray-500 hover:text-gray-700">&times;</button>
-        </div>
+    <div id="addColorModal" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 hidden">
+        <div class="bg-white w-1/3 rounded-lg shadow-lg p-6">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-2xl font-bold">Add New Color</h2>
+                <button onclick="closeModal()" class="text-gray-500 hover:text-gray-700">&times;</button>
+            </div>
 
-        <!-- Form -->
-        <form action="{{ route('admin.color.store') }}" method="POST">
-            @csrf
-            <!-- Dropdown for Selecting Unit -->
-            <div class="mb-4">
-                <label for="unit_id" class="block text-sm font-semibold text-gray-700">Select Unit</label>
-                <select id="unit_id" name="unit_id" required
+            <!-- Form -->
+            <form action="{{ route('admin.color.store') }}" method="POST">
+                @csrf
+                <!-- Dropdown for Selecting Unit -->
+                <div class="mb-4">
+                    <label for="unit_id" class="block text-sm font-semibold text-gray-700">Select Unit</label>
+                    <select id="unit_id" name="unit_id" required
                         class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-green-200">
-                    <option value="" disabled selected>Choose a unit</option>
-                    @foreach($units as $unit)
-                        <option value="{{ $unit->id }}">{{ $unit->name }}</option>
-                    @endforeach
-                </select>
-            </div>
-
-            <!-- Input for Hex Code with add Color Picker -->
-            <div class="mb-4">
-                <label for="colorHex" class="block text-sm font-semibold text-gray-700">Color HEX Code</label>
-                <div class="input-group">
-                    <input type="text" id="colorHex" name="color" required placeholder="#000000"
-                           class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-green-200"
-                           pattern="^#[A-Fa-f0-9]{6}$" title="Please enter a valid HEX code (e.g., #1A1A1A)" />
-                    <input type="color" id="colorPicker" class="p-1">
+                        <option value="" disabled selected>Choose a unit</option>
+                        @foreach ($units as $unit)
+                            <option value="{{ $unit->id }}">{{ $unit->name }}</option>
+                        @endforeach
+                    </select>
                 </div>
-            </div>
-            
-            <!-- Submit Button -->
-            <div class="flex justify-end">
-                <button type="button" onclick="closeModal()" class="mr-2 px-4 py-2 bg-gray-400 text-white rounded hover:bg-gray-500">
-                    Cancel
-                </button>
-                <button type="submit" class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600">
-                    Save
-                </button>
-            </div>
-        </form>
-    </div>
-</div>
 
-<!-- Delete Confirmation Modal -->
-<div id="deleteConfirmModal" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 hidden">
-    <div class="bg-white rounded-lg shadow-lg p-6 w-1/3">
-        <div class="mb-4">
-            <h2 class="text-xl font-bold">Confirm Delete</h2>
-            <p>Are you sure you want to delete this color?</p>
-        </div>
-        <div class="flex justify-end space-x-4">
-            <button onclick="closeDeleteModal()" class="px-4 py-2 bg-gray-400 text-white rounded hover:bg-gray-500">Cancel</button>
-            <button id="confirmDeleteBtn" class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">Delete</button>
+                <!-- Input for Hex Code with add Color Picker -->
+                <div class="mb-4">
+                    <label for="colorHex" class="block text-sm font-semibold text-gray-700">Color HEX Code</label>
+                    <div class="input-group">
+                        <input type="text" id="colorHex" name="color" required placeholder="#000000"
+                            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-green-200"
+                            pattern="^#[A-Fa-f0-9]{6}$" title="Please enter a valid HEX code (e.g., #1A1A1A)" />
+                        <input type="color" id="colorPicker" class="p-1">
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="flex justify-end">
+                    <button type="button" onclick="closeModal()"
+                        class="mr-2 px-4 py-2 bg-gray-400 text-white rounded hover:bg-gray-500">
+                        Cancel
+                    </button>
+                    <button type="submit" class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600">
+                        Save
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
-</div>
 
-<!-- Modal Edit Color -->
-<div id="editColorModal" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 hidden">
-    <div class="bg-white w-1/3 rounded-lg shadow-lg p-6">
-        <div class="flex justify-between items-center mb-4">
-            <h2 class="text-2xl font-bold">Edit Color</h2>
-            <button onclick="closeEditModal()" class="text-gray-500 hover:text-gray-700">&times;</button>
-        </div>
-
-        <!-- Form Edit -->
-        <form id="editColorForm" method="POST">
-            @csrf
-            @method('PUT') <!-- Ini penting untuk emulasi PUT -->
-            
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteConfirmModal"
+        class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 hidden">
+        <div class="bg-white rounded-lg shadow-lg p-6 w-1/3">
             <div class="mb-4">
-                <label for="edit_unit_id" class="block text-sm font-semibold text-gray-700">Select Unit</label>
-                <select id="edit_unit_id" name="unit_id" required
+                <h2 class="text-xl font-bold">Confirm Delete</h2>
+                <p>Are you sure you want to delete this color?</p>
+            </div>
+            <div class="flex justify-end space-x-4">
+                <button onclick="closeDeleteModal()"
+                    class="px-4 py-2 bg-gray-400 text-white rounded hover:bg-gray-500">Cancel</button>
+                <button id="confirmDeleteBtn"
+                    class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Edit Color -->
+    <div id="editColorModal" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 hidden">
+        <div class="bg-white w-1/3 rounded-lg shadow-lg p-6">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-2xl font-bold">Edit Color</h2>
+                <button onclick="closeEditModal()" class="text-gray-500 hover:text-gray-700">&times;</button>
+            </div>
+
+            <!-- Form Edit -->
+            <form id="editColorForm" method="POST">
+                @csrf
+                @method('PUT') <!-- Ini penting untuk emulasi PUT -->
+
+                <div class="mb-4">
+                    <label for="edit_unit_id" class="block text-sm font-semibold text-gray-700">Select Unit</label>
+                    <select id="edit_unit_id" name="unit_id" required
                         class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-green-200">
-                    <option value="" disabled>Choose a unit</option>
-                    @foreach($units as $unit)
-                        <option value="{{ $unit->id }}">{{ $unit->name }}</option>
-                    @endforeach
-                </select>
-            </div>
-            <!-- Input for Hex Code with edit Color Picker -->
-            <div class="mb-4">
-                <label for="editColorHex" class="block text-sm font-semibold text-gray-700">Color HEX Code</label>
-                <div class="input-group">
-                <input type="text" id="editColorHex" name="color" required placeholder="#000000"
-                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-green-200"
-                pattern="^#[A-Fa-f0-9]{6}$" title="Please enter a valid HEX code (e.g., #1A1A1A)" />
-                <input type="color" id="editColorPicker" class="p-1">
+                        <option value="" disabled>Choose a unit</option>
+                        @foreach ($units as $unit)
+                            <option value="{{ $unit->id }}">{{ $unit->name }}</option>
+                        @endforeach
+                    </select>
                 </div>
-            </div>
-      
-            <div class="flex justify-end">
-                <button type="button" onclick="closeEditModal()" class="mr-2 px-4 py-2 bg-gray-400 text-white rounded hover:bg-gray-500">
-                    Cancel
-                </button>
-                <button type="submit" class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600">
-                    Update
-                </button>
-            </div>
-        </form>                        
+                <!-- Input for Hex Code with edit Color Picker -->
+                <div class="mb-4">
+                    <label for="editColorHex" class="block text-sm font-semibold text-gray-700">Color HEX Code</label>
+                    <div class="input-group">
+                        <input type="text" id="editColorHex" name="color" required placeholder="#000000"
+                            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-green-200"
+                            pattern="^#[A-Fa-f0-9]{6}$" title="Please enter a valid HEX code (e.g., #1A1A1A)" />
+                        <input type="color" id="editColorPicker" class="p-1">
+                    </div>
+                </div>
+
+                <div class="flex justify-end">
+                    <button type="button" onclick="closeEditModal()"
+                        class="mr-2 px-4 py-2 bg-gray-400 text-white rounded hover:bg-gray-500">
+                        Cancel
+                    </button>
+                    <button type="submit" class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600">
+                        Update
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
-
-@if ($colors->count() > 0)
-    <!-- Cek apakah ada data untuk dipaginasi -->
-    <div class="flex justify-center mt-5">
-        <ol class="flex justify-center gap-2 text-xs font-medium">
-            <!-- Previous Page -->
-            @if (!$colors->onFirstPage())
-                <li>
-                    <a href="{{ $colors->previousPageUrl() }}"
-                        class="inline-flex items-center justify-center rounded border border-gray-200 bg-white text-black dark:border-gray-800 dark:bg-gray-900 dark:text-white">
-                        <span class="sr-only">Prev Page</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" viewBox="0 0 20 20"
-                            fill="currentColor">
-                            <path fill-rule="evenodd"
-                                d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-                                clip-rule="evenodd" />
-                        </svg>
-                    </a>
-                </li>
-            @endif
-
-            <!-- Page Numbers -->
-            @foreach ($colors->links()->elements[0] as $page => $url)
-                <li>
-                    @if ($page == $colors->currentPage())
-                        <span
-                            class="block w-8 h-8 rounded bg-black text-center leading-8 text-white">{{ $page }}</span>
-                    @else
-                        <a href="{{ $url }}"
-                            class="block w-8 h-8 rounded border border-gray-200 bg-white text-center leading-8 text-black">
-                            {{ $page }}
-                        </a>
-                    @endif
-                </li>
-            @endforeach
-
-            <!-- Next Page -->
-            @if ($colors->hasMorePages())
-                <li>
-                    <a href="{{ $colors->nextPageUrl() }}"
-                        class="inline-flex items-center justify-center rounded border border-gray-200 bg-white text-black dark:border-gray-800 dark:bg-gray-900 dark:text-white">
-                        <span class="sr-only">Next Page</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" viewBox="0 0 20 20"
-                            fill="currentColor">
-                            <path fill-rule="evenodd"
-                                d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                                clip-rule="evenodd" />
-                        </svg>
-                    </a>
-                </li>
-            @endif
-        </ol>
-    </div>
-@else
-    <!-- Tampilkan pesan jika tidak ada data -->
-    <div class="flex flex-col items-center justify-center mt-5">
-        <img src="https://i.pinimg.com/originals/6a/f3/71/6af371f102361c0fd47619eb524bf4bb.gif"
-            alt="Empty Content" class="w-32 h-32">
-        <p class="text-gray-500 mt-3">Tidak ada konten untuk ditampilkan</p>
-    </div>
-@endif
 
 
-@if(session('success'))
+
+
+    @if (session('success'))
         <script>
             Swal.fire({
                 icon: 'success',
