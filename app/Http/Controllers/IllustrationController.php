@@ -13,7 +13,7 @@ class IllustrationController extends Controller
     public function index(Request $request)
     {
 
-        $illustrations = Illustration::all();
+        $illustrations = Illustration::paginate(4);
         $units = Unit::all();
 
         $userRole = auth()->user()->role;
@@ -22,11 +22,11 @@ class IllustrationController extends Controller
             ? 'admin.content.illustration-admin'
             : 'operator.content.illustration-operator';
 
-        // if ($illustrations->currentPage() > $illustrations->lastPage()) {
-        //     $routeName = $userRole === 'admin' ? 'admin.logo' : 'operator.logo';
+        if ($illustrations->currentPage() > $illustrations->lastPage()) {
+            $routeName = $userRole === 'admin' ? 'admin.illustration' : 'operator.illustration';
 
-        //     return redirect()->route($routeName, ['page' => $illustrations->lastPage()]);
-        // }
+            return redirect()->route($routeName, ['page' => $illustrations->lastPage()]);
+        }
 
         return view($view, compact('illustrations', 'units'));
     }
@@ -60,7 +60,45 @@ class IllustrationController extends Controller
         ]);
 
         return redirect()->route(auth()->user()->role === 'admin' ? 'admin.illustration' : 'operator.illustration')
-            ->with('success', 'Logo and photos added successfully!');
+            ->with('success', 'Illustration added successfully!');
+    }
+
+    public function edit($id)
+    {
+
+        $illustration = Illustration::findOrFail($id);
+        $units = Unit::all();
+
+        $view = auth()->user()->role === 'admin'
+            ? 'admin.content.illustration-admin'
+            : 'operator.content.illustration-operator';
+
+        return view($view, compact('illustration', 'units'));
+    }
+
+    public function update(Request $request, $id)
+    {
+
+        $illustration = Illustration::findOrFail($id);
+
+        $validatedData = $request->validate([
+            'unit_id' => 'required|exists:units,id',
+            'path' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5048',
+        ]);
+
+        $illustration->unit_id = $validatedData['unit_id'];
+
+        if ($request->hasFile('path')) {
+            if ($illustration->path && Storage::disk('public')->exists($illustration->path)) {
+                Storage::disk('public')->delete($illustration->path);
+            }
+
+            $illustration->path = $request->file('path')->store('illustrations', 'public');
+        }
+        $illustration->save();
+
+        return redirect()->route(auth()->user()->role === 'admin' ? 'admin.illustration' : 'operator.illustration')
+            ->with('success', 'Illustration updated successfully!');
     }
 
     public function destroy($id)
@@ -76,6 +114,6 @@ class IllustrationController extends Controller
         $illustration->delete();
 
         return redirect()->route(auth()->user()->role === 'admin' ? 'admin.illustration' : 'operator.illustration')
-            ->with('success', 'Logo and photos deleted successfully!');
+            ->with('success', 'Illustration deleted successfully!');
     }
 }
