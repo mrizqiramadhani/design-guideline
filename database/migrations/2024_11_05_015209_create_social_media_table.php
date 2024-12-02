@@ -11,6 +11,7 @@ return new class extends Migration
         Schema::create('social_media', function (Blueprint $table) {
             $table->id();
             $table->string('path');
+            $table->enum('type', ['feed', 'story', 'reels']);
             $table->foreignId('unit_id')->constrained('units')->onDelete('cascade');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();

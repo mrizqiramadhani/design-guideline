@@ -5,9 +5,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Admin - Content Management</title>
-    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="{{ asset('css/admin/style.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/admin/content/social-media.css') }}" />
     <link rel="icon" href="{{ asset('img/SG 2023-04.png') }}">
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.15/dist/sweetalert2.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.15/dist/sweetalert2.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
@@ -16,7 +20,7 @@
         <div class="mx-auto max-w-screen-xl px-4 py-3 sm:px-6 sm:py-4 lg:px-8">
             <div class="flex items-center justify-between">
                 <h1 class="text-2xl font-bold text-white sm:text-3xl cursor-pointer">
-                    <a href="/admin/dashboard">Shafwah Admin Panel</a>
+                    <a href="{{ route('admin.dashboard') }}">Shafwah Admin Panel</a>
                 </h1>
                 <div class="flex space-x-4">
                     <ul class="flex space-x-6 text-lg text-white">
@@ -145,7 +149,7 @@
             <p>Copyright © 2024 - All rights reserved by Shafwah Group</p>
         </aside>
     </footer>
-    <script src="{{ asset('js/admin/script.js') }}"></script>
+    <script src="{{ asset('js/admin/content/social-media-admin.js') }}"></script>
 </body>
 
 </html>
