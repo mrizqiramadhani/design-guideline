@@ -104,11 +104,11 @@ Route::group(['middleware' => ['auth', 'startSessionByRole']], function () {
 
 
         //! illustration Admin Routes
-        Route::get('admin/illustration', [illustrationController::class, 'index'])->name('admin.illustration');
-        Route::post('admin/illustration', [illustrationController::class, 'store'])->name('admin.illustration.store');
-        Route::get('admin/illustration/{id}/edit', [illustrationController::class, 'edit'])->name('admin.illustration.edit');
-        Route::put('admin/illustration/{id}', [illustrationController::class, 'update'])->name('admin.illustration.update');
-        Route::delete('admin/illustration/{id}', [illustrationController::class, 'destroy'])->name('admin.illustration.destroy');
+        Route::get('admin/illustration', [IllustrationController::class, 'index'])->name('admin.illustration');
+        Route::post('admin/illustration', [IllustrationController::class, 'store'])->name('admin.illustration.store');
+        Route::get('admin/illustration/{id}/edit', [IllustrationController::class, 'edit'])->name('admin.illustration.edit');
+        Route::put('admin/illustration/{id}', [IllustrationController::class, 'update'])->name('admin.illustration.update');
+        Route::delete('admin/illustration/{id}', [IllustrationController::class, 'destroy'])->name('admin.illustration.destroy');
 
         Route::get('/admin/social-media', function () {
             return view('admin.content.sosmed-admin');
@@ -152,11 +152,11 @@ Route::group(['middleware' => ['auth', 'startSessionByRole']], function () {
 
 
         //! illustration operator Routes
-        Route::get('operator/illustration', [illustrationController::class, 'index'])->name('operator.illustration');
-        Route::post('operator/illustration', [illustrationController::class, 'store'])->name('operator.illustration.store');
-        Route::get('operator/illustration/{id}/edit', [illustrationController::class, 'edit'])->name('operator.illustration.edit');
-        Route::put('operator/illustration/{id}', [illustrationController::class, 'update'])->name('operator.illustration.update');
-        Route::delete('operator/illustration/{id}', [illustrationController::class, 'destroy'])->name('operator.illustration.destroy');
+        Route::get('operator/illustration', [IllustrationController::class, 'index'])->name('operator.illustration');
+        Route::post('operator/illustration', [IllustrationController::class, 'store'])->name('operator.illustration.store');
+        Route::get('operator/illustration/{id}/edit', [IllustrationController::class, 'edit'])->name('operator.illustration.edit');
+        Route::put('operator/illustration/{id}', [IllustrationController::class, 'update'])->name('operator.illustration.update');
+        Route::delete('operator/illustration/{id}', [IllustrationController::class, 'destroy'])->name('operator.illustration.destroy');
 
         Route::get('/operator/social-media', function () {
             return view('operator.content.sosmed-operator');
