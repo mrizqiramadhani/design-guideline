@@ -101,9 +101,16 @@ Route::group(['middleware' => ['auth', 'startSessionByRole']], function () {
         Route::get('/admin/typography', function () {
             return view('admin.content.typography-admin');
         })->name('admin.typography');
-        Route::get('/admin/illustration', function () {
-            return view('admin.content.illustration-admin');
-        })->name('admin.illustration');
+
+
+        //! illustration Admin Routes
+        Route::get('admin/illustration', [IllustrationController::class, 'index'])->name('admin.illustration');
+        Route::post('admin/illustration', [IllustrationController::class, 'store'])->name('admin.illustration.store');
+        Route::get('admin/illustration/{id}/edit', [IllustrationController::class, 'edit'])->name('admin.illustration.edit');
+        Route::put('admin/illustration/{id}', [IllustrationController::class, 'update'])->name('admin.illustration.update');
+        Route::delete('admin/illustration/{id}', [IllustrationController::class, 'destroy'])->name('admin.illustration.destroy');
+
+
         Route::get('/admin/social-media', function () {
             return view('admin.content.sosmed-admin');
         })->name('admin.social');
@@ -143,9 +150,15 @@ Route::group(['middleware' => ['auth', 'startSessionByRole']], function () {
         Route::get('/operator/typography', function () {
             return view('operator.content.typography-operator');
         })->name('operator.typography');
-        Route::get('/operator/illustration', function () {
-            return view('operator.content.illustration-operator');
-        })->name('operator.illustration');
+
+
+        //! illustration operator Routes
+        Route::get('operator/illustration', [IllustrationController::class, 'index'])->name('operator.illustration');
+        Route::post('operator/illustration', [IllustrationController::class, 'store'])->name('operator.illustration.store');
+        Route::get('operator/illustration/{id}/edit', [IllustrationController::class, 'edit'])->name('operator.illustration.edit');
+        Route::put('operator/illustration/{id}', [IllustrationController::class, 'update'])->name('operator.illustration.update');
+        Route::delete('operator/illustration/{id}', [IllustrationController::class, 'destroy'])->name('operator.illustration.destroy');
+
         Route::get('/operator/social-media', function () {
             return view('operator.content.sosmed-operator');
         })->name('operator.social');
