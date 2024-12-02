@@ -7,6 +7,7 @@ use App\Models\Logo;
 use App\Models\LogoPhoto;
 use App\Models\Unit;
 use App\Models\ColorPalette;
+use App\Models\Illustration;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
@@ -18,9 +19,10 @@ class ShowUnitController extends Controller
         $unit = Unit::where('name', 'Shafwah group')->first();
         $logos = Logo::where('unit_id', $unit->id)->get();
         $colors = ColorPalette::where('unit_id', $unit->id)->get();
+        $illustrations = Illustration::where('unit_id', $unit->id)->get();
 
         // Pass logos and unit to the view
-        return view('shafwah-group.index-sg', compact('logos', 'unit','colors'));
+        return view('shafwah-group.index-sg', compact('logos', 'unit', 'colors', 'illustrations'));
     }
 
     public function showPrimaryLogosShafwahGroup($id)
@@ -71,9 +73,10 @@ class ShowUnitController extends Controller
         $unit = Unit::where('name', 'Shafwah holidays')->first();
         $logos = Logo::where('unit_id', $unit->id)->get();
         $colors = ColorPalette::where('unit_id', $unit->id)->get();
+        $illustrations = Illustration::where('unit_id', $unit->id)->get();
 
         // Pass logos and unit to the view
-        return view('shafwah-holidays.index-sh', compact('logos', 'unit', 'colors'));
+        return view('shafwah-holidays.index-sh', compact('logos', 'unit', 'colors', 'illustrations'));
     }
 
     public function showPrimaryLogosShafwahHolidays($id)
@@ -124,9 +127,10 @@ class ShowUnitController extends Controller
         $unit = Unit::where('name', 'Shafwah property')->first();
         $logos = Logo::where('unit_id', $unit->id)->get();
         $colors = ColorPalette::where('unit_id', $unit->id)->get();
+        $illustrations = Illustration::where('unit_id', $unit->id)->get();
 
         // Pass logos and unit to the view
-        return view('shafwah-property.index-srp', compact('logos', 'unit', 'colors'));
+        return view('shafwah-property.index-srp', compact('logos', 'unit', 'colors', 'illustrations'));
     }
 
     public function showPrimaryLogosShafwahProperty($id)
@@ -170,5 +174,4 @@ class ShowUnitController extends Controller
 
         return view('shafwah-property.logo.logo-white', compact('logo', 'unit'));
     }
-
 }

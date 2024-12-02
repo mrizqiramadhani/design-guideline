@@ -163,7 +163,8 @@ document
             title: "Success!",
             text: data.success,
             icon: "success",
-            confirmButtonText: "OK",
+            timer: 2000, // Pesan dari controller
+            showConfirmButton: false,
           }).then(() => {
             location.reload(); // Reload halaman set  elah menambah operator
           });
@@ -246,7 +247,8 @@ document
             title: "Success!",
             text: data.success,
             icon: "success",
-            confirmButtonText: "OK",
+            timer: 2000, // Pesan dari controller
+            showConfirmButton: false,
           }).then(() => {
             location.reload(); // Reload halaman setelah update operator
           });

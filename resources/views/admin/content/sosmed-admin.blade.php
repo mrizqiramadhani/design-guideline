@@ -70,12 +70,7 @@
         </aside>
 
         <main class="w-4/5 p-8 bg-gray-100">
-            <!-- Success Notification -->
-            @if (session('success'))
-                <div class="bg-green-500 text-white p-3 rounded mb-4">
-                    {{ session('success') }}
-                </div>
-            @endif
+
             <div class="mt-20 mb-5 flex items-center justify-between">
                 <h2 class="text-4xl font-bold text-gray-900">Social Media</h2>
                 <div class="flex space-x-4">

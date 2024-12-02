@@ -127,7 +127,8 @@
                     <div class="flex flex-wrap -mx-2">
                         @foreach ($colors as $color)
                             <div class="w-1/4 px-2 mb-4 text-center color-item" data-color="{{ $color->color }}">
-                                <div class="color-circle rounded-full mx-auto" style="background-color: {{ $color->color }};">
+                                <div class="color-circle rounded-full mx-auto"
+                                    style="background-color: {{ $color->color }};">
                                     <span class="copy-tooltip hidden">Copy Code</span>
                                 </div>
                                 <p class="text-lg mt-2 text-gray-600">{{ $color->color }}</p>
@@ -183,29 +184,10 @@
 
                         <!-- Rectangle Container -->
                         <div class="flex flex-wrap gap-4 mt-6 justify-between">
-                            <!-- Image 1 -->
-                            <img src="https://media1.giphy.com/media/AZRQtb6DA3fLq/200.webp?cid=790b76111dwt1sraxf00opjli7sjl837uqf5i121o1gppj3q&ep=v1_gifs_search&rid=200.webp&ct=g"
-                                alt="Image 1" class="bg-gray-200 w-[calc(50%-0.5rem)] h-64 rounded-md object-cover">
-
-                            <!-- Image 2 -->
-                            <img src="https://media.giphy.com/media/rz1WOXXBJ1sZACwRSD/giphy.gif?cid=ecf05e47r35vril2f9ezsklop945zsza2t91vtpkpxtqld8f&ep=v1_gifs_related&rid=giphy.gif&ct=g"
-                                alt="Image 2" class="bg-gray-200 w-[calc(50%-0.5rem)] h-64 rounded-md object-cover">
-
-                            <!-- Image 3 -->
-                            <img src="https://media.giphy.com/media/l0MYR64Gp8bQ2RGYo/giphy.gif?cid=ecf05e47mo9yz2ebk8spth7qb87chejl2oglv4s5hifhpp7u&ep=v1_gifs_related&rid=giphy.gif&ct=g"
-                                alt="Image 3" class="bg-gray-200 w-[calc(50%-0.5rem)] h-64 rounded-md object-cover">
-
-                            <!-- Image 4 -->
-                            <img src="https://media.giphy.com/media/ErZ8hv5eO92JW/giphy.gif?cid=790b76117irugjg2qngqd076l3x3cow1r0jjden21tuvv2ab&ep=v1_gifs_search&rid=giphy.gif&ct=g"
-                                alt="Image 4" class="bg-gray-200 w-[calc(50%-0.5rem)] h-64 rounded-md object-cover">
-
-                            <!-- Image 5 -->
-                            <img src="https://media.giphy.com/media/jFNTzpnwahSwg/giphy.gif?cid=ecf05e47qtfoidvajlihmq6zxiexzoxt1e877n44o02y4voe&ep=v1_gifs_search&rid=giphy.gif&ct=g"
-                                alt="Image 5" class="bg-gray-200 w-[calc(50%-0.5rem)] h-64 rounded-md object-cover">
-
-                            <!-- Image 6 -->
-                            <img src="https://media.giphy.com/media/GDWhpl6PTEbkI/giphy.gif?cid=ecf05e47qtfoidvajlihmq6zxiexzoxt1e877n44o02y4voe&ep=v1_gifs_search&rid=giphy.gif&ct=g"
-                                alt="Image 6" class="bg-gray-200 w-[calc(50%-0.5rem)] h-64 rounded-md object-cover">
+                            @foreach ($illustrations as $illustration)
+                                <img src="{{ asset('storage/' . $illustration->path) }}" alt="Illustration Image"
+                                    class="bg-gray-200 w-[calc(50%-0.5rem)] h-64 rounded-md object-cover">
+                            @endforeach
                         </div>
 
                     </div>

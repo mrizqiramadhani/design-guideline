@@ -103,10 +103,6 @@ Route::group(['middleware' => ['auth', 'startSessionByRole']], function () {
         })->name('admin.typography');
 
 
-        // Route::get('/admin/illustration', function () {
-        //     return view('admin.content.illustration-admin');
-        // })->name('admin.illustration');
-
         //! illustration Admin Routes
         Route::get('admin/illustration', [illustrationController::class, 'index'])->name('admin.illustration');
         Route::post('admin/illustration', [illustrationController::class, 'store'])->name('admin.illustration.store');
