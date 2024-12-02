@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin - Content Management</title>
+    <link rel="stylesheet" href="{{ asset('css/admin/style.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/admin/content/social-media.css') }}" />
+    <link rel="icon" href="{{ asset('img/SG 2023-04.png') }}">
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.15/dist/sweetalert2.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.15/dist/sweetalert2.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+    <!-- Header -->
+    <header id="navbar" class="bg-black transition-colors duration-300 fixed top-0 left-0 right-0 z-10">
+        <div class="mx-auto max-w-screen-xl px-4 py-3 sm:px-6 sm:py-4 lg:px-8">
+            <div class="flex items-center justify-between">
+                <h1 class="text-2xl font-bold text-white sm:text-3xl cursor-pointer">
+                    <a href="{{ route('admin.dashboard') }}">Shafwah Admin Panel</a>
+                </h1>
+                <div class="flex space-x-4">
+                    <ul class="flex space-x-6 text-lg text-white">
+                        <li><a href="{{ route('admin.dashboard') }}" class="nav-link">Dashboard</a></li>
+                        <li><a href="{{ route('admin.show-operators') }}" class="nav-link">Operator</a></li>
+                    </ul>
+
+                    <!-- User Icon with Dropdown -->
+                    <div class="relative">
+                        <button id="userMenuButton" class="focus:outline-none">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white cursor-pointer"
+                                fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5.121 17.804A9 9 0 0112 2a9 9 0 016.879 15.804M12 12a3 3 0 100-6 3 3 0 000 6zm-5 7a5 5 0 0110 0H7z" />
+                            </svg>
+                        </button>
+
+                        <div id="userDropdown"
+                            class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-20">
+                            <a href="#"
+                                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile</a>
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button type="submit"
+                                    class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Logout</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+
+    <!-- Modal Add Illustration -->
+    <div id="addSocialMedia"
+        class="fixed inset-0 bg-gray-500 bg-opacity-50 hidden flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg w-full max-w-md p-8 shadow-lg relative">
+            <h2 class="text-2xl font-semibold mb-4">Add New Social Media</h2>
+            <form action="{{ route('admin.social-media.store') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="mb-4">
+                    <label for="unit_id" class="block text-gray-700">Unit Name:</label>
+                    <select id="unit_id" name="unit_id" class="w-full border border-gray-300 p-2 rounded">
+                        @foreach ($units as $unit)
+                            <option value="{{ $unit->id }}">{{ $unit->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <label for="type" class="block text-gray-700">Social Media Type:</label>
+                    <select id="type" name="type" class="w-full border border-gray-300 p-2 rounded">
+                        <option value="feed">Feed</option>
+                        <option value="story">Story</option>
+                        <option value="reels">Reels</option>
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <label for="path" class="block text-gray-700">Social Media image:</label>
+                    <input type="file" id="path" name="path"
+                        class="w-full border border-gray-300 p-2 rounded">
+                </div>
+                <div class="flex justify-end">
+                    <button type="button" onclick="closeModal('addSocialMedia')"
+                        class="mr-4 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">
+                        Cancel
+                    </button>
+                    <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
+                        Save
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Content -->
+    <div class="flex min-h-screen">
+        <aside class="w-1/5 bg-white border-r border-gray-200">
+            <div class="px-10 py-20">
+                <nav class="my-8">
+                    <ul class="space-y-6 text-lg text-gray-900">
+                        <li><a href="{{ route('admin.deskripsi') }}">Deskripsi</a></li>
+                        <li><a href="{{ route('admin.logo') }}">Logo</a></li>
+                        <li><a href="{{ route('admin.color') }}">Color Palette</a></li>
+                        <li><a href="{{ route('admin.typography') }}">Typography</a></li>
+                        <li><a href="{{ route('admin.illustration') }}">Illustration</a></li>
+                        <li><a href="{{ route('admin.social-media') }}">Social Media</a></li>
+                        <li><a href="{{ route('admin.iconography') }}">Iconography</a></li>
+                        <li><a href="{{ route('admin.campaign') }}">Campaign</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </aside>
+
+        <main class="w-4/5 p-8 bg-gray-100">
+
+            <div class="mt-20 mb-5 flex items-center justify-between">
+                <h2 class="text-4xl font-bold text-gray-900">Social Media</h2>
+                <div class="flex space-x-4">
+                    <button onclick="openModal('addSocialMedia')"
+                        class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
+                        + Add New Social Media
+                    </button>
+                </div>
+            </div>
+
+
+            <!-- Content Table -->
+            <div class="overflow-x-auto">
+                <table class="min-w-full border border-gray-300 bg-white">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Unit</th>
+                            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Type</th>
+                            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Image</th>
+                            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse ($socialMedias as $socialMedia)
+                            <tr class="border-t">
+                                <!-- Unit -->
+                                <td class="px-4 py-2 text-gray-900">
+                                    {{ $socialMedia->unit->name ?? '' }}
+                                </td>
+                                <!-- Type -->
+                                <td class="px-4 py-2 text-gray-900">
+                                    {{ ucfirst($socialMedia->type) }}
+                                </td>
+                                <!-- Image -->
+                                <td class="px-4 py-2 text-gray-900">
+                                    <div class="w-32 h-20">
+                                        <img src="{{ asset('storage/' . $socialMedia->path) }}"
+                                            alt="Social Media Image" class="w-full h-full object-cover rounded">
+                                    </div>
+                                </td>
+                                <!-- Actions -->
+                                <td class="px-4 py-2">
+                                    <div class="flex space-x-2">
+                                        <a href="{{ route('admin.social-media.edit', $socialMedia->id) }}"
+                                            class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">Edit</a>
+                                        <form action="{{ route('admin.social-media.destroy', $socialMedia->id) }}"
+                                            method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit"
+                                                class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
+                                                onclick="return confirm('Are you sure you want to delete this?');">
+                                                Delete
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="4" class="px-4 py-2 text-center text-gray-500">
+                                    No Social Media content available.
+                                </td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+
+            </div>
+        </main>
+    </div>
+    <footer class="absolute bottom-0 left-0 w-full bg-black text-center text-white p-4">
+        <aside>
+            <p>Copyright © 2024 - All rights reserved by Shafwah Group</p>
+        </aside>
+    </footer>
+    {{-- <script src="{{ asset('js/admin/content/social-media-admin.js') }}"></script> --}}
+    <script>
+        function openModal(id) {
+            document.getElementById(id).classList.remove("hidden");
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.add("hidden");
+        }
+    </script>
+    @if (session('success'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: '{{ session('success') }}',
+                timer: 2000, // Pesan dari controller
+                showConfirmButton: false,
+            });
+        </script>
+    @endif
+</body>
+
+</html>

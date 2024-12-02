@@ -8,6 +8,7 @@ use App\Http\Controllers\ColorController;
 use App\Http\Controllers\LogoController;
 use App\Http\Controllers\ShowUnitController;
 use App\Http\Controllers\IllustrationController;
+use App\Http\Controllers\SocialMediaController;
 
 
 // Route::get('/', function () {
@@ -90,7 +91,7 @@ Route::group(['middleware' => ['auth', 'startSessionByRole']], function () {
 
 
 
-        // Color Palette Routes
+        //! Color Palette Routes
         Route::get('/admin/color-palette', [ColorController::class, 'index'])->name('admin.color');
         Route::get('/admin/color-palette/create', [ColorController::class, 'create'])->name('admin.color.create');
         Route::post('/admin/color-palette', [ColorController::class, 'store'])->name('admin.color.store');
@@ -111,9 +112,13 @@ Route::group(['middleware' => ['auth', 'startSessionByRole']], function () {
         Route::delete('admin/illustration/{id}', [IllustrationController::class, 'destroy'])->name('admin.illustration.destroy');
 
 
-        Route::get('/admin/social-media', function () {
-            return view('admin.content.sosmed-admin');
-        })->name('admin.social');
+        //! social media admin Routes
+        Route::get('admin/social-media', [SocialMediaController::class, 'index'])->name('admin.social-media');
+        Route::post('admin/social-media', [SocialMediaController::class, 'store'])->name('admin.social-media.store');
+        Route::get('admin/social-media/{id}/edit', [SocialMediaController::class, 'edit'])->name('admin.social-media.edit');
+        Route::put('admin/social-media/{id}', [SocialMediaController::class, 'update'])->name('admin.social-media.update');
+        Route::delete('admin/social-media/{id}', [SocialMediaController::class, 'destroy'])->name('admin.social-media.destroy');
+
         Route::get('/admin/iconography', function () {
             return view('admin.content.iconography-admin');
         })->name('admin.iconography');
@@ -159,9 +164,13 @@ Route::group(['middleware' => ['auth', 'startSessionByRole']], function () {
         Route::put('operator/illustration/{id}', [IllustrationController::class, 'update'])->name('operator.illustration.update');
         Route::delete('operator/illustration/{id}', [IllustrationController::class, 'destroy'])->name('operator.illustration.destroy');
 
-        Route::get('/operator/social-media', function () {
-            return view('operator.content.sosmed-operator');
-        })->name('operator.social');
+        //! social media operator Routes
+        Route::get('operator/social-media', [SocialMediaController::class, 'index'])->name('operator.social-media');
+        Route::post('operator/social-media', [SocialMediaController::class, 'store'])->name('operator.social-media.store');
+        Route::get('operator/social-media/{id}/edit', [SocialMediaController::class, 'edit'])->name('operator.social-media.edit');
+        Route::put('operator/social-media/{id}', [SocialMediaController::class, 'update'])->name('operator.social-media.update');
+        Route::delete('operator/social-media/{id}', [SocialMediaController::class, 'destroy'])->name('operator.social-media.destroy');
+
         Route::get('/operator/iconography', function () {
             return view('operator.content.iconography-operator');
         })->name('operator.iconography');

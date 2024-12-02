@@ -61,7 +61,7 @@
                         <li><a href="{{ route('admin.color') }}">Color Palette</a></li>
                         <li><a href="{{ route('admin.typography') }}">Typography</a></li>
                         <li><a href="{{ route('admin.illustration') }}">Illustration</a></li>
-                        <li><a href="{{ route('admin.social') }}">Social Media</a></li>
+                        <li><a href="{{ route('admin.social-media') }}">Social Media</a></li>
                         <li><a href="{{ route('admin.iconography') }}">Iconography</a></li>
                         <li><a href="{{ route('admin.campaign') }}">Campaign</a></li>
                     </ul>

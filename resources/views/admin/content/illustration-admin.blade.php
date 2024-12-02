@@ -161,7 +161,7 @@
                         <li><a href="{{ route('admin.color') }}">Color Palette</a></li>
                         <li><a href="{{ route('admin.typography') }}">Typography</a></li>
                         <li><a href="{{ route('admin.illustration') }}">Illustration</a></li>
-                        <li><a href="{{ route('admin.social') }}">Social Media</a></li>
+                        <li><a href="{{ route('admin.social-media') }}">Social Media</a></li>
                         <li><a href="{{ route('admin.iconography') }}">Iconography</a></li>
                         <li><a href="{{ route('admin.campaign') }}">Campaign</a></li>
                     </ul>
@@ -195,14 +195,12 @@
                         @foreach ($illustrations as $illustration)
                             <tr class="border-t">
                                 <td class="px-4 py-2 text-gray-900">{{ $illustration->unit->name ?? '' }}</td>
-                                <!-- Menampilkan nama unit -->
                                 <td class="px-4 py-2 text-gray-900">
                                     <img src="{{ asset('storage/' . $illustration->path) }}" alt="Illustration Image"
                                         class="w-32 h-20 object-cover">
                                 </td>
                                 <td class="px-4 py-2">
                                     <div class="flex space-x-2">
-                                        <!-- Edit Button -->
                                         <button
                                             onclick="openEditModal({{ $illustration->id }}, '{{ $illustration->unit->id }}', '{{ $illustration->path }}')"
                                             class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">
