@@ -65,7 +65,7 @@
                         <li><a href="{{ route('operator.color') }}">Color Palette</a></li>
                         <li><a href="{{ route('operator.typography') }}">Typography</a></li>
                         <li><a href="{{ route('operator.illustration') }}">Illustration</a></li>
-                        <li><a href="{{ route('operator.social') }}">Social Media</a></li>
+                        <li><a href="{{ route('operator.social-media') }}">Social Media</a></li>
                         <li><a href="{{ route('operator.iconography') }}">Iconography</a></li>
                         <li><a href="{{ route('operator.campaign') }}">Campaign</a></li>
                     </ul>
