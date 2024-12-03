@@ -96,6 +96,78 @@
         </div>
     </div>
 
+    {{-- Modal Edit Social Media --}}
+    <div id="editSocialMedia"
+        class="fixed inset-0 hidden bg-gray-500 bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg w-full max-w-md p-8 shadow-lg relative">
+            <h2 class="text-2xl font-semibold mb-4">Edit Social Media</h2>
+            <form id="editSocialMediaForm" method="POST" enctype="multipart/form-data">
+                @csrf
+                @method('PUT') <!-- Untuk PUT method pada update -->
+                <div class="mb-4">
+                    <label for="editUnitName" class="block text-gray-700">Unit Name:</label>
+                    <select id="editUnitName" name="unit_id" class="w-full border border-gray-300 p-2 rounded" required>
+                        @foreach ($units as $unit)
+                            <option value="{{ $unit->id }}">{{ $unit->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="mb-4">
+                    <label for="editSocialMediaType" class="block text-gray-700">Type:</label>
+                    <select id="editSocialMediaType" name="type" class="w-full border border-gray-300 p-2 rounded"
+                        required>
+                        <option value="feed">Feed</option>
+                        <option value="story">Story</option>
+                        <option value="reels">Reels</option>
+                    </select>
+                </div>
+
+                <div class="mb-4">
+                    <label for="editImageSocialMedia" class="block text-gray-700">Image:</label>
+                    <input type="file" id="editImageSocialMedia" name="path"
+                        class="w-full border border-gray-300 p-2 rounded">
+                    <p class="text-xs text-gray-500 mt-1">Kosongkan jika tidak ingin mengubah gambar.</p>
+                </div>
+
+                <div class="flex justify-end">
+                    <button type="button" onclick="closeModal('editSocialMedia')"
+                        class="mr-4 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Cancel</button>
+                    <button type="submit"
+                        class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Update</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- Modal Delete Illustration -->
+    <div id="deleteSocialMediaModal"
+        class="fixed inset-0 hidden bg-gray-500 bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg w-full max-w-md p-8 shadow-lg">
+            <!-- Header Modal -->
+            <h2 class="text-2xl font-semibold mb-4">Delete Social Media</h2>
+
+            <!-- Informasi Hapus -->
+            <p class="mb-4">Are you sure you want to delete this social media and its associated images?</p>
+
+            <!-- Action buttons -->
+            <div class="flex justify-end">
+                <button type="button" onclick="closeModal('deleteSocialMediaModal')"
+                    class="mr-4 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">
+                    Cancel
+                </button>
+                <form id="deleteSocialMediaForm" action="" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
+                        Delete
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <!-- Content -->
     <div class="flex min-h-screen">
         <aside class="w-1/5 bg-white border-r border-gray-200">
@@ -140,7 +212,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse ($socialMedias as $socialMedia)
+                        @foreach ($socialMedias as $socialMedia)
                             <tr class="border-t">
                                 <!-- Unit -->
                                 <td class="px-4 py-2 text-gray-900">
@@ -160,32 +232,83 @@
                                 <!-- Actions -->
                                 <td class="px-4 py-2">
                                     <div class="flex space-x-2">
-                                        <a href="{{ route('admin.social-media.edit', $socialMedia->id) }}"
-                                            class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">Edit</a>
-                                        <form action="{{ route('admin.social-media.destroy', $socialMedia->id) }}"
-                                            method="POST">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit"
-                                                class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
-                                                onclick="return confirm('Are you sure you want to delete this?');">
-                                                Delete
-                                            </button>
+                                        <button
+                                            onclick="openEditModal({{ $socialMedia->id }}, '{{ $socialMedia->unit_id }}', '{{ $socialMedia->path }}', '{{ $socialMedia->type }}')"
+                                            class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">
+                                            Edit
+                                        </button>
+                                        <button onclick="openDeleteModal({{ $socialMedia->id }})"
+                                            class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">
+                                            Delete
+                                        </button>
                                         </form>
                                     </div>
                                 </td>
                             </tr>
-                        @empty
-                            <tr>
-                                <td colspan="4" class="px-4 py-2 text-center text-gray-500">
-                                    No Social Media content available.
-                                </td>
-                            </tr>
-                        @endforelse
+                        @endforeach
                     </tbody>
                 </table>
-
             </div>
+            <!-- Pagination -->
+            @if ($socialMedias->count() > 0)
+                <div class="flex justify-center mt-5">
+                    <ol class="flex justify-center gap-2 text-xs font-medium">
+                        <!-- Previous Page -->
+                        @if (!$socialMedias->onFirstPage())
+                            <li>
+                                <a href="{{ $socialMedias->previousPageUrl() }}"
+                                    class="inline-flex items-center justify-center rounded border border-gray-200 bg-white text-black dark:border-gray-800 dark:bg-gray-900 dark:text-white">
+                                    <span class="sr-only">Prev Page</span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" viewBox="0 0 20 20"
+                                        fill="currentColor">
+                                        <path fill-rule="evenodd"
+                                            d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+                                </a>
+                            </li>
+                        @endif
+
+                        <!-- Page Numbers -->
+                        @foreach ($socialMedias->links()->elements[0] as $page => $url)
+                            <li>
+                                @if ($page == $socialMedias->currentPage())
+                                    <span
+                                        class="block w-8 h-8 rounded bg-black text-center leading-8 text-white">{{ $page }}</span>
+                                @else
+                                    <a href="{{ $url }}"
+                                        class="block w-8 h-8 rounded border border-gray-200 bg-white text-center leading-8 text-black">
+                                        {{ $page }}
+                                    </a>
+                                @endif
+                            </li>
+                        @endforeach
+
+                        <!-- Next Page -->
+                        @if ($socialMedias->hasMorePages())
+                            <li>
+                                <a href="{{ $socialMedias->nextPageUrl() }}"
+                                    class="inline-flex items-center justify-center rounded border border-gray-200 bg-white text-black dark:border-gray-800 dark:bg-gray-900 dark:text-white">
+                                    <span class="sr-only">Next Page</span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" viewBox="0 0 20 20"
+                                        fill="currentColor">
+                                        <path fill-rule="evenodd"
+                                            d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+                                </a>
+                            </li>
+                        @endif
+                    </ol>
+                </div>
+            @else
+                <div class="flex flex-col items-center justify-center mt-5">
+                    <img src="https://i.pinimg.com/originals/6a/f3/71/6af371f102361c0fd47619eb524bf4bb.gif"
+                        alt="Empty Content" class="w-32 h-32">
+                    <p class="text-gray-500 mt-3">Tidak ada konten untuk ditampilkan</p>
+                </div>
+
+            @endif
         </main>
     </div>
     <footer class="absolute bottom-0 left-0 w-full bg-black text-center text-white p-4">
@@ -193,16 +316,7 @@
             <p>Copyright © 2024 - All rights reserved by Shafwah Group</p>
         </aside>
     </footer>
-    {{-- <script src="{{ asset('js/admin/content/social-media-admin.js') }}"></script> --}}
-    <script>
-        function openModal(id) {
-            document.getElementById(id).classList.remove("hidden");
-        }
-
-        function closeModal(id) {
-            document.getElementById(id).classList.add("hidden");
-        }
-    </script>
+    <script src="{{ asset('js/admin/content/social-media-admin.js') }}"></script>
     @if (session('success'))
         <script>
             Swal.fire({
