@@ -209,24 +209,54 @@
 
                         <h3 class="font-semibold text-2xl text-black mt-20 mb-2 flex justify-center">
                             Feed</h3>
+                        <div class="grid grid-cols-1 gap-4 justify-items-center">
+                            @php
+                                $feedSocialMedias = $socialMedias->where('type', 'feed');
+                            @endphp
 
-                        <div class="flex justify-center">
-                            <img src="https://plus.unsplash.com/premium_vector-1724431910988-4de0021698ac?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxpbGx1c3RyYXRpb25zLWZlZWR8N3x8fGVufDB8fHx8fA%3D%3D"
-                                alt="Social Media Feed" class="w-[655px] h-[543px] rounded-md object-cover" />
+                            @if ($feedSocialMedias->isEmpty())
+                                <p class="text-center text-gray-500">No Social Media content available for feed.</p>
+                            @else
+                                @foreach ($feedSocialMedias as $socialMedia)
+                                    <img src="{{ asset('storage/' . $socialMedia->path) }}" alt="Social Media Feed"
+                                        class="w-[655px] h-[543px] rounded-md object-cover" />
+                                @endforeach
+                            @endif
                         </div>
+
 
                         <h3 class="font-semibold text-2xl text-black mt-20 mb-2 flex justify-center">Story</h3>
 
-                        <div class="flex justify-center">
-                            <img src="https://plus.unsplash.com/premium_vector-1724431911049-5e5c9bd2fbc3?w=300&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1pbi1zYW1lLXNlcmllc3wzfHx8ZW58MHx8fHx8"
-                                alt="Social Media Feed" class="w-[655px] h-[543px] rounded-md object-cover" />
+                        <div class="grid grid-cols-1 gap-4 justify-items-center">
+                            @php
+                                $storySocialMedias = $socialMedias->where('type', 'story');
+                            @endphp
+
+                            @if ($storySocialMedias->isEmpty())
+                                <p class="text-center text-gray-500">No Social Media content available for story.</p>
+                            @else
+                                @foreach ($storySocialMedias as $socialMedia)
+                                    <img src="{{ asset('storage/' . $socialMedia->path) }}" alt="Social Media Story"
+                                        class="w-[655px] h-[543px] rounded-md object-cover" />
+                                @endforeach
+                            @endif
                         </div>
 
                         <h3 class="font-semibold text-2xl text-black mt-20 mb-2 flex justify-center">Reels</h3>
 
-                        <div class="flex justify-center">
-                            <img src="https://plus.unsplash.com/premium_vector-1724431911126-2af198bc61f5?w=300&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1pbi1zYW1lLXNlcmllc3w0fHx8ZW58MHx8fHx8"
-                                alt="Social Media Feed" class="w-[655px] h-[543px] rounded-md object-cover" />
+                        <div class="grid grid-cols-1 gap-4 justify-items-center">
+                            @php
+                                $reelsSocialMedias = $socialMedias->where('type', 'reels');
+                            @endphp
+
+                            @if ($reelsSocialMedias->isEmpty())
+                                <p class="text-center text-gray-500">No Social Media content available for reels.</p>
+                            @else
+                                @foreach ($reelsSocialMedias as $socialMedia)
+                                    <img src="{{ asset('storage/' . $socialMedia->path) }}" alt="Social Media Feed"
+                                        class="w-[655px] h-[543px] rounded-md object-cover" />
+                                @endforeach
+                            @endif
                         </div>
                     </div>
 

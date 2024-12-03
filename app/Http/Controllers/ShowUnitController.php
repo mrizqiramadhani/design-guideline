@@ -8,6 +8,7 @@ use App\Models\LogoPhoto;
 use App\Models\Unit;
 use App\Models\ColorPalette;
 use App\Models\Illustration;
+use App\Models\SocialMedia;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
@@ -15,14 +16,13 @@ class ShowUnitController extends Controller
 {
     public function showShafwahGroupPage()
     {
-        // Get the logos for Shafwah Group unit
         $unit = Unit::where('name', 'Shafwah group')->first();
         $logos = Logo::where('unit_id', $unit->id)->get();
         $colors = ColorPalette::where('unit_id', $unit->id)->get();
         $illustrations = Illustration::where('unit_id', $unit->id)->get();
+        $socialMedias = socialMedia::where('unit_id', $unit->id)->get();
 
-        // Pass logos and unit to the view
-        return view('shafwah-group.index-sg', compact('logos', 'unit', 'colors', 'illustrations'));
+        return view('shafwah-group.index-sg', compact('logos', 'unit', 'colors', 'illustrations', 'socialMedias'));
     }
 
     public function showPrimaryLogosShafwahGroup($id)
@@ -74,9 +74,10 @@ class ShowUnitController extends Controller
         $logos = Logo::where('unit_id', $unit->id)->get();
         $colors = ColorPalette::where('unit_id', $unit->id)->get();
         $illustrations = Illustration::where('unit_id', $unit->id)->get();
+        $socialMedias = socialMedia::where('unit_id', $unit->id)->get();
 
         // Pass logos and unit to the view
-        return view('shafwah-holidays.index-sh', compact('logos', 'unit', 'colors', 'illustrations'));
+        return view('shafwah-holidays.index-sh', compact('logos', 'unit', 'colors', 'illustrations', 'socialMedias'));
     }
 
     public function showPrimaryLogosShafwahHolidays($id)
@@ -128,9 +129,10 @@ class ShowUnitController extends Controller
         $logos = Logo::where('unit_id', $unit->id)->get();
         $colors = ColorPalette::where('unit_id', $unit->id)->get();
         $illustrations = Illustration::where('unit_id', $unit->id)->get();
+        $socialMedias = socialMedia::where('unit_id', $unit->id)->get();
 
         // Pass logos and unit to the view
-        return view('shafwah-property.index-srp', compact('logos', 'unit', 'colors', 'illustrations'));
+        return view('shafwah-property.index-srp', compact('logos', 'unit', 'colors', 'illustrations', 'socialMedias'));
     }
 
     public function showPrimaryLogosShafwahProperty($id)
