@@ -8,14 +8,14 @@ function closeModal(id) {
 
 function openDeleteModal(id) {
   const deleteForm = document.getElementById("deleteCampaignForm");
-  deleteForm.action = `/admin/campaign/${id}`;
+  deleteForm.action = `/operator/campaign/${id}`;
   document.getElementById("deleteCampaignModal").classList.remove("hidden");
 }
 
 function openEditModal(id, unitId, path) {
   // Atur action URL form edit
   const form = document.getElementById("editCampaignForm");
-  form.action = `/admin/campaign/${id}`;
+  form.action = `/operator/campaign/${id}`;
 
   // Set selected unit
   const unitSelect = document.getElementById("editUnitName");
