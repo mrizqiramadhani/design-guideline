@@ -8,6 +8,7 @@ use App\Http\Controllers\ColorController;
 use App\Http\Controllers\LogoController;
 use App\Http\Controllers\ShowUnitController;
 use App\Http\Controllers\IllustrationController;
+use App\Http\Controllers\CampaignController;
 
 
 // Route::get('/', function () {
@@ -116,9 +117,13 @@ Route::group(['middleware' => ['auth', 'startSessionByRole']], function () {
         Route::get('/admin/iconography', function () {
             return view('admin.content.iconography-admin');
         })->name('admin.iconography');
-        Route::get('/admin/campaign', function () {
-            return view('admin.content.campaign-admin');
-        })->name('admin.campaign');
+
+        //campaign routes
+        Route::get('admin/campaign', [CampaignController::class, 'index'])->name('admin.campaign');
+        Route::post('admin/campaign', [CampaignController::class, 'store'])->name('admin.campaign.store');
+        Route::get('admin/campaign/{id}/edit', [CampaignController::class, 'edit'])->name('admin.campaign.edit');
+        Route::put('admin/campaign/{id}', [CampaignController::class, 'update'])->name('admin.campaign.update');
+        Route::delete('admin/campaign/{id}', [CampaignController::class, 'destroy'])->name('admin.campaign.destroy');
     });
 
     Route::group(['middleware' => ['checkOperator']], function () {
@@ -164,9 +169,12 @@ Route::group(['middleware' => ['auth', 'startSessionByRole']], function () {
         Route::get('/operator/iconography', function () {
             return view('operator.content.iconography-operator');
         })->name('operator.iconography');
-        Route::get('/operator/campaign', function () {
-            return view('operator.content.campaign-operator');
-        })->name('operator.campaign');
+        
+        Route::get('operator/campaign', [CampaignController::class, 'index'])->name('operator.campaign');
+        Route::post('operator/campaign', [CampaignController::class, 'store'])->name('operator.campaign.store');
+        Route::get('operator/campaign/{id}/edit', [CampaignController::class, 'edit'])->name('operator.campaign.edit');
+        Route::put('operator/campaign/{id}', [CampaignController::class, 'update'])->name('operator.campaign.update');
+        Route::delete('operator/campaign/{id}', [CampaignController::class, 'destroy'])->name('operator.campaign.destroy');
     });
 });
 
