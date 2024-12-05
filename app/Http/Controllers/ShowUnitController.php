@@ -9,6 +9,7 @@ use App\Models\Unit;
 use App\Models\ColorPalette;
 use App\Models\Illustration;
 use App\Models\SocialMedia;
+use App\Models\Campaign;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
@@ -21,8 +22,9 @@ class ShowUnitController extends Controller
         $colors = ColorPalette::where('unit_id', $unit->id)->get();
         $illustrations = Illustration::where('unit_id', $unit->id)->get();
         $socialMedias = socialMedia::where('unit_id', $unit->id)->get();
+        $campaigns = Campaign::where('unit_id', $unit->id)->get();
 
-        return view('shafwah-group.index-sg', compact('logos', 'unit', 'colors', 'illustrations', 'socialMedias'));
+        return view('shafwah-group.index-sg', compact('logos', 'unit', 'colors', 'illustrations', 'socialMedias', 'campaigns'));
     }
 
     public function showPrimaryLogosShafwahGroup($id)
@@ -75,9 +77,10 @@ class ShowUnitController extends Controller
         $colors = ColorPalette::where('unit_id', $unit->id)->get();
         $illustrations = Illustration::where('unit_id', $unit->id)->get();
         $socialMedias = socialMedia::where('unit_id', $unit->id)->get();
+        $campaigns = Campaign::where('unit_id', $unit->id)->get();
 
         // Pass logos and unit to the view
-        return view('shafwah-holidays.index-sh', compact('logos', 'unit', 'colors', 'illustrations', 'socialMedias'));
+        return view('shafwah-holidays.index-sh', compact('logos', 'unit', 'colors', 'illustrations','socialMedias', 'campaigns'));
     }
 
     public function showPrimaryLogosShafwahHolidays($id)
@@ -130,9 +133,10 @@ class ShowUnitController extends Controller
         $colors = ColorPalette::where('unit_id', $unit->id)->get();
         $illustrations = Illustration::where('unit_id', $unit->id)->get();
         $socialMedias = socialMedia::where('unit_id', $unit->id)->get();
+        $campaigns = Campaign::where('unit_id', $unit->id)->get();
 
         // Pass logos and unit to the view
-        return view('shafwah-property.index-srp', compact('logos', 'unit', 'colors', 'illustrations', 'socialMedias'));
+        return view('shafwah-property.index-srp', compact('logos', 'unit', 'colors', 'illustrations','socialMedias', 'campaigns'));
     }
 
     public function showPrimaryLogosShafwahProperty($id)

@@ -286,19 +286,13 @@
                             adipisicing elit. Enim ipsum mollitia veniam! Perspiciatis dignissimos ducimus laboriosam
                             fugit doloribus inventore molestias omnis nesciunt, odit temporibus! Laborum vitae error vel
                             sapiente similique.</p>
+                            
                         <!-- Rectangle Container -->
-                        <div class="flex flex-wrap gap-4 mt-6 justify-start">
-                            <!-- Image 1 -->
-                            <img src="{{ asset('img/Logo - Ada Jalan Menuju Kebaikan.png') }}" alt="Image 1"
-                                class="bg-grey-200 w-[calc(50%-0.5rem)] h-64 rounded-md object-contain mx-auto">
-
-                            <!-- Image 2 -->
-                            <img src="{{ asset('img/NiatAjaDulu-01.png') }}" alt="Image 2"
-                                class="bg-grey-200 w-[calc(50%-0.5rem)] h-64 rounded-md object-contain mx-auto">
-
-                            <!-- Image 3 -->
-                            <img src="{{ asset('img/WujudkanNiatmu-01.png') }}" alt="Image 3"
-                                class="bg-grey-200 w-[calc(50%-0.5rem)] h-64 rounded-md object-contain mx-auto">
+                        <div class="flex flex-wrap gap-4 mt-6 justify-between">
+                            @foreach ($campaigns as $campaign)
+                                <img src="{{ asset('storage/' . $campaign->path) }}" alt="Campaign Image"
+                                    class="bg-gray-200 w-[calc(50%-0.5rem)] h-64 rounded-md object-cover">
+                            @endforeach
                         </div>
                     </div>
                 </div>
