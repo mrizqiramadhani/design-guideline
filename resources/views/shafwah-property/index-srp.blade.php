@@ -263,10 +263,13 @@
                             adipisicing elit. Enim ipsum mollitia veniam! Perspiciatis dignissimos ducimus laboriosam
                             fugit doloribus inventore molestias omnis nesciunt, odit temporibus! Laborum vitae error vel
                             sapiente similique.</p>
+                            
                         {{-- image --}}
                         <div class="h-[450px] mt-4 relative">
-                            <img src="https://i.pinimg.com/564x/85/ab/16/85ab165d608fac66faa9c7dfde6c5b13.jpg"alt="Icongraphy Example"
+                            @foreach ($iconographys as $iconography)
+                                <img src="{{ asset('storage/' . $iconography->path) }}" alt="Iconography Image"
                                 class="h-full w-full object-cover rounded-sm" />
+                            @endforeach
                         </div>
                         <a href="#" target="_blank" rel="noopener noreferrer">
                             <button type="button"

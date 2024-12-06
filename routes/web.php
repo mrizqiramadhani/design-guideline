@@ -10,6 +10,7 @@ use App\Http\Controllers\ShowUnitController;
 use App\Http\Controllers\IllustrationController;
 use App\Http\Controllers\SocialMediaController;
 use App\Http\Controllers\CampaignController;
+use App\Http\Controllers\IconographyController;
 
 
 // Route::get('/', function () {
@@ -120,9 +121,12 @@ Route::group(['middleware' => ['auth', 'startSessionByRole']], function () {
         Route::put('admin/social-media/{id}', [SocialMediaController::class, 'update'])->name('admin.social-media.update');
         Route::delete('admin/social-media/{id}', [SocialMediaController::class, 'destroy'])->name('admin.social-media.destroy');
 
-        Route::get('/admin/iconography', function () {
-            return view('admin.content.iconography-admin');
-        })->name('admin.iconography');
+        //iconography routes
+        Route::get('admin/iconography', [IconographyController::class, 'index'])->name('admin.iconography');
+        Route::post('admin/iconography', [IconographyController::class, 'store'])->name('admin.iconography.store');
+        Route::get('admin/iconography/{id}/edit', [IconographyController::class, 'edit'])->name('admin.iconography.edit');
+        Route::put('admin/iconography/{id}', [IconographyController::class, 'update'])->name('admin.iconography.update');
+        Route::delete('admin/iconography/{id}', [IconographyController::class, 'destroy'])->name('admin.iconography.destroy');
 
         //campaign routes
         Route::get('admin/campaign', [CampaignController::class, 'index'])->name('admin.campaign');
@@ -176,10 +180,14 @@ Route::group(['middleware' => ['auth', 'startSessionByRole']], function () {
         Route::put('operator/social-media/{id}', [SocialMediaController::class, 'update'])->name('operator.social-media.update');
         Route::delete('operator/social-media/{id}', [SocialMediaController::class, 'destroy'])->name('operator.social-media.destroy');
 
-        Route::get('/operator/iconography', function () {
-            return view('operator.content.iconography-operator');
-        })->name('operator.iconography');
-        
+        //iconography routes
+        Route::get('operator/iconography', [IconographyController::class, 'index'])->name('operator.iconography');
+        Route::post('operator/iconography', [IconographyController::class, 'store'])->name('operator.iconography.store');
+        Route::get('operator/iconography/{id}/edit', [IconographyController::class, 'edit'])->name('operator.iconography.edit');
+        Route::put('operator/iconography/{id}', [IconographyController::class, 'update'])->name('operator.iconography.update');
+        Route::delete('operator/iconography/{id}', [IconographyController::class, 'destroy'])->name('operator.iconography.destroy');
+
+        //campaign routes
         Route::get('operator/campaign', [CampaignController::class, 'index'])->name('operator.campaign');
         Route::post('operator/campaign', [CampaignController::class, 'store'])->name('operator.campaign.store');
         Route::get('operator/campaign/{id}/edit', [CampaignController::class, 'edit'])->name('operator.campaign.edit');
