@@ -262,15 +262,14 @@
                         <p class="font-light text-gray-600 paragraf">Lorem ipsum dolor sit amet, consectetur
                             adipisicing elit. Enim ipsum mollitia veniam! Perspiciatis dignissimos ducimus laboriosam
                             fugit doloribus inventore molestias omnis nesciunt, odit temporibus! Laborum vitae error vel
-                            sapiente similique.</p>
-                            
+                            sapiente similique.</p>                           
                         {{-- image --}}
-                        <div class="h-[450px] mt-4 relative">
+                        <div class="h-[450px] mt-4 relative flex items-center justify-center">
                             @foreach ($iconographys as $iconography)
                                 <img src="{{ asset('storage/' . $iconography->path) }}" alt="Iconography Image"
-                                class="h-full w-full object-cover rounded-sm" />
+                                    class="h-full w-full object-contain rounded-sm" />
                             @endforeach
-                        </div>
+                        </div>                        
                         <a href="#" target="_blank" rel="noopener noreferrer">
                             <button type="button"
                                 class="w-full rounded-md border border-blue-600 bg-blue-600 px-6 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500 mt-3 mr-5">
