@@ -203,9 +203,11 @@
                                 <td class="px-4 py-2 text-gray-900">{{ $campaign->unit->name ?? '' }}</td>
                                 <!-- Menampilkan nama unit -->
                                 <td class="px-4 py-2 text-gray-900">
-                                    <img src="{{ asset('storage/' . $campaign->path) }}" alt="Campaign Image"
-                                        class="w-32 h-20 object-cover">
-                                </td>
+                                    <div class="w-32 h-20 bg-gray-200 flex items-center justify-center">
+                                        <img src="{{ asset('storage/' . $campaign->path) }}" alt="Campaign Image"
+                                            class="max-w-full max-h-full object-contain">
+                                    </div>
+                                </td>                                
                                 <td class="px-4 py-2">
                                     <div class="flex space-x-2">
                                         <!-- Edit Button -->

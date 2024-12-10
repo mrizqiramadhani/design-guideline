@@ -287,12 +287,15 @@
                             fugit doloribus inventore molestias omnis nesciunt, odit temporibus! Laborum vitae error vel
                             sapiente similique.</p>
 
-                        <div class="flex flex-wrap gap-4 mt-6 justify-between">
-                            @foreach ($campaigns as $campaign)
-                                <img src="{{ asset('storage/' . $campaign->path) }}" alt="Campaign Image"
-                                class="bg-gray-200 w-[calc(50%-0.5rem)] h-64 rounded-md object-cover">
-                            @endforeach
-                        </div>
+                            <div class="flex flex-wrap gap-4 mt-6 justify-between">
+                                @foreach ($campaigns as $index => $campaign)
+                                    <div class="bg-gray-200 w-[calc(50%-0.5rem)] h-64 rounded-md flex items-center justify-center 
+                                                @if ($loop->last && $loop->remaining % 2 === 0) mx-auto @endif">
+                                        <img src="{{ asset('storage/' . $campaign->path) }}" alt="Campaign Image"
+                                            class="object-contain max-w-full max-h-full rounded-md">
+                                    </div>
+                                @endforeach
+                            </div>
                     </div>
                 </div>
             </div>
