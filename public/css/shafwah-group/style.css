@@ -38,10 +38,6 @@
   position: relative; /* Menjaga posisinya */
 }
 
-/* scramble effect */
-.nav-link {
-  transition: color 200ms;
-}
 /* .nav-link:hover {
   color: #2076ff;
 } */

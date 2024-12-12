@@ -21,10 +21,32 @@
                     </h1>
                 </div>
                 <div class="flex space-x-4 md:space-x-8">
-                    <ul class="flex space-x-10 text-lg text-white">
-                        <li><a href="{{ route('shafwah-group') }}" class="nav-link">Shafwah Group</a></li>
-                        <li><a href="{{ route('shafwah-holidays') }}" class="nav-link">Shafwah Holidays</a></li>
-                        <li><a href="{{ route('shafwah-property') }}" class="nav-link">Shafwah Property</a></li>
+                    <ul class="flex space-x-10 text-lg text-white font-bold">
+                        <li class="group">
+                            <a href="{{ route('shafwah-group') }}"
+                                class="nav-link relative inline-block text-white transition-transform duration-300 ease-in-out group-hover:scale-105 group-hover:text-blue-500"
+                                style="color: #2076ff">
+                                Shafwah Group
+                                <span
+                                    class="absolute left-0 bottom-0 w-0 h-1 bg-gradient-to-r from-blue-400 to-blue-600 transition-all duration-500 ease-in-out group-hover:w-full rounded-full"></span>
+                            </a>
+                        </li>
+                        <li class="group">
+                            <a href="{{ route('shafwah-holidays') }}"
+                                class="nav-link relative inline-block transition-transform duration-300 ease-in-out group-hover:scale-105 group-hover:text-blue-500">
+                                Shafwah Holidays
+                                <span
+                                    class="absolute left-0 bottom-0 w-0 h-1 bg-gradient-to-r from-blue-400 to-blue-600 transition-all duration-500 ease-in-out group-hover:w-full rounded-full"></span>
+                            </a>
+                        </li>
+                        <li class="group">
+                            <a href="{{ route('shafwah-property') }}"
+                                class="nav-link relative inline-block transition-transform duration-300 ease-in-out group-hover:scale-105 group-hover:text-blue-500">
+                                Shafwah Property
+                                <span
+                                    class="absolute left-0 bottom-0 w-0 h-1 bg-gradient-to-r from-blue-400 to-blue-600 transition-all duration-500 ease-in-out group-hover:w-full rounded-full"></span>
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -48,7 +70,7 @@
             <nav class="-mx-3 space-y-6">
                 <div class="space-y-3">
                     <div class="flex justify-center ml-10">
-                        <ul class="space-y-8 text-center mt-10 text-3xl capitalize text-black cursor-pointer">
+                        <ul class="space-y-8 text-center mt-10 text-3xl capitalize text-black cursor-pointer font-bold">
                             <li><a href="#deskripsi">Deskripsi</a></li>
                             <li><a href="#logo">Logo</a></li>
                             <li><a href="#color-palette">Color Palette</a></li>
@@ -275,7 +297,7 @@
                                 <img src="{{ asset('storage/' . $iconography->path) }}" alt="Iconography Image"
                                     class="h-full w-full object-contain rounded-sm" />
                             @endforeach
-                        </div>                                                
+                        </div>
                         <a href="#" target="_blank" rel="noopener noreferrer">
                             <button type="button"
                                 class="w-full rounded-md border border-blue-600 bg-blue-600 px-6 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500 mt-3 mr-5">
