@@ -71,11 +71,11 @@
                 <div class="space-y-3">
                     <div class="flex justify-center ml-10">
                         <ul class="space-y-8 text-center mt-10 text-3xl capitalize text-black cursor-pointer font-bold">
-                            <li><a href="#deskripsi">Deskripsi</a></li>
+                            <li><a href="#deskripsi">Description</a></li>
                             <li><a href="#logo">Logo</a></li>
                             <li><a href="#color-palette">Color Palette</a></li>
                             <li><a href="#typography">Typography</a></li>
-                            <li><a href="#ilustration">Ilustration</a></li>
+                            <li><a href="#ilustration">Illustration</a></li>
                             <li><a href="#social-media">Social Media</a></li>
                             <li><a href="#iconography">Iconography</a></li>
                         </ul>
@@ -89,7 +89,7 @@
 
             <!-- Deskripsi Section -->
             <div class="p-4 mb-8 min-h-[1000px] bg-white">
-                <h2 id="deskripsi" class="uppercase font-bold text-3xl text-black mb-4 section-heading">Deskripsi</h2>
+                <h2 id="deskripsi" class="uppercase font-bold text-3xl text-black mb-4 section-heading">Description</h2>
                 <p class="font-light text-gray-600 text-justify paragraf">
                     Shafwah Group adalah perusahaan yang berdedikasi untuk menyediakan layanan berkualitas tinggi
                     di berbagai bidang seperti pariwisata, properti, dan lainnya. Kami bangga dengan komitmen
