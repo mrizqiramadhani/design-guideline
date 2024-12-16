@@ -72,7 +72,7 @@
                     <ul class="space-y-6 text-lg text-gray-900 font-bold">
                         <li>
                             <a href="{{ route('admin.deskripsi') }}"
-                                class="{{ request()->routeIs('admin.deskripsi') ? 'active' : '' }}">
+                                class="{{ request()->routeIs('admin.deskripsi','admin.dashboard') ? 'active' : '' }}">
                                 Deskripsi
                             </a>
                         </li>
