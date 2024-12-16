@@ -29,17 +29,19 @@
                                 class="nav-link relative inline-block text-white transition-transform duration-300 ease-in-out group-hover:scale-105 group-hover:text-blue-500"
                                 style="color: #2076ff">
                                 Dashboard
-                                <span class="absolute left-0 bottom-0 w-0 h-1 bg-gradient-to-r from-blue-400 to-blue-600 transition-all duration-500 ease-in-out group-hover:w-full rounded-full"></span>
+                                <span
+                                    class="absolute left-0 bottom-0 w-0 h-1 bg-gradient-to-r from-blue-400 to-blue-600 transition-all duration-500 ease-in-out group-hover:w-full rounded-full"></span>
                             </a>
                         </li>
                         <li class="group">
                             <a href="{{ route('admin.show-operators') }}"
                                 class="nav-link relative inline-block transition-transform duration-300 ease-in-out group-hover:scale-105 group-hover:text-blue-500">
                                 Operator
-                                <span class="absolute left-0 bottom-0 w-0 h-1 bg-gradient-to-r from-blue-400 to-blue-600 transition-all duration-500 ease-in-out group-hover:w-full rounded-full"></span>
+                                <span
+                                    class="absolute left-0 bottom-0 w-0 h-1 bg-gradient-to-r from-blue-400 to-blue-600 transition-all duration-500 ease-in-out group-hover:w-full rounded-full"></span>
                             </a>
                         </li>
-                    </ul>                    
+                    </ul>
 
                     <!-- User Icon with Dropdown -->
                     <div class="relative">
@@ -67,81 +69,82 @@
         </div>
     </header>
 
-<!-- Modal Add Campaign -->
-<div id="addCampaign" class="fixed inset-0 bg-gray-500 bg-opacity-50 hidden flex items-center justify-center z-50">
-    <div class="bg-white rounded-lg w-full max-w-md p-8 shadow-lg relative">
-        <h2 class="text-2xl font-semibold mb-4">Add New Campaign</h2>
-        <form action="{{ route('admin.campaign.store') }}" method="POST" enctype="multipart/form-data">
-            @csrf
-            <div class="mb-4">
-                <label for="unit_id" class="block text-gray-700">Unit Name:</label>
-                <select id="unit_id" name="unit_id" class="w-full border border-gray-300 p-2 rounded">
-                    <!-- Menampilkan unit yang relevan saja: Shafwah holidays dan Shafwah property -->
-                    @foreach ($units as $unit)
-                        @if (in_array($unit['name'], ['Shafwah holidays', 'Shafwah property']))
-                            <option value="{{ $unit['id'] }}">{{ $unit['name'] }}</option>
-                        @endif
-                    @endforeach
-                </select>
-                @error('unit_id')
-                    <div class="text-red-500 text-sm">{{ $message }}</div>
-                @enderror
-            </div>
-            <div class="mb-4">
-                <label for="path" class="block text-gray-700">Campaign Image:</label>
-                <input type="file" id="path" name="path" class="w-full border border-gray-300 p-2 rounded">
-                @error('path')
-                    <div class="text-red-500 text-sm">{{ $message }}</div>
-                @enderror
-            </div>
-            <div class="flex justify-end">
-                <button type="button" onclick="closeModal('addCampaign')" class="mr-4 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">
-                    Cancel
-                </button>
-                <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
-                    Save
-                </button>
-            </div>
-        </form>
+    <!-- Modal Add Campaign -->
+    <div id="addCampaign" class="fixed inset-0 bg-gray-500 bg-opacity-50 hidden flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg w-full max-w-md p-8 shadow-lg relative">
+            <h2 class="text-2xl font-semibold mb-4">Add New Campaign</h2>
+            <form action="{{ route('admin.campaign.store') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="mb-4">
+                    <label for="unit_id" class="block text-gray-700">Unit Name:</label>
+                    <select id="unit_id" name="unit_id" class="w-full border border-gray-300 p-2 rounded">
+                        <!-- Menampilkan unit yang relevan saja: Shafwah holidays dan Shafwah property -->
+                        @foreach ($units as $unit)
+                            @if (in_array($unit['name'], ['Shafwah holidays', 'Shafwah property']))
+                                <option value="{{ $unit['id'] }}">{{ $unit['name'] }}</option>
+                            @endif
+                        @endforeach
+                    </select>
+                    @error('unit_id')
+                        <div class="text-red-500 text-sm">{{ $message }}</div>
+                    @enderror
+                </div>
+                <div class="mb-4">
+                    <label for="path" class="block text-gray-700">Campaign Image:</label>
+                    <input type="file" id="path" name="path"
+                        class="w-full border border-gray-300 p-2 rounded">
+                    @error('path')
+                        <div class="text-red-500 text-sm">{{ $message }}</div>
+                    @enderror
+                </div>
+                <div class="flex justify-end">
+                    <button type="button" onclick="closeModal('addCampaign')"
+                        class="mr-4 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">
+                        Cancel
+                    </button>
+                    <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
+                        Save
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
 
 
     {{-- Modal Edit Campaign --}}
-<div id="editCampaign"
-     class="fixed inset-0 hidden bg-gray-500 bg-opacity-50 flex items-center justify-center z-50">
-    <div class="bg-white rounded-lg w-full max-w-md p-8 shadow-lg relative">
-        <h2 class="text-2xl font-semibold mb-4">Edit Campaign</h2>
-        <form id="editCampaignForm" method="POST" enctype="multipart/form-data">
-            @csrf
-            @method('PUT') <!-- Untuk PUT method pada update -->
-            <div class="mb-4">
-                <label for="editUnitName" class="block text-gray-700">Unit Name:</label>
-                <select id="editUnitName" name="unit_id" class="w-full border border-gray-300 p-2 rounded" required>
-                    @foreach ($units as $unit)
-                        @if (in_array($unit['name'], ['Shafwah holidays', 'Shafwah property']))
-                            <option value="{{ $unit['id'] }}">{{ $unit['name'] }}</option>
-                        @endif
-                    @endforeach
-                </select>
-            </div>
+    <div id="editCampaign" class="fixed inset-0 hidden bg-gray-500 bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg w-full max-w-md p-8 shadow-lg relative">
+            <h2 class="text-2xl font-semibold mb-4">Edit Campaign</h2>
+            <form id="editCampaignForm" method="POST" enctype="multipart/form-data">
+                @csrf
+                @method('PUT') <!-- Untuk PUT method pada update -->
+                <div class="mb-4">
+                    <label for="editUnitName" class="block text-gray-700">Unit Name:</label>
+                    <select id="editUnitName" name="unit_id" class="w-full border border-gray-300 p-2 rounded" required>
+                        @foreach ($units as $unit)
+                            @if (in_array($unit['name'], ['Shafwah holidays', 'Shafwah property']))
+                                <option value="{{ $unit['id'] }}">{{ $unit['name'] }}</option>
+                            @endif
+                        @endforeach
+                    </select>
+                </div>
 
-            <div class="mb-4">
-                <label for="editImageCampaign" class="block text-gray-700">Campaign:</label>
-                <input type="file" id="editImageCampaign" name="path"
-                       class="w-full border border-gray-300 p-2 rounded">
-                <p class="text-xs text-gray-500 mt-1">Kosongkan jika tidak ingin mengubah gambar.</p>
-            </div>
+                <div class="mb-4">
+                    <label for="editImageCampaign" class="block text-gray-700">Campaign:</label>
+                    <input type="file" id="editImageCampaign" name="path"
+                        class="w-full border border-gray-300 p-2 rounded">
+                    <p class="text-xs text-gray-500 mt-1">Kosongkan jika tidak ingin mengubah gambar.</p>
+                </div>
 
-            <div class="flex justify-end">
-                <button type="button" onclick="closeModal('editCampaign')"
+                <div class="flex justify-end">
+                    <button type="button" onclick="closeModal('editCampaign')"
                         class="mr-4 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Cancel</button>
-                <button type="submit"
+                    <button type="submit"
                         class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Update</button>
-            </div>
-        </form>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
 
     <!-- Modal Delete Campaign -->
     <div id="deleteCampaignModal"
@@ -173,59 +176,59 @@
 
     <!-- Content -->
     <div class="flex min-h-screen">
-        <aside class="w-1/5 bg-white border-r border-gray-200">
+        <aside class="w-1/5 bg-white border-r border-gray-200 font-bold">
             <div class="px-10 py-20">
                 <nav class="my-8">
                     <ul class="space-y-6 text-lg text-gray-900">
                         <li>
-                            <a href="{{ route('admin.deskripsi') }}" 
-                               class="{{ request()->routeIs('admin.deskripsi') ? 'active' : '' }}">
+                            <a href="{{ route('admin.deskripsi') }}"
+                                class="{{ request()->routeIs('admin.deskripsi') ? 'active' : '' }}">
                                 Deskripsi
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('admin.logo') }}" 
-                               class="{{ request()->routeIs('admin.logo') ? 'active' : '' }}">
+                            <a href="{{ route('admin.logo') }}"
+                                class="{{ request()->routeIs('admin.logo') ? 'active' : '' }}">
                                 Logo
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('admin.color') }}" 
-                               class="{{ request()->routeIs('admin.color') ? 'active' : '' }}">
+                            <a href="{{ route('admin.color') }}"
+                                class="{{ request()->routeIs('admin.color') ? 'active' : '' }}">
                                 Color Palette
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('admin.typography') }}" 
-                               class="{{ request()->routeIs('admin.typography') ? 'active' : '' }}">
+                            <a href="{{ route('admin.typography') }}"
+                                class="{{ request()->routeIs('admin.typography') ? 'active' : '' }}">
                                 Typography
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('admin.illustration') }}" 
-                               class="{{ request()->routeIs('admin.illustration') ? 'active' : '' }}">
+                            <a href="{{ route('admin.illustration') }}"
+                                class="{{ request()->routeIs('admin.illustration') ? 'active' : '' }}">
                                 Illustration
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('admin.social-media') }}" 
-                               class="{{ request()->routeIs('admin.social-media') ? 'active' : '' }}">
+                            <a href="{{ route('admin.social-media') }}"
+                                class="{{ request()->routeIs('admin.social-media') ? 'active' : '' }}">
                                 Social Media
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('admin.iconography') }}" 
-                               class="{{ request()->routeIs('admin.iconography') ? 'active' : '' }}">
+                            <a href="{{ route('admin.iconography') }}"
+                                class="{{ request()->routeIs('admin.iconography') ? 'active' : '' }}">
                                 Iconography
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('admin.campaign') }}" 
-                               class="{{ request()->routeIs('admin.campaign') ? 'active' : '' }}">
+                            <a href="{{ route('admin.campaign') }}"
+                                class="{{ request()->routeIs('admin.campaign') ? 'active' : '' }}">
                                 Campaign
                             </a>
                         </li>
-                    </ul>                    
+                    </ul>
                 </nav>
             </div>
         </aside>
@@ -262,7 +265,7 @@
                                         <img src="{{ asset('storage/' . $campaign->path) }}" alt="Campaign Image"
                                             class="max-w-full max-h-full object-contain">
                                     </div>
-                                </td>                                
+                                </td>
                                 <td class="px-4 py-2">
                                     <div class="flex space-x-2">
                                         <!-- Edit Button -->
@@ -345,7 +348,7 @@
 
         </main>
     </div>
-    <footer class="absolute bottom-0 left-0 w-full bg-black text-center text-white p-4">
+    <footer class="absolute bottom-0 left-0 w-full bg-black text-center text-white p-4 font-bold">
         <aside>
             <p>Copyright © 2024 - All rights reserved by Shafwah Group</p>
         </aside>

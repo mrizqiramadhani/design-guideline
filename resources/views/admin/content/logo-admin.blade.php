@@ -30,14 +30,16 @@
                                 class="nav-link relative inline-block text-white transition-transform duration-300 ease-in-out group-hover:scale-105 group-hover:text-blue-500"
                                 style="color: #2076ff">
                                 Dashboard
-                                <span class="absolute left-0 bottom-0 w-0 h-1 bg-gradient-to-r from-blue-400 to-blue-600 transition-all duration-500 ease-in-out group-hover:w-full rounded-full"></span>
+                                <span
+                                    class="absolute left-0 bottom-0 w-0 h-1 bg-gradient-to-r from-blue-400 to-blue-600 transition-all duration-500 ease-in-out group-hover:w-full rounded-full"></span>
                             </a>
                         </li>
                         <li class="group">
                             <a href="{{ route('admin.show-operators') }}"
                                 class="nav-link relative inline-block transition-transform duration-300 ease-in-out group-hover:scale-105 group-hover:text-blue-500">
                                 Operator
-                                <span class="absolute left-0 bottom-0 w-0 h-1 bg-gradient-to-r from-blue-400 to-blue-600 transition-all duration-500 ease-in-out group-hover:w-full rounded-full"></span>
+                                <span
+                                    class="absolute left-0 bottom-0 w-0 h-1 bg-gradient-to-r from-blue-400 to-blue-600 transition-all duration-500 ease-in-out group-hover:w-full rounded-full"></span>
                             </a>
                         </li>
                     </ul>
@@ -70,59 +72,59 @@
 
     <!-- Content -->
     <div class="flex min-h-screen">
-        <aside class="w-1/5 bg-white border-r border-gray-200">
+        <aside class="w-1/5 bg-white border-r border-gray-200 font-bold">
             <div class="px-10 py-20">
                 <nav class="my-8">
-                    <ul class="space-y-6 text-lg text-gray-900">
+                    <ul class="space-y-6 text-lg text-gray-900 font-bold">
                         <li>
-                            <a href="{{ route('admin.deskripsi') }}" 
-                               class="{{ request()->routeIs('admin.deskripsi') ? 'active' : '' }}">
+                            <a href="{{ route('admin.deskripsi') }}"
+                                class="{{ request()->routeIs('admin.deskripsi') ? 'active' : '' }}">
                                 Deskripsi
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('admin.logo') }}" 
-                               class="{{ request()->routeIs('admin.logo') ? 'active' : '' }}">
+                            <a href="{{ route('admin.logo') }}"
+                                class="{{ request()->routeIs('admin.logo') ? 'active' : '' }}">
                                 Logo
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('admin.color') }}" 
-                               class="{{ request()->routeIs('admin.color') ? 'active' : '' }}">
+                            <a href="{{ route('admin.color') }}"
+                                class="{{ request()->routeIs('admin.color') ? 'active' : '' }}">
                                 Color Palette
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('admin.typography') }}" 
-                               class="{{ request()->routeIs('admin.typography') ? 'active' : '' }}">
+                            <a href="{{ route('admin.typography') }}"
+                                class="{{ request()->routeIs('admin.typography') ? 'active' : '' }}">
                                 Typography
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('admin.illustration') }}" 
-                               class="{{ request()->routeIs('admin.illustration') ? 'active' : '' }}">
+                            <a href="{{ route('admin.illustration') }}"
+                                class="{{ request()->routeIs('admin.illustration') ? 'active' : '' }}">
                                 Illustration
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('admin.social-media') }}" 
-                               class="{{ request()->routeIs('admin.social-media') ? 'active' : '' }}">
+                            <a href="{{ route('admin.social-media') }}"
+                                class="{{ request()->routeIs('admin.social-media') ? 'active' : '' }}">
                                 Social Media
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('admin.iconography') }}" 
-                               class="{{ request()->routeIs('admin.iconography') ? 'active' : '' }}">
+                            <a href="{{ route('admin.iconography') }}"
+                                class="{{ request()->routeIs('admin.iconography') ? 'active' : '' }}">
                                 Iconography
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('admin.campaign') }}" 
-                               class="{{ request()->routeIs('admin.campaign') ? 'active' : '' }}">
+                            <a href="{{ route('admin.campaign') }}"
+                                class="{{ request()->routeIs('admin.campaign') ? 'active' : '' }}">
                                 Campaign
                             </a>
                         </li>
-                    </ul>                    
+                    </ul>
                 </nav>
             </div>
         </aside>
@@ -184,8 +186,8 @@
                             <!-- Unit Bisnis -->
                             <div class="mb-4">
                                 <label for="unit_id" class="block text-gray-700">Unit Bisnis:</label>
-                                <select name="unit_id" id="unit_id" class="w-full border border-gray-300 p-2 rounded"
-                                    required>
+                                <select name="unit_id" id="unit_id"
+                                    class="w-full border border-gray-300 p-2 rounded" required>
                                     @foreach ($units as $unit)
                                         <option value="{{ $unit->id }}">{{ $unit->name }}</option>
                                     @endforeach
@@ -504,7 +506,7 @@
             });
         </script>
     @endif
-    <footer class="absolute bottom-0 left-0 w-full bg-black text-center text-white p-4">
+    <footer class="absolute bottom-0 left-0 w-full bg-black text-center text-white p-4 font-bold">
         <aside>
             <p>Copyright © 2024 - All rights reserved by Shafwah Group</p>
         </aside>

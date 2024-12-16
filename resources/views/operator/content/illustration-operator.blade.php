@@ -29,7 +29,8 @@
                                 class="nav-link relative inline-block text-white transition-transform duration-300 ease-in-out group-hover:scale-105 group-hover:text-blue-500"
                                 style="color: #2076ff">
                                 Dashboard
-                                <span class="absolute left-0 bottom-0 w-0 h-1 bg-gradient-to-r from-blue-400 to-blue-600 transition-all duration-500 ease-in-out group-hover:w-full rounded-full"></span>
+                                <span
+                                    class="absolute left-0 bottom-0 w-0 h-1 bg-gradient-to-r from-blue-400 to-blue-600 transition-all duration-500 ease-in-out group-hover:w-full rounded-full"></span>
                             </a>
                         </li>
                     </ul>
@@ -158,59 +159,59 @@
 
     <!-- Content -->
     <div class="flex min-h-screen">
-        <aside class="w-1/5 bg-white border-r border-gray-200">
+        <aside class="w-1/5 bg-white border-r border-gray-200 font-bold">
             <div class="px-10 py-20">
                 <nav class="my-8">
                     <ul class="space-y-6 text-lg text-gray-900">
                         <li>
-                            <a href="{{ route('operator.deskripsi') }}" 
-                               class="{{ request()->routeIs('operator.deskripsi') ? 'active' : '' }}">
+                            <a href="{{ route('operator.deskripsi') }}"
+                                class="{{ request()->routeIs('operator.deskripsi') ? 'active' : '' }}">
                                 Deskripsi
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('operator.logo') }}" 
-                               class="{{ request()->routeIs('operator.logo') ? 'active' : '' }}">
+                            <a href="{{ route('operator.logo') }}"
+                                class="{{ request()->routeIs('operator.logo') ? 'active' : '' }}">
                                 Logo
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('operator.color') }}" 
-                               class="{{ request()->routeIs('operator.color') ? 'active' : '' }}">
+                            <a href="{{ route('operator.color') }}"
+                                class="{{ request()->routeIs('operator.color') ? 'active' : '' }}">
                                 Color Palette
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('operator.typography') }}" 
-                               class="{{ request()->routeIs('operator.typography') ? 'active' : '' }}">
+                            <a href="{{ route('operator.typography') }}"
+                                class="{{ request()->routeIs('operator.typography') ? 'active' : '' }}">
                                 Typography
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('operator.illustration') }}" 
-                               class="{{ request()->routeIs('operator.illustration') ? 'active' : '' }}">
+                            <a href="{{ route('operator.illustration') }}"
+                                class="{{ request()->routeIs('operator.illustration') ? 'active' : '' }}">
                                 Illustration
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('operator.social-media') }}" 
-                               class="{{ request()->routeIs('operator.social-media') ? 'active' : '' }}">
+                            <a href="{{ route('operator.social-media') }}"
+                                class="{{ request()->routeIs('operator.social-media') ? 'active' : '' }}">
                                 Social Media
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('operator.iconography') }}" 
-                               class="{{ request()->routeIs('operator.iconography') ? 'active' : '' }}">
+                            <a href="{{ route('operator.iconography') }}"
+                                class="{{ request()->routeIs('operator.iconography') ? 'active' : '' }}">
                                 Iconography
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('operator.campaign') }}" 
-                               class="{{ request()->routeIs('operator.campaign') ? 'active' : '' }}">
+                            <a href="{{ route('operator.campaign') }}"
+                                class="{{ request()->routeIs('operator.campaign') ? 'active' : '' }}">
                                 Campaign
                             </a>
                         </li>
-                    </ul>                    
+                    </ul>
                 </nav>
             </div>
         </aside>
@@ -328,7 +329,7 @@
 
         </main>
     </div>
-    <footer class="absolute bottom-0 left-0 w-full bg-black text-center text-white p-4">
+    <footer class="absolute bottom-0 left-0 w-full bg-black text-center text-white p-4 font-bold">
         <aside>
             <p>Copyright © 2024 - All rights reserved by Shafwah Group</p>
         </aside>
