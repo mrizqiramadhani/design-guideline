@@ -21,7 +21,7 @@
         <div class="mx-auto max-w-screen-xl px-4 py-3 sm:px-6 sm:py-4 lg:px-8">
             <div class="flex items-center justify-between">
                 <h1 class="text-2xl font-bold text-white sm:text-3xl cursor-pointer">
-                    <a href="/admin/dashboard">Shafwah Admin Panel</a>
+                    <a href="{{ route('admin.dashboard') }}">Shafwah Admin Panel</a>
                 </h1>
                 <div class="flex space-x-4">
                     <ul class="flex space-x-10 text-lg text-white font-bold">

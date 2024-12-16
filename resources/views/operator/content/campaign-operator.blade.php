@@ -339,7 +339,8 @@
 
         </main>
     </div>
-    <footer class="absolute bottom-0 left-0 w-full bg-black text-center text-white p-4 font-bold">
+    <footer class="absolute bottom-0 left-0 w-full bg-black text-center text-white p-4 font-bold
+    ">
         <aside>
             <p>Copyright © 2024 - All rights reserved by Shafwah Group</p>
         </aside>
