@@ -156,16 +156,8 @@
                         enctype="multipart/form-data">
                         @csrf
 
-                        <!-- Error Messages -->
-                        @if ($errors->any())
-                            <div class="text-red-500 mb-4">
-                                <ul>
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        @endif
+                        <div id="formErrors" class="hidden">
+                        </div>
 
                         <!-- Modal Scrollable Content -->
                         <div class="modal-content max-h-[400px] overflow-y-auto pr-4 pb-8 relative">
@@ -219,7 +211,7 @@
                         <div class="flex justify-end">
                             <button type="button" onclick="closeModal()"
                                 class="mr-4 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Cancel</button>
-                            <button type="submit"
+                            <button type="submit" id="submitLogoForm"
                                 class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Add Logo</button>
                         </div>
                     </form>
