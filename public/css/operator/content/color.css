@@ -24,3 +24,8 @@
     border-radius: 4px; /* Tambahkan sudut membulat */
     border: 1px solid #d1d5db; /* Tambahkan border abu-abu */
 }
+
+.active {
+    color: #2076ff;
+    font-weight: bold;
+}

@@ -22,8 +22,15 @@
                     <a href="/operator/dashboard">Shafwah Operator Panel</a>
                 </h1>
                 <div class="flex space-x-4">
-                    <ul class="flex space-x-6 text-lg text-white">
-                        <li><a href="{{ route('operator.dashboard') }}" class="nav-link">Dashboard</a></li>
+                    <ul class="flex space-x-10 text-lg text-white font-bold">
+                        <li class="group">
+                            <a href="{{ route('operator.dashboard') }}"
+                                class="nav-link relative inline-block text-white transition-transform duration-300 ease-in-out group-hover:scale-105 group-hover:text-blue-500"
+                                style="color: #2076ff">
+                                Dashboard
+                                <span class="absolute left-0 bottom-0 w-0 h-1 bg-gradient-to-r from-blue-400 to-blue-600 transition-all duration-500 ease-in-out group-hover:w-full rounded-full"></span>
+                            </a>
+                        </li>
                     </ul>
 
                     <!-- User Icon with Dropdown -->
@@ -154,15 +161,55 @@
             <div class="px-10 py-20">
                 <nav class="my-8">
                     <ul class="space-y-6 text-lg text-gray-900">
-                        <li><a href="{{ route('operator.deskripsi') }}">Deskripsi</a></li>
-                        <li><a href="{{ route('operator.logo') }}">Logo</a></li>
-                        <li><a href="{{ route('operator.color') }}">Color Palette</a></li>
-                        <li><a href="{{ route('operator.typography') }}">Typography</a></li>
-                        <li><a href="{{ route('operator.illustration') }}">Illustration</a></li>
-                        <li><a href="{{ route('operator.social-media') }}">Social Media</a></li>
-                        <li><a href="{{ route('operator.iconography') }}">Iconography</a></li>
-                        <li><a href="{{ route('operator.campaign') }}">Campaign</a></li>
-                    </ul>
+                        <li>
+                            <a href="{{ route('operator.deskripsi') }}" 
+                               class="{{ request()->routeIs('operator.deskripsi') ? 'active' : '' }}">
+                                Deskripsi
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('operator.logo') }}" 
+                               class="{{ request()->routeIs('operator.logo') ? 'active' : '' }}">
+                                Logo
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('operator.color') }}" 
+                               class="{{ request()->routeIs('operator.color') ? 'active' : '' }}">
+                                Color Palette
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('operator.typography') }}" 
+                               class="{{ request()->routeIs('operator.typography') ? 'active' : '' }}">
+                                Typography
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('operator.illustration') }}" 
+                               class="{{ request()->routeIs('operator.illustration') ? 'active' : '' }}">
+                                Illustration
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('operator.social-media') }}" 
+                               class="{{ request()->routeIs('operator.social-media') ? 'active' : '' }}">
+                                Social Media
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('operator.iconography') }}" 
+                               class="{{ request()->routeIs('operator.iconography') ? 'active' : '' }}">
+                                Iconography
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('operator.campaign') }}" 
+                               class="{{ request()->routeIs('operator.campaign') ? 'active' : '' }}">
+                                Campaign
+                            </a>
+                        </li>
+                    </ul>                    
                 </nav>
             </div>
         </aside>

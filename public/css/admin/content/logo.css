@@ -180,3 +180,8 @@
     transform: rotate(-360deg);
   }
 }
+
+.active {
+  color: #2076ff;
+  font-weight: bold;
+}

@@ -47,49 +47,6 @@ links.forEach((link) => {
 
 window.addEventListener("scroll", setActiveLink);
 
-//* Scramble effect --------------------------------------------------------------------- //*
-const navLinks = document.querySelectorAll(".nav-link");
-
-navLinks.forEach((link) => {
-  const originalText = link.innerText;
-  const delay = 30; // Waktu delay antara perubahan karakter
-
-  link.addEventListener("mouseover", () => {
-    const scrambledChars = originalText.split("");
-
-    // Reset teks untuk animasi
-    link.innerText = originalText;
-
-    let index = 0; // Indeks karakter yang sedang diubah
-
-    const scrambleNextChar = () => {
-      if (index < scrambledChars.length) {
-        const modifiedText = scrambledChars
-          .map((char, i) => {
-            if (i < index) {
-              return char; // Kembalikan karakter asli yang sudah diperbaiki
-            }
-            // Cek apakah karakter adalah huruf
-            if (/[a-zA-Z]/.test(char)) {
-              return String.fromCharCode(Math.random() * (122 - 97 + 1) + 97); // Huruf kecil a-z
-            }
-            return char; // Kembalikan karakter asli jika bukan huruf
-          })
-          .join("");
-
-        link.innerText = modifiedText;
-
-        index++; // Pindah ke karakter berikutnya
-        setTimeout(scrambleNextChar, delay); // Set delay untuk karakter berikutnya
-      } else {
-        // Setelah semua karakter diperbaiki, kembalikan ke teks asli
-        link.innerText = originalText;
-      }
-    };
-
-    scrambleNextChar(); // Mulai animasi
-  });
-});
 
 //*logout
 // Dropdown Logic

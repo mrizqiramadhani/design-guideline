@@ -4,3 +4,8 @@
 * {
   font-family: Nohemi;
 }
+
+.active {
+  color: #2076ff;
+  font-weight: bold;
+}

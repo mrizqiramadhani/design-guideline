@@ -23,9 +23,22 @@
                     <a href="/admin/dashboard">Shafwah Admin Panel</a>
                 </h1>
                 <div class="flex space-x-4">
-                    <ul class="flex space-x-6 text-lg text-white">
-                        <li><a href="{{ route('admin.dashboard') }}" class="nav-link">Dashboard</a></li>
-                        <li><a href="{{ route('admin.show-operators') }}" class="nav-link">Operator</a></li>
+                    <ul class="flex space-x-10 text-lg text-white font-bold">
+                        <li class="group">
+                            <a href="{{ route('admin.dashboard') }}"
+                                class="nav-link relative inline-block text-white transition-transform duration-300 ease-in-out group-hover:scale-105 group-hover:text-blue-500"
+                                style="color: #2076ff">
+                                Dashboard
+                                <span class="absolute left-0 bottom-0 w-0 h-1 bg-gradient-to-r from-blue-400 to-blue-600 transition-all duration-500 ease-in-out group-hover:w-full rounded-full"></span>
+                            </a>
+                        </li>
+                        <li class="group">
+                            <a href="{{ route('admin.show-operators') }}"
+                                class="nav-link relative inline-block transition-transform duration-300 ease-in-out group-hover:scale-105 group-hover:text-blue-500">
+                                Operator
+                                <span class="absolute left-0 bottom-0 w-0 h-1 bg-gradient-to-r from-blue-400 to-blue-600 transition-all duration-500 ease-in-out group-hover:w-full rounded-full"></span>
+                            </a>
+                        </li>
                     </ul>
 
                     <!-- User Icon with Dropdown -->
@@ -156,15 +169,55 @@
             <div class="px-10 py-20">
                 <nav class="my-8">
                     <ul class="space-y-6 text-lg text-gray-900">
-                        <li><a href="{{ route('admin.deskripsi') }}">Deskripsi</a></li>
-                        <li><a href="{{ route('admin.logo') }}">Logo</a></li>
-                        <li><a href="{{ route('admin.color') }}">Color Palette</a></li>
-                        <li><a href="{{ route('admin.typography') }}">Typography</a></li>
-                        <li><a href="{{ route('admin.illustration') }}">Illustration</a></li>
-                        <li><a href="{{ route('admin.social-media') }}">Social Media</a></li>
-                        <li><a href="{{ route('admin.iconography') }}">Iconography</a></li>
-                        <li><a href="{{ route('admin.campaign') }}">Campaign</a></li>
-                    </ul>
+                        <li>
+                            <a href="{{ route('admin.deskripsi') }}" 
+                               class="{{ request()->routeIs('admin.deskripsi') ? 'active' : '' }}">
+                                Deskripsi
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('admin.logo') }}" 
+                               class="{{ request()->routeIs('admin.logo') ? 'active' : '' }}">
+                                Logo
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('admin.color') }}" 
+                               class="{{ request()->routeIs('admin.color') ? 'active' : '' }}">
+                                Color Palette
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('admin.typography') }}" 
+                               class="{{ request()->routeIs('admin.typography') ? 'active' : '' }}">
+                                Typography
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('admin.illustration') }}" 
+                               class="{{ request()->routeIs('admin.illustration') ? 'active' : '' }}">
+                                Illustration
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('admin.social-media') }}" 
+                               class="{{ request()->routeIs('admin.social-media') ? 'active' : '' }}">
+                                Social Media
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('admin.iconography') }}" 
+                               class="{{ request()->routeIs('admin.iconography') ? 'active' : '' }}">
+                                Iconography
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('admin.campaign') }}" 
+                               class="{{ request()->routeIs('admin.campaign') ? 'active' : '' }}">
+                                Campaign
+                            </a>
+                        </li>
+                    </ul>                    
                 </nav>
             </div>
         </aside>
