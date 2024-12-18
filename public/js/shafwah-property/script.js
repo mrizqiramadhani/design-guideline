@@ -115,3 +115,21 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 });
+
+//! AOS Illustration
+document.addEventListener("DOMContentLoaded", function () {
+  AOS.init({
+    duration: 1000, // Durasi animasi dalam ms
+    once: true, // Animasi hanya muncul sekali
+  });
+
+  var masonryGrid = document.querySelector("#masonry-grid");
+  if (masonryGrid) {
+    new Masonry(masonryGrid, {
+      itemSelector: ".group", // Elemen grid target
+      columnWidth: masonryGrid.querySelector(".group"), // Dasar kolom
+      percentPosition: true, // Posisi relatif persen
+      gutter: 18, // Jarak antar elemen
+    });
+  }
+});
