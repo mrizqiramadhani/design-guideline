@@ -65,12 +65,11 @@
     <div id="addCampaign" class="fixed inset-0 bg-gray-500 bg-opacity-50 hidden flex items-center justify-center z-50">
         <div class="bg-white rounded-lg w-full max-w-md p-8 shadow-lg relative">
             <h2 class="text-2xl font-semibold mb-4">Add New Campaign</h2>
-            <form action="{{ route('operator.campaign.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('admin.campaign.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="mb-4">
                     <label for="unit_id" class="block text-gray-700">Unit Name:</label>
                     <select id="unit_id" name="unit_id" class="w-full border border-gray-300 p-2 rounded">
-                        <!-- Menampilkan unit yang relevan saja: Shafwah holidays dan Shafwah property -->
                         @foreach ($units as $unit)
                             @if (in_array($unit['name'], ['Shafwah holidays', 'Shafwah property']))
                                 <option value="{{ $unit['id'] }}">{{ $unit['name'] }}</option>
@@ -82,16 +81,21 @@
                     @enderror
                 </div>
                 <div class="mb-4">
+                    <label for="status" class="block text-gray-700">Status:</label>
+                    <select id="status" name="status" class="w-full border border-gray-300 p-2 rounded" required>
+                        <option value="publish">Publish</option>
+                        <option value="private">Private</option>
+                    </select>
+                </div>
+                <div class="mb-4">
                     <label for="path" class="block text-gray-700">Campaign Image:</label>
-                    <input type="file" id="path" name="path"
-                        class="w-full border border-gray-300 p-2 rounded">
+                    <input type="file" id="path" name="path" class="w-full border border-gray-300 p-2 rounded">
                     @error('path')
                         <div class="text-red-500 text-sm">{{ $message }}</div>
                     @enderror
                 </div>
                 <div class="flex justify-end">
-                    <button type="button" onclick="closeModal('addCampaign')"
-                        class="mr-4 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">
+                    <button type="button" onclick="closeModal('addCampaign')" class="mr-4 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">
                         Cancel
                     </button>
                     <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
@@ -108,7 +112,7 @@
             <h2 class="text-2xl font-semibold mb-4">Edit Campaign</h2>
             <form id="editCampaignForm" method="POST" enctype="multipart/form-data">
                 @csrf
-                @method('PUT') <!-- Untuk PUT method pada update -->
+                @method('PUT')
                 <div class="mb-4">
                     <label for="editUnitName" class="block text-gray-700">Unit Name:</label>
                     <select id="editUnitName" name="unit_id" class="w-full border border-gray-300 p-2 rounded" required>
@@ -119,19 +123,28 @@
                         @endforeach
                     </select>
                 </div>
-
+    
                 <div class="mb-4">
-                    <label for="editImageCampaign" class="block text-gray-700">Campaign:</label>
-                    <input type="file" id="editImageCampaign" name="path"
-                        class="w-full border border-gray-300 p-2 rounded">
-                    <p class="text-xs text-gray-500 mt-1">Kosongkan jika tidak ingin mengubah gambar.</p>
+                    <label for="editStatus" class="block text-gray-700">Status:</label>
+                    <select id="editStatus" name="status" class="w-full border border-gray-300 p-2 rounded" required>
+                        <option value="publish">Publish</option>
+                        <option value="private">Private</option>
+                    </select>
                 </div>
 
+                <div class="mb-4">
+                    <label for="editImageCampaign" class="block text-gray-700">Campaign Image:</label>
+                    <input type="file" id="editImageCampaign" name="path" class="w-full border border-gray-300 p-2 rounded">
+                    <p class="text-xs text-gray-500 mt-1">Kosongkan jika tidak ingin mengubah gambar.</p>
+                </div>
+    
                 <div class="flex justify-end">
-                    <button type="button" onclick="closeModal('editCampaign')"
-                        class="mr-4 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Cancel</button>
-                    <button type="submit"
-                        class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Update</button>
+                    <button type="button" onclick="closeModal('editCampaign')" class="mr-4 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">
+                        Cancel
+                    </button>
+                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                        Update
+                    </button>
                 </div>
             </form>
         </div>
@@ -243,6 +256,7 @@
                         <tr>
                             <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Unit</th>
                             <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Campaign</th>
+                            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Status</th>
                             <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Actions</th>
                         </tr>
                     </thead>
@@ -254,25 +268,38 @@
                                 <td class="px-4 py-2 text-gray-900">
                                     <div class="w-32 h-20 bg-gray-200 flex items-center justify-center">
                                         <img src="{{ asset('storage/' . $campaign->path) }}" alt="Campaign Image"
-                                            class="max-w-full max-h-full object-contain">
+                                             class="max-w-full max-h-full object-contain">
                                     </div>
                                 </td>
+            
+                                <!-- Status Column -->
+                                <td class="px-4 py-2 text-gray-900">
+                                    <span class="px-2 py-1 rounded-full
+                                        @if ($campaign->status == 'publish') bg-green-200 text-green-800
+                                        @elseif ($campaign->status == 'private') bg-gray-200 text-gray-800 @endif">
+                                        {{ ucfirst($campaign->status) }}
+                                    </span>
+                                </td>
+            
+                                <!-- Action Column -->
                                 <td class="px-4 py-2">
                                     <div class="flex space-x-2">
                                         <!-- Edit Button -->
-                                        <button
-                                            onclick="openEditModal({{ $campaign->id }}, '{{ $campaign->unit->id }}', '{{ $campaign->path }}')"
-                                            class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">
+                                        <button onclick="openEditModal({{ $campaign->id }}, '{{ $campaign->unit->id }}', '{{ $campaign->path }}')"
+                                                class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">
                                             Edit
                                         </button>
+            
+                                        <!-- Delete Button -->
                                         <button onclick="openDeleteModal({{ $campaign->id }})"
-                                            class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">
+                                                class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">
                                             Delete
                                         </button>
                                     </div>
                                 </td>
                             </tr>
                         @endforeach
+                    </tbody>
                 </table>
             </div>
 

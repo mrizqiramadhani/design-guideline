@@ -15,6 +15,7 @@ class Campaign extends Model
     // Kolom yang dapat diisi mass-assignment
     protected $fillable = [
         'path',
+        'status',
         'unit_id',
         'user_id',
     ];
