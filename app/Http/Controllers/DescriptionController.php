@@ -10,7 +10,7 @@ class DescriptionController extends Controller
 {
     public function index(Request $request)
     {
-        $descriptions = Description::all();
+        $descriptions = Description::paginate(8);
         $units = Unit::all();
         $userRole = auth()->user()->role;
 
@@ -18,11 +18,11 @@ class DescriptionController extends Controller
             ? 'admin.dashboard-admin'
             : 'operator.dashboard-operator';
 
-        // if ($descriptions->currentPage() > $descriptions->lastPage()) {
-        //     $routeName = $userRole === 'admin' ? 'admin.description' : 'operator.description';
+        if ($descriptions->currentPage() > $descriptions->lastPage()) {
+            $routeName = $userRole === 'admin' ? 'admin.description' : 'operator.description';
 
-        //     return redirect()->route($routeName, ['page' => $descriptions->lastPage()]);
-        // }
+            return redirect()->route($routeName, ['page' => $descriptions->lastPage()]);
+        }
 
         return view($view, compact('descriptions', 'units'));
     }

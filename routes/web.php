@@ -38,18 +38,18 @@ use App\Http\Controllers\IconographyController;
 // })->name('logo-white-sg');
 
 //* route Logo Unit bisnis
-Route::get('/', [ShowunitController::class, 'showShafwahGroupPage']);
-Route::get('/shafwah-group', [ShowunitController::class, 'showShafwahGroupPage'])->name('shafwah-group');
-Route::get('/shafwah-holidays', [ShowunitController::class, 'showShafwahHolidaysPage'])->name('shafwah-holidays');
-Route::get('/shafwah-property', [ShowunitController::class, 'showShafwahPropertyPage'])->name('shafwah-property');
+Route::get('/', [ShowUnitController::class, 'showShafwahGroupPage']);
+Route::get('/shafwah-group', [ShowUnitController::class, 'showShafwahGroupPage'])->name('shafwah-group');
+Route::get('/shafwah-holidays', [ShowUnitController::class, 'showShafwahHolidaysPage'])->name('shafwah-holidays');
+Route::get('/shafwah-property', [ShowUnitController::class, 'showShafwahPropertyPage'])->name('shafwah-property');
 
 //! route logo primary dan white
-Route::get('/shafwah-group/logo-primary/{id}', [ShowunitController::class, 'showPrimaryLogosShafwahGroup'])->name('logo-primary-sg');
-Route::get('/shafwah-group/logo-white/{id}', [ShowunitController::class, 'showWhiteLogosShafwahGroup'])->name('logo-white-sg');
-Route::get('/shafwah-holidays/logo-primary/{id}', [ShowunitController::class, 'showPrimaryLogosShafwahHolidays'])->name('logo-primary-sh');
-Route::get('/shafwah-holidays/logo-white/{id}', [ShowunitController::class, 'showWhiteLogosShafwahHolidays'])->name('logo-white-sh');
-Route::get('/shafwah-property/logo-primary/{id}', [ShowunitController::class, 'showPrimaryLogosShafwahProperty'])->name('logo-primary-srp');
-Route::get('/shafwah-property/logo-white/{id}', [ShowunitController::class, 'showWhiteLogosShafwahProperty'])->name('logo-white-srp');
+Route::get('/shafwah-group/logo-primary/{id}', [ShowUnitController::class, 'showPrimaryLogosShafwahGroup'])->name('logo-primary-sg');
+Route::get('/shafwah-group/logo-white/{id}', [ShowUnitController::class, 'showWhiteLogosShafwahGroup'])->name('logo-white-sg');
+Route::get('/shafwah-holidays/logo-primary/{id}', [ShowUnitController::class, 'showPrimaryLogosShafwahHolidays'])->name('logo-primary-sh');
+Route::get('/shafwah-holidays/logo-white/{id}', [ShowUnitController::class, 'showWhiteLogosShafwahHolidays'])->name('logo-white-sh');
+Route::get('/shafwah-property/logo-primary/{id}', [ShowUnitController::class, 'showPrimaryLogosShafwahProperty'])->name('logo-primary-srp');
+Route::get('/shafwah-property/logo-white/{id}', [ShowUnitController::class, 'showWhiteLogosShafwahProperty'])->name('logo-white-srp');
 
 
 

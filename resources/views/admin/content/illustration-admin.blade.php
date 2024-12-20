@@ -332,9 +332,7 @@
                         alt="Empty Content" class="w-32 h-32">
                     <p class="text-gray-500 mt-3">Tidak ada konten untuk ditampilkan</p>
                 </div>
-
             @endif
-
         </main>
     </div>
     <footer class="absolute bottom-0 left-0 w-full bg-black text-center text-white p-4 font-bold">

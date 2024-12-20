@@ -259,7 +259,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse ($descriptions as $description)
+                        @foreach ($descriptions as $description)
                             <tr class="border-t">
                                 <td class="px-4 py-2 text-gray-900">{{ $description->title ?? 'N/A' }}</td>
                                 <td class="px-4 py-2 text-gray-900">{{ $description->unit->name }}</td>
@@ -279,15 +279,70 @@
                                     </div>
                                 </td>
                             </tr>
-                        @empty
-                            <tr>
-                                <td colspan="4" class="px-4 py-2 text-center text-gray-500">No descriptions
-                                    available.</td>
-                            </tr>
-                        @endforelse
+                        @endforeach
                     </tbody>
                 </table>
             </div>
+
+            <!-- Pagination -->
+            @if ($descriptions->count() > 0)
+                <div class="flex justify-center mt-5">
+                    <ol class="flex justify-center gap-2 text-xs font-medium">
+                        <!-- Previous Page -->
+                        @if (!$descriptions->onFirstPage())
+                            <li>
+                                <a href="{{ $descriptions->previousPageUrl() }}"
+                                    class="inline-flex items-center justify-center rounded border border-gray-200 bg-white text-black dark:border-gray-800 dark:bg-gray-900 dark:text-white">
+                                    <span class="sr-only">Prev Page</span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" viewBox="0 0 20 20"
+                                        fill="currentColor">
+                                        <path fill-rule="evenodd"
+                                            d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+                                </a>
+                            </li>
+                        @endif
+
+                        <!-- Page Numbers -->
+                        @foreach ($descriptions->links()->elements[0] as $page => $url)
+                            <li>
+                                @if ($page == $descriptions->currentPage())
+                                    <span
+                                        class="block w-8 h-8 rounded bg-black text-center leading-8 text-white">{{ $page }}</span>
+                                @else
+                                    <a href="{{ $url }}"
+                                        class="block w-8 h-8 rounded border border-gray-200 bg-white text-center leading-8 text-black">
+                                        {{ $page }}
+                                    </a>
+                                @endif
+                            </li>
+                        @endforeach
+
+                        <!-- Next Page -->
+                        @if ($descriptions->hasMorePages())
+                            <li>
+                                <a href="{{ $descriptions->nextPageUrl() }}"
+                                    class="inline-flex items-center justify-center rounded border border-gray-200 bg-white text-black dark:border-gray-800 dark:bg-gray-900 dark:text-white">
+                                    <span class="sr-only">Next Page</span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" viewBox="0 0 20 20"
+                                        fill="currentColor">
+                                        <path fill-rule="evenodd"
+                                            d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+                                </a>
+                            </li>
+                        @endif
+                    </ol>
+                </div>
+            @else
+                <div class="flex flex-col items-center justify-center mt-5">
+                    <img src="https://i.pinimg.com/originals/6a/f3/71/6af371f102361c0fd47619eb524bf4bb.gif"
+                        alt="Empty Content" class="w-32 h-32">
+                    <p class="text-gray-500 mt-3">Tidak ada konten untuk ditampilkan</p>
+                </div>
+            @endif
         </main>
     </div>
     <footer class="absolute bottom-0 left-0 w-full bg-black text-center text-white p-4 font-bold">
