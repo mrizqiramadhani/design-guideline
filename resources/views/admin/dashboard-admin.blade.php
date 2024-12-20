@@ -219,6 +219,33 @@
                 </div>
             </div>
 
+            <!-- Modal Delete Description -->
+            <div id="deleteDescriptionModal"
+                class="fixed inset-0 hidden bg-gray-500 bg-opacity-50 flex items-center justify-center z-50">
+                <div class="bg-white rounded-lg w-full max-w-md p-8 shadow-lg">
+                    <!-- Header Modal -->
+                    <h2 class="text-2xl font-semibold mb-4">Delete Description</h2>
+
+                    <!-- Informasi Hapus -->
+                    <p class="mb-4">Are you sure you want to delete this description and its associated content?</p>
+
+                    <!-- Action buttons -->
+                    <div class="flex justify-end">
+                        <button type="button" onclick="closeModal('deleteDescriptionModal')"
+                            class="mr-4 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">
+                            Cancel
+                        </button>
+                        <form id="deleteDescriptionForm" action="" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
+                                Delete
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
 
             <!-- Content Table -->
             <div class="overflow-x-auto">
@@ -239,17 +266,16 @@
                                 <td class="px-4 py-2 text-gray-900">{{ $description->content }}</td>
                                 <td class="px-4 py-2">
                                     <div class="flex space-x-2">
-                                        <a href="javascript:void(0);"
+                                        <button
                                             onclick="openEditDescriptionModal({{ $description->id }}, {{ $description->unit_id }}, '{{ $description->title }}', '{{ $description->content }}')"
-                                            class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">Edit</a>
+                                            class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">
+                                            Edit
+                                        </button>
 
-                                        <form action="#" method="POST"
-                                            onsubmit="return confirm('Are you sure you want to delete this description?');">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit"
-                                                class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">Delete</button>
-                                        </form>
+                                        <button onclick="openDeleteDescriptionModal({{ $description->id }})"
+                                            class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">
+                                            Delete
+                                        </button>
                                     </div>
                                 </td>
                             </tr>
@@ -302,8 +328,14 @@
             modal.classList.remove("hidden");
         }
 
-        function closeModal(modalId) {
-            document.getElementById(modalId).classList.add("hidden");
+        function openDeleteDescriptionModal(id) {
+            // Atur action URL form delete
+            const form = document.getElementById('deleteDescriptionForm');
+            form.action = `/admin/description/${id}`;
+
+            // Tampilkan modal
+            const modal = document.getElementById('deleteDescriptionModal');
+            modal.classList.remove('hidden');
         }
     </script>
     @if (session('success'))

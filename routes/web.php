@@ -80,18 +80,14 @@ Route::group(['middleware' => ['auth', 'startSessionByRole']], function () {
             return view('admin.operator-admin');
         })->name('admin.operator-list');
 
-        // Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
         Route::get('/admin/dashboard', [DescriptionController::class, 'index'])->name('admin.dashboard');
 
         //! route admin description
-        // Route::get('/admin/description', function () {
-        //     return view('admin.dashboard-admin');
-        // })->name('admin.description');
         Route::get('admin/description', [DescriptionController::class, 'index'])->name('admin.description');
         Route::post('admin/description', [DescriptionController::class, 'store'])->name('admin.description.store');
         Route::get('admin/description/{id}/edit', [descriptionController::class, 'edit'])->name('admin.description.edit');
         Route::put('admin/description/{id}', [descriptionController::class, 'update'])->name('admin.description.update');
-        // Route::delete('admin/description/{id}', [descriptionController::class, 'destroy'])->name('admin.description.destroy');
+        Route::delete('admin/description/{id}', [descriptionController::class, 'destroy'])->name('admin.description.destroy');
 
 
         //! Route admin Logo

@@ -86,4 +86,14 @@ class DescriptionController extends Controller
         return redirect()->route(auth()->user()->role === 'admin' ? 'admin.description' : 'operator.description')
             ->with('success', 'Description updated successfully!');
     }
+
+    public function destroy($id)
+    {
+        $description = Description::findOrFail($id);
+
+        $description->delete();
+
+        return redirect()->route(auth()->user()->role === 'admin' ? 'admin.description' : 'operator.description')
+            ->with('success', 'Description deleted successfully!');
+    }
 }
