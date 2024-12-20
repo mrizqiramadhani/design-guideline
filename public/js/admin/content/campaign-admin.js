@@ -32,7 +32,7 @@ function openEditModal(id, unitId, path) {
   // Set status campaign pada dropdown status
   const statusSelect = document.getElementById("editStatus");
   // Menambahkan logika untuk set status dari campaign yang dipilih
-  if (path && path.includes('publish')) {
+  if (path && path.includes("publish")) {
     statusSelect.value = "publish";
   } else {
     statusSelect.value = "private";
@@ -136,6 +136,7 @@ document
     // Ambil data dari form
     const unitId = document.getElementById("editUnitName").value;
     const path = document.getElementById("editImageCampaign").files;
+    const status = document.getElementById("editStatus").value;
 
     // Reset pesan error sebelumnya
     const errorContainer = document.getElementById("editCampaignErrors");
@@ -147,7 +148,7 @@ document
       errors.push("Unit Name is required.");
     }
 
-    // Validasi path (gambar), jika ada file diupload
+    // Validasi path (gambar), hanya jika ada file yang diunggah
     if (path.length > 0) {
       const allowedMimeTypes = [
         "image/jpeg",
@@ -166,6 +167,14 @@ document
       if (path[0].size > maxSize) {
         errors.push("Campaign Image size must not exceed 5MB.");
       }
+    }
+
+    // Validasi status
+    const allowedStatuses = ["publish", "private"];
+    if (!status) {
+      errors.push("Status is required.");
+    } else if (!allowedStatuses.includes(status)) {
+      errors.push("Status must be either 'publish' or 'private'.");
     }
 
     // Jika ada error, tampilkan pesan error di modal
