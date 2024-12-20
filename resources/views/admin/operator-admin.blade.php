@@ -75,8 +75,8 @@
                 <nav class="my-8">
                     <ul class="space-y-6 text-lg text-gray-900">
                         <li>
-                            <a href="{{ route('admin.deskripsi') }}"
-                                class="{{ request()->routeIs('admin.deskripsi') ? 'active' : '' }}">
+                            <a href="{{ route('admin.description') }}"
+                                class="{{ request()->routeIs('admin.description') ? 'active' : '' }}">
                                 Deskripsi
                             </a>
                         </li>

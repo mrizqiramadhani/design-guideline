@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('descriptions', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
+            $table->string('title')->nullable();
             $table->text('content');
             $table->foreignId('unit_id')->constrained('units')->onDelete('cascade');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');

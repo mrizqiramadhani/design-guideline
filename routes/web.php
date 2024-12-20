@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\OperatorController;
+use App\Http\Controllers\DescriptionController;
 use App\Http\Controllers\ColorController;
 use App\Http\Controllers\LogoController;
 use App\Http\Controllers\ShowUnitController;
@@ -70,17 +71,27 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 //* Admin Route
 Route::group(['middleware' => ['auth', 'startSessionByRole']], function () {
     Route::group(['middleware' => ['checkAdmin']], function () {
-        Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
         Route::post('/admin/add-operator', [AdminController::class, 'addOperator'])->name('admin.addOperator');
         Route::get('/admin/operator-list', [AdminController::class, 'showOperators'])->name('admin.show-operators');
         Route::get('/admin/operator/edit/{id}', [AdminController::class, 'editOperator'])->name('admin.editOperator');
         Route::put('/admin/operator/update/{id}', [AdminController::class, 'updateOperator'])->name('admin.updateOperator');
+        Route::delete('/admin/operator/{id}', [AdminController::class, 'deleteOperator'])->name('admin.deleteOperator');
         Route::get('/admin/operator', function () {
             return view('admin.operator-admin');
         })->name('admin.operator-list');
-        Route::get('/admin/deskripsi', function () {
-            return view('admin.dashboard-admin');
-        })->name('admin.deskripsi');
+
+        // Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+        Route::get('/admin/dashboard', [DescriptionController::class, 'index'])->name('admin.dashboard');
+
+        //! route admin description
+        // Route::get('/admin/description', function () {
+        //     return view('admin.dashboard-admin');
+        // })->name('admin.description');
+        Route::get('admin/description', [DescriptionController::class, 'index'])->name('admin.description');
+        Route::post('admin/description', [DescriptionController::class, 'store'])->name('admin.description.store');
+        // Route::get('admin/description/{id}/edit', [descriptionController::class, 'edit'])->name('admin.description.edit');
+        // Route::put('admin/description/{id}', [descriptionController::class, 'update'])->name('admin.description.update');
+        // Route::delete('admin/description/{id}', [descriptionController::class, 'destroy'])->name('admin.description.destroy');
 
 
         //! Route admin Logo
@@ -195,5 +206,3 @@ Route::group(['middleware' => ['auth', 'startSessionByRole']], function () {
         Route::delete('operator/campaign/{id}', [CampaignController::class, 'destroy'])->name('operator.campaign.destroy');
     });
 });
-
-Route::delete('/admin/operator/{id}', [AdminController::class, 'deleteOperator'])->name('admin.deleteOperator');

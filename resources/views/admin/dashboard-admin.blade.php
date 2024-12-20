@@ -15,7 +15,7 @@
         <div class="mx-auto max-w-screen-xl px-4 py-3 sm:px-6 sm:py-4 lg:px-8">
             <div class="flex items-center justify-between">
                 <h1 class="text-2xl font-bold text-white sm:text-3xl cursor-pointer">
-                    <a href="/admin/dashboard">Shafwah Admin Panel</a>
+                    <a href="{{ route('admin.dashboard') }}">Shafwah Admin Panel</a>
                 </h1>
                 <div class="flex space-x-4">
                     <ul class="flex space-x-10 text-lg text-white font-bold">
@@ -71,9 +71,9 @@
                 <nav class="my-8">
                     <ul class="space-y-6 text-lg text-gray-900 font-bold">
                         <li>
-                            <a href="{{ route('admin.deskripsi') }}"
-                                class="{{ request()->routeIs('admin.deskripsi','admin.dashboard') ? 'active' : '' }}">
-                                Deskripsi
+                            <a href="{{ route('admin.description') }}"
+                                class="{{ request()->routeIs('admin.description', 'admin.dashboard') ? 'active' : '' }}">
+                                Description
                             </a>
                         </li>
                         <li>
@@ -125,12 +125,57 @@
 
         <main class="w-4/5 p-8 bg-gray-100">
             <div class="mt-20 mb-5 flex items-center justify-between">
-                <h2 class="text-4xl font-bold text-gray-900">Deskripsi</h2>
+                <h2 class="text-4xl font-bold text-gray-900">Description</h2>
                 <div class="flex space-x-4">
-                    <a href="#" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">+ Add New
-                        Content</a>
+                    <button onclick="openModal('addDescription')"
+                        class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
+                        + Add New Description
+                    </button>
                 </div>
             </div>
+
+
+            <!-- Modal Add Description -->
+            <div id="addDescription"
+                class="fixed inset-0 bg-gray-500 bg-opacity-50 hidden flex items-center justify-center z-50">
+                <div class="bg-white rounded-lg w-full max-w-md p-8 shadow-lg relative">
+                    <h2 class="text-2xl font-semibold mb-4">Add New Description</h2>
+                    <form action="{{ route('admin.description.store') }}" method="POST">
+                        @csrf
+                        <div class="mb-4">
+                            <label for="unit_id" class="block text-gray-700">Unit Name:</label>
+                            <select id="unit_id" name="unit_id" class="w-full border border-gray-300 p-2 rounded"
+                                required>
+                                @foreach ($units as $unit)
+                                    <option value="{{ $unit->id }}">{{ $unit->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="mb-4">
+                            <label for="title" class="block text-gray-700">Title:</label>
+                            <input type="text" id="title" name="title"
+                                class="w-full border border-gray-300 p-2 rounded" placeholder="Enter title (optional)">
+                        </div>
+                        <div class="mb-4">
+                            <label for="content" class="block text-gray-700">Content:</label>
+                            <textarea id="content" name="content" rows="4" class="w-full border border-gray-300 p-2 rounded"
+                                placeholder="Enter content" required></textarea>
+                        </div>
+                        <div class="flex justify-end">
+                            <button type="button" onclick="closeModal('addDescription')"
+                                class="mr-4 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">
+                                Cancel
+                            </button>
+                            <button type="submit"
+                                class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
+                                Save
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+
 
 
             <!-- Content Table -->
@@ -138,60 +183,44 @@
                 <table class="min-w-full border border-gray-300 bg-white">
                     <thead class="bg-gray-50">
                         <tr>
-                            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Name</th>
-                            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Category</th>
-                            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Content Type</th>
-                            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Last Updated By</th>
+                            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Title</th>
+                            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Unit</th>
+                            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Text Content</th>
                             <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="border-t">
-                            <td class="px-4 py-2 text-gray-900">Shafwah Group</td>
-                            <td class="px-4 py-2 text-gray-900">Description</td>
-                            <td class="px-4 py-2 text-gray-900">Text</td>
-                            <td class="px-4 py-2"></td>
-                            <td class="px-4 py-2">
-                                <div class="flex space-x-2">
-                                    <a href="#"
-                                        class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">Edit</a>
-                                    <a href="#"
-                                        class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">Delete</a>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr class="border-t">
-                            <td class="px-4 py-2 text-gray-900">Shafwah Holidays</td>
-                            <td class="px-4 py-2 text-gray-900">Description</td>
-                            <td class="px-4 py-2 text-gray-900">Text</td>
-                            <td class="px-4 py-2"></td>
-                            <td class="px-4 py-2">
-                                <div class="flex space-x-2">
-                                    <a href="#"
-                                        class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">Edit</a>
-                                    <a href="#"
-                                        class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">Delete</a>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr class="border-t">
-                            <td class="px-4 py-2 text-gray-900">Shafwah Property</td>
-                            <td class="px-4 py-2 text-gray-900">Description</td>
-                            <td class="px-4 py-2 text-gray-900">Text</td>
-                            <td class="px-4 py-2"></td>
-                            <td class="px-4 py-2">
-                                <div class="flex space-x-2">
-                                    <a href="#"
-                                        class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">Edit</a>
-                                    <a href="#"
-                                        class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">Delete</a>
-                                </div>
-                            </td>
-                        </tr>
+                        @forelse ($descriptions as $description)
+                            <tr class="border-t">
+                                <td class="px-4 py-2 text-gray-900">{{ $description->title ?? 'N/A' }}</td>
+                                <td class="px-4 py-2 text-gray-900">{{ $description->unit->name }}</td>
+                                <td class="px-4 py-2 text-gray-900">{{ $description->content }}</td>
+                                <td class="px-4 py-2">
+                                    <div class="flex space-x-2">
+                                        <a href="#"
+                                            class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">Edit</a>
+                                        <form action="#" method="POST"
+                                            onsubmit="return confirm('Are you sure you want to delete this description?');">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit"
+                                                class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">Delete</button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="4" class="px-4 py-2 text-center text-gray-500">No descriptions
+                                    available.</td>
+                            </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>
-        </main>
+
+    </div>
+    </main>
     </div>
     <footer class="absolute bottom-0 left-0 w-full bg-black text-center text-white p-4 font-bold">
         <aside>
@@ -199,6 +228,27 @@
         </aside>
     </footer>
     <script src="{{ asset('js/admin/db-script.js') }}"></script>
+    <script src="{{ asset('js/admin/content/description-admin.js') }}"></script>
+    <script>
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.remove('hidden');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.add('hidden');
+        }
+    </script>
+    @if (session('success'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: '{{ session('success') }}',
+                timer: 2000, // Pesan dari controller
+                showConfirmButton: false,
+            });
+        </script>
+    @endif
 </body>
 
 </html>
