@@ -76,6 +76,7 @@
             <h2 class="text-2xl font-semibold mb-4">Add New Illustration</h2>
             <form action="{{ route('admin.illustration.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
+                <div id="illustrationErrors" class="hidden mb-4"></div>
                 <div class="mb-4">
                     <label for="unit_id" class="block text-gray-700">Unit Name:</label>
                     <select id="unit_id" name="unit_id" class="w-full border border-gray-300 p-2 rounded">
@@ -110,6 +111,7 @@
             <form id="editIllustrationForm" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT') <!-- Untuk PUT method pada update -->
+                <div id="editIllustrationErrors" class="hidden mb-4"></div>
                 <div class="mb-4">
                     <label for="editUnitName" class="block text-gray-700">Unit Name:</label>
                     <select id="editUnitName" name="unit_id" class="w-full border border-gray-300 p-2 rounded" required>

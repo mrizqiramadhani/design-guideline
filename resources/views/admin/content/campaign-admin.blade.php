@@ -75,6 +75,7 @@
             <h2 class="text-2xl font-semibold mb-4">Add New Campaign</h2>
             <form action="{{ route('admin.campaign.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
+                <div id="campaignErrors" class="hidden mb-4"></div>
                 <div class="mb-4">
                     <label for="unit_id" class="block text-gray-700">Unit Name:</label>
                     <select id="unit_id" name="unit_id" class="w-full border border-gray-300 p-2 rounded">
@@ -84,9 +85,6 @@
                             @endif
                         @endforeach
                     </select>
-                    @error('unit_id')
-                        <div class="text-red-500 text-sm">{{ $message }}</div>
-                    @enderror
                 </div>
                 <div class="mb-4">
                     <label for="status" class="block text-gray-700">Status:</label>
@@ -97,7 +95,8 @@
                 </div>
                 <div class="mb-4">
                     <label for="path" class="block text-gray-700">Campaign Image:</label>
-                    <input type="file" id="path" name="path" class="w-full border border-gray-300 p-2 rounded">
+                    <input type="file" id="path" name="path"
+                        class="w-full border border-gray-300 p-2 rounded">
                     @error('path')
                         <div class="text-red-500 text-sm">{{ $message }}</div>
                     @enderror
@@ -121,7 +120,7 @@
             <h2 class="text-2xl font-semibold mb-4">Edit Campaign</h2>
             <form id="editCampaignForm" method="POST" enctype="multipart/form-data">
                 @csrf
-                @method('PUT')
+                @method('PUT') <!-- Untuk PUT method pada update -->
                 <div class="mb-4">
                     <label for="editUnitName" class="block text-gray-700">Unit Name:</label>
                     <select id="editUnitName" name="unit_id" class="w-full border border-gray-300 p-2 rounded" required>

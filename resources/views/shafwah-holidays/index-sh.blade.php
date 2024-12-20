@@ -8,6 +8,9 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="{{ asset('css/shafwah-holidays/style.css') }}" />
     <link rel="icon" href="{{ asset('img/main-SG.png') }}">
+    <script src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
 </head>
 
 <body>
@@ -192,9 +195,9 @@
                     </div>
 
                     <!-- Ilustration Section -->
-                    <div class="p-4 mb-8 min-h-[1000px] bg-white">
+                    <div class="p-4 mb-8 bg-white">
                         <h2 id="ilustration" class="uppercase font-bold text-3xl text-black mb-4 section-heading">
-                            Ilustration
+                            Illustration
                         </h2>
                         <p class="font-light text-gray-600 paragraf text-justify">
                             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facilis nostrum soluta assumenda
@@ -204,14 +207,19 @@
                             voluptates doloribus quas perspiciatis temporibus.
                         </p>
 
-                        <!-- Rectangle Container -->
-                        <div class="flex flex-wrap gap-4 mt-6 justify-between">
-                            @foreach ($illustrations as $illustration)
-                                <img src="{{ asset('storage/' . $illustration->path) }}" alt="Illustration Image"
-                                    class="bg-gray-200 w-[calc(50%-0.5rem)] h-64 rounded-md object-cover">
-                            @endforeach
-                        </div>
-
+                        @if ($illustrations->isNotEmpty())
+                            <!-- Rectangle Container -->
+                            <div id="masonry-grid" class="flex flex-wrap gap-4 mt-6">
+                                @foreach ($illustrations as $illustration)
+                                    <div class="overflow-hidden group w-full sm:w-[calc(50%-16px)] md:w-[calc(33.333%-16px)]"
+                                        data-aos="fade-up" data-aos-delay="{{ $loop->index * 100 }}">
+                                        <img src="{{ asset('storage/' . $illustration->path) }}"
+                                            alt="Illustration Image"
+                                            class="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-110 mb-5">
+                                    </div>
+                                @endforeach
+                            </div>
+                        @endif
                     </div>
 
                     <!-- Social Media Section -->

@@ -1,10 +1,128 @@
-//* Spinnder Loading
-document.getElementById("addLogoForm").addEventListener("submit", function () {
-  document.getElementById("loadingSpinner").classList.remove("hidden");
-});
-document.getElementById("editForm").addEventListener("submit", function () {
-  document.getElementById("loadingSpinnerEdit").classList.remove("hidden");
-});
+// //* Spinnder Loading
+// document.getElementById("addLogoForm").addEventListener("submit", function () {
+//   document.getElementById("loadingSpinner").classList.remove("hidden");
+// });
+// document.getElementById("editForm").addEventListener("submit", function () {
+//   document.getElementById("loadingSpinnerEdit").classList.remove("hidden");
+// });
+
+//! form validation modal tambah
+document
+  .getElementById("submitLogoForm")
+  .addEventListener("click", function (event) {
+    event.preventDefault(); // Mencegah form langsung dikirimkan
+
+    const errors = [];
+
+    // Ambil data dari form
+    const title = document.getElementById("title").value.trim();
+    const thumbnail = document.getElementById("thumbnail").files;
+    const unitId = document.getElementById("unit_id").value;
+    const themePrimary = document.getElementById("theme_primary").files;
+    const themeWhite = document.getElementById("theme_white").files;
+
+    // Reset pesan error sebelumnya
+    const errorContainer = document.getElementById("formErrors");
+    errorContainer.innerHTML = ""; // Hapus semua pesan error sebelumnya
+    errorContainer.classList.add("hidden"); // Sembunyikan container error
+
+    // Validasi title
+    if (!title) {
+      errors.push("Title is required.");
+    } else if (title.length > 255) {
+      errors.push("Title cannot exceed 255 characters.");
+    }
+
+    // Validasi thumbnail
+    if (thumbnail.length === 0) {
+      errors.push("Thumbnail is required.");
+    } else {
+      const allowedMimeTypes = [
+        "image/jpeg",
+        "image/png",
+        "image/jpg",
+        "image/gif",
+        "image/svg+xml",
+      ];
+      const maxSize = 5048 * 1024; // 5048 KB
+
+      if (!allowedMimeTypes.includes(thumbnail[0].type)) {
+        errors.push(
+          "Thumbnail must be an image with jpeg, png, jpg, gif, or svg format."
+        );
+      }
+      if (thumbnail[0].size > maxSize) {
+        errors.push("Thumbnail size must not exceed 5MB.");
+      }
+    }
+
+    // Validasi unit_id
+    if (!unitId) {
+      errors.push("Unit Bisnis is required.");
+    }
+
+    // Validasi theme_primary
+    if (themePrimary.length > 0) {
+      const allowedMimeTypes = [
+        "image/jpeg",
+        "image/png",
+        "image/jpg",
+        "image/gif",
+        "image/svg+xml",
+      ];
+      const maxSize = 5048 * 1024; // 5048 KB
+
+      for (let i = 0; i < themePrimary.length; i++) {
+        if (!allowedMimeTypes.includes(themePrimary[i].type)) {
+          errors.push(
+            "Each Theme Primary photo must be an image with jpeg, png, jpg, gif, or svg format."
+          );
+        }
+        if (themePrimary[i].size > maxSize) {
+          errors.push("Each Theme Primary photo size must not exceed 5MB.");
+        }
+      }
+    }
+
+    // Validasi theme_white
+    if (themeWhite.length > 0) {
+      const allowedMimeTypes = [
+        "image/jpeg",
+        "image/png",
+        "image/jpg",
+        "image/gif",
+        "image/svg+xml",
+      ];
+      const maxSize = 5048 * 1024; // 5048 KB
+
+      for (let i = 0; i < themeWhite.length; i++) {
+        if (!allowedMimeTypes.includes(themeWhite[i].type)) {
+          errors.push(
+            "Each Theme White photo must be an image with jpeg, png, jpg, gif, or svg format."
+          );
+        }
+        if (themeWhite[i].size > maxSize) {
+          errors.push("Each Theme White photo size must not exceed 5MB.");
+        }
+      }
+    }
+
+    // Jika ada error, tampilkan pesan error di modal
+    if (errors.length > 0) {
+      errors.forEach((error) => {
+        const errorDiv = document.createElement("div");
+        errorDiv.className = "bg-red-100 text-red-700 px-4 py-3 rounded mb-2";
+        errorDiv.innerHTML = `<span class="block sm:inline">${error}</span>`;
+        errorContainer.appendChild(errorDiv);
+      });
+      errorContainer.classList.remove("hidden"); // Tampilkan container error
+    } else {
+      // Jika validasi berhasil, tampilkan spinner dan submit form
+      const spinner = document.getElementById("loadingSpinner");
+      spinner.classList.remove("hidden"); // Tampilkan spinner
+      document.getElementById("addLogoForm").submit(); // Submit form
+    }
+  });
 
 //! Modal Tambah Logo
 function showModal() {
@@ -237,6 +355,12 @@ $("#editForm").on("submit", function (e) {
   formData.append("delete_primary_ids", deletePrimaryIds.join(","));
   formData.append("delete_white_ids", deleteWhiteIds.join(","));
 
+  // Reset pesan error sebelumnya
+  $("#formErrorsEdit").html("").addClass("hidden");
+
+  // Tampilkan loading spinner
+  $("#loadingSpinnerEdit").removeClass("hidden");
+
   // Lakukan submit via AJAX
   $.ajax({
     url: $(this).attr("action"), // Ambil URL dari action form
@@ -245,10 +369,14 @@ $("#editForm").on("submit", function (e) {
     processData: false,
     contentType: false,
     success: function (response) {
+      // Sembunyikan loading spinner
+      $("#loadingSpinnerEdit").addClass("hidden");
+
+      // Tampilkan SweetAlert sukses
       Swal.fire({
         icon: "success",
         title: "Success",
-        text: "Logo and photos deleted successfully!",
+        text: "Logo successfully updated!",
         showConfirmButton: false, // Menyembunyikan tombol konfirmasi
         timer: 2000, // Timer untuk 2 detik
       }).then(() => {
@@ -257,13 +385,27 @@ $("#editForm").on("submit", function (e) {
       });
     },
     error: function (xhr, status, error) {
-      console.error("Error updating data:", error);
-      Swal.fire({
-        icon: "error",
-        title: "Gagal!",
-        text: "Data gagal diperbarui. Silakan coba lagi.",
-        confirmButtonText: "OK",
-      });
+      // Sembunyikan loading spinner
+      $("#loadingSpinnerEdit").addClass("hidden");
+
+      // Tampilkan pesan error di modal
+      if (xhr.status === 422) {
+        let errors = xhr.responseJSON.errors; // Ambil error dari response JSON
+        let errorList = "<ul>";
+        $.each(errors, function (key, value) {
+          errorList += "<li class='text-red-500'>" + value[0] + "</li>";
+        });
+        errorList += "</ul>";
+        $("#formErrorsEdit").html(errorList).removeClass("hidden"); // Tampilkan pesan error
+      } else {
+        // Tampilkan alert untuk error lain
+        Swal.fire({
+          icon: "error",
+          title: "Gagal!",
+          text: "Data gagal diperbarui. Silakan coba lagi.",
+          confirmButtonText: "OK",
+        });
+      }
     },
   });
 });
