@@ -5,9 +5,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Admin - Content Management</title>
-    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="{{ asset('css/admin/style.css') }}" />
     <link rel="icon" href="{{ asset('img/SG 2023-04.png') }}">
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.15/dist/sweetalert2.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.15/dist/sweetalert2.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
@@ -175,7 +178,46 @@
                 </div>
             </div>
 
+            {{-- Modal Edit Description --}}
+            <div id="editDescription"
+                class="fixed inset-0 hidden bg-gray-500 bg-opacity-50 flex items-center justify-center z-50">
+                <div class="bg-white rounded-lg w-full max-w-md p-8 shadow-lg relative">
+                    <h2 class="text-2xl font-semibold mb-4">Edit Description</h2>
+                    <form id="editDescriptionForm" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        @method('PUT') <!-- Untuk PUT method pada update -->
+                        <div id="editDescriptionErrors" class="hidden mb-4"></div>
 
+                        <div class="mb-4">
+                            <label for="editUnitName" class="block text-gray-700">Unit Name:</label>
+                            <select id="editUnitName" name="unit_id"
+                                class="w-full border border-gray-300 p-2 rounded" required>
+                                @foreach ($units as $unit)
+                                    <option value="{{ $unit->id }}">{{ $unit->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="editTitle" class="block text-gray-700">Title:</label>
+                            <input type="text" id="editTitle" name="title"
+                                class="w-full border border-gray-300 p-2 rounded">
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="editContent" class="block text-gray-700">Content:</label>
+                            <textarea id="editContent" name="content" rows="4" class="w-full border border-gray-300 p-2 rounded"></textarea>
+                        </div>
+
+                        <div class="flex justify-end">
+                            <button type="button" onclick="closeModal('editDescription')"
+                                class="mr-4 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Cancel</button>
+                            <button type="submit"
+                                class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Update</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
 
 
             <!-- Content Table -->
@@ -197,8 +239,10 @@
                                 <td class="px-4 py-2 text-gray-900">{{ $description->content }}</td>
                                 <td class="px-4 py-2">
                                     <div class="flex space-x-2">
-                                        <a href="#"
+                                        <a href="javascript:void(0);"
+                                            onclick="openEditDescriptionModal({{ $description->id }}, {{ $description->unit_id }}, '{{ $description->title }}', '{{ $description->content }}')"
                                             class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">Edit</a>
+
                                         <form action="#" method="POST"
                                             onsubmit="return confirm('Are you sure you want to delete this description?');">
                                             @csrf
@@ -218,9 +262,7 @@
                     </tbody>
                 </table>
             </div>
-
-    </div>
-    </main>
+        </main>
     </div>
     <footer class="absolute bottom-0 left-0 w-full bg-black text-center text-white p-4 font-bold">
         <aside>
@@ -234,8 +276,34 @@
             document.getElementById(modalId).classList.remove('hidden');
         }
 
+        function openEditModal(modalId) {
+            document.getElementById(modalId).classList.remove('hidden');
+        }
+
         function closeModal(modalId) {
             document.getElementById(modalId).classList.add('hidden');
+        }
+
+        function openEditDescriptionModal(id, unitId, title, content) {
+            // Atur action URL form edit
+            const form = document.getElementById("editDescriptionForm");
+            form.action = `/admin/description/${id}`; // Menggunakan ID untuk update
+
+            // Set selected unit
+            const unitSelect = document.getElementById("editUnitName");
+            unitSelect.value = unitId; // Menyesuaikan pilihan unit
+
+            // Set title dan content
+            document.getElementById("editTitle").value = title;
+            document.getElementById("editContent").value = content;
+
+            // Tampilkan modal
+            const modal = document.getElementById("editDescription");
+            modal.classList.remove("hidden");
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.add("hidden");
         }
     </script>
     @if (session('success'))

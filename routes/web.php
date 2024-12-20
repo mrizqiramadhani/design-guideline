@@ -89,8 +89,8 @@ Route::group(['middleware' => ['auth', 'startSessionByRole']], function () {
         // })->name('admin.description');
         Route::get('admin/description', [DescriptionController::class, 'index'])->name('admin.description');
         Route::post('admin/description', [DescriptionController::class, 'store'])->name('admin.description.store');
-        // Route::get('admin/description/{id}/edit', [descriptionController::class, 'edit'])->name('admin.description.edit');
-        // Route::put('admin/description/{id}', [descriptionController::class, 'update'])->name('admin.description.update');
+        Route::get('admin/description/{id}/edit', [descriptionController::class, 'edit'])->name('admin.description.edit');
+        Route::put('admin/description/{id}', [descriptionController::class, 'update'])->name('admin.description.update');
         // Route::delete('admin/description/{id}', [descriptionController::class, 'destroy'])->name('admin.description.destroy');
 
 

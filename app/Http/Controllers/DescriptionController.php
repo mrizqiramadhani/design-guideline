@@ -55,4 +55,35 @@ class DescriptionController extends Controller
         return redirect()->route(auth()->user()->role === 'admin' ? 'admin.description' : 'operator.description')
             ->with('success', 'Description added successfully!');
     }
+
+    public function edit($id)
+    {
+        $description = Description::findOrFail($id);
+        $units = Unit::all();
+        $view = auth()->user()->role === 'admin'
+            ? 'admin.dashboard-admin'
+            : 'operator.dashboard-operator';
+
+        return view($view, compact('description', 'units'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $descriptions = Description::findOrFail($id);
+
+        $validatedData = $request->validate([
+            'title' => 'nullable|string|max:255',
+            'content' => 'required|string',
+            'unit_id' => 'required|exists:units,id',
+        ]);
+
+        $descriptions->update([
+            'title' => $validatedData['title'] ?? null,
+            'content' => $validatedData['content'],
+            'unit_id' => $validatedData['unit_id'],
+        ]);
+
+        return redirect()->route(auth()->user()->role === 'admin' ? 'admin.description' : 'operator.description')
+            ->with('success', 'Description updated successfully!');
+    }
 }
