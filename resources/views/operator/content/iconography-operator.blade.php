@@ -163,9 +163,9 @@
                 <nav class="my-8">
                     <ul class="space-y-6 text-lg text-gray-900">
                         <li>
-                            <a href="{{ route('operator.deskripsi') }}"
-                                class="{{ request()->routeIs('operator.deskripsi') ? 'active' : '' }}">
-                                Deskripsi
+                            <a href="{{ route('operator.description') }}"
+                                class="{{ request()->routeIs('operator.description') ? 'active' : '' }}">
+                                Description
                             </a>
                         </li>
                         <li>

@@ -144,13 +144,15 @@ Route::group(['middleware' => ['auth', 'startSessionByRole']], function () {
     });
 
     Route::group(['middleware' => ['checkOperator']], function () {
-        Route::get('/operator/dashboard', [OperatorController::class, 'index'])->name('operator.dashboard');
-        Route::get('/operator/deskripsi', function () {
-            return view('operator.dashboard-operator');
-        })->name('operator.deskripsi');
-        // Route::get('/operator/logo', function () {
-        //     return view('operator.content.logo-operator');
-        // })->name('operator.logo');
+
+        Route::get('/operator/dashboard', [DescriptionController::class, 'index'])->name('operator.dashboard');
+
+        //! route operator description
+        Route::get('operator/description', [DescriptionController::class, 'index'])->name('operator.description');
+        Route::post('operator/description', [DescriptionController::class, 'store'])->name('operator.description.store');
+        Route::get('operator/description/{id}/edit', [descriptionController::class, 'edit'])->name('operator.description.edit');
+        Route::put('operator/description/{id}', [descriptionController::class, 'update'])->name('operator.description.update');
+        Route::delete('operator/description/{id}', [descriptionController::class, 'destroy'])->name('operator.description.destroy');
 
         //! Route operator Logo
         Route::get('operator/logo', [LogoController::class, 'index'])->name('operator.logo');

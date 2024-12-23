@@ -77,7 +77,7 @@
                         <li>
                             <a href="{{ route('admin.description') }}"
                                 class="{{ request()->routeIs('admin.description') ? 'active' : '' }}">
-                                Deskripsi
+                                Description
                             </a>
                         </li>
                         <li>

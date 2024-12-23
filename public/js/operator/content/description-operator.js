@@ -13,7 +13,7 @@ function closeModal(modalId) {
 function openEditDescriptionModal(id, unitId, title, content) {
   // Atur action URL form edit
   const form = document.getElementById("editDescriptionForm");
-  form.action = `/admin/description/${id}`; // Menggunakan ID untuk update
+  form.action = `/operator/description/${id}`; // Menggunakan ID untuk update
 
   // Set selected unit
   const unitSelect = document.getElementById("editUnitName");
@@ -31,7 +31,7 @@ function openEditDescriptionModal(id, unitId, title, content) {
 function openDeleteDescriptionModal(id) {
   // Atur action URL form delete
   const form = document.getElementById("deleteDescriptionForm");
-  form.action = `/admin/description/${id}`;
+  form.action = `/operator/description/${id}`;
 
   // Tampilkan modal
   const modal = document.getElementById("deleteDescriptionModal");
