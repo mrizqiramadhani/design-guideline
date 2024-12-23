@@ -246,6 +246,30 @@
                 </div>
             </div>
 
+            <!-- Modal View Description -->
+            <div id="viewDescription"
+                class="fixed inset-0 bg-gray-500 bg-opacity-50 hidden flex items-center justify-center z-50">
+                <div class="bg-white rounded-lg w-full max-w-md p-8 shadow-lg relative">
+                    <h2 id="modalTitle" class="text-2xl font-semibold mb-4">View Description</h2>
+                    <div class="mb-4">
+                        <label class="block text-gray-700">Title:</label>
+                        <p id="descriptionTitle" class="text-gray-900 border border-gray-300 p-2 rounded bg-gray-100">
+                        </p>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700">Content:</label>
+                        <textarea id="descriptionContent" class="w-full text-gray-900 border border-gray-300 p-2 rounded bg-gray-100"
+                            rows="10" readonly></textarea>
+                    </div>
+                    <div class="flex justify-end">
+                        <button type="button" onclick="closeModal('viewDescription')"
+                            class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">
+                            Close
+                        </button>
+                    </div>
+                </div>
+            </div>
+
 
             <!-- Content Table -->
             <div class="overflow-x-auto">
@@ -261,13 +285,32 @@
                     <tbody>
                         @foreach ($descriptions as $description)
                             <tr class="border-t">
-                                <td class="px-4 py-2 text-gray-900">{{ $description->title ?? 'N/A' }}</td>
+                                <td class="px-4 py-2">
+                                    @if ($description->title)
+                                        <span class="text-gray-900">{{ $description->title }}</span>
+                                    @else
+                                        <span class="text-gray-500">No title desc</span>
+                                    @endif
+                                </td>
                                 <td class="px-4 py-2 text-gray-900">{{ $description->unit->name }}</td>
-                                <td class="px-4 py-2 text-gray-900">{{ $description->content }}</td>
+                                <td class="px-4 py-2 text-gray-900">
+                                    <span>
+                                        @if (Str::length($description->content) > 40)
+                                            {{ Str::limit($description->content, 40, '...') }}
+                                            <button
+                                                class="ml-2 text-sm text-black bg-gray-300 px-2 py-1 rounded hover:bg-gray-200"
+                                                onclick="showModal('{{ $description->title }}', `{{ $description->content }}`)">
+                                                See More
+                                            </button>
+                                        @else
+                                            {{ $description->content }}
+                                        @endif
+                                    </span>
+                                </td>
                                 <td class="px-4 py-2">
                                     <div class="flex space-x-2">
                                         <button
-                                            onclick="openEditDescriptionModal({{ $description->id }}, {{ $description->unit_id }}, '{{ $description->title }}', '{{ $description->content }}')"
+                                            onclick="openEditDescriptionModal({{ $description->id }}, {{ $description->unit_id }}, '{{ $description->title }}', `{{ $description->content }}`)"
                                             class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">
                                             Edit
                                         </button>
@@ -283,6 +326,7 @@
                     </tbody>
                 </table>
             </div>
+
 
             <!-- Pagination -->
             @if ($descriptions->count() > 0)
@@ -391,6 +435,30 @@
             // Tampilkan modal
             const modal = document.getElementById('deleteDescriptionModal');
             modal.classList.remove('hidden');
+        }
+    </script>
+
+    <script>
+        function showModal(title, content) {
+            const descriptionTitleElement = document.getElementById('descriptionTitle');
+            const descriptionContentElement = document.getElementById('descriptionContent');
+
+            // Mengatur judul dengan logika if-else
+            if (title) {
+                descriptionTitleElement.innerText = title;
+                descriptionTitleElement.classList.remove('text-gray-500'); // Warna default
+                descriptionTitleElement.classList.add('text-gray-900'); // Warna untuk teks ada
+            } else {
+                descriptionTitleElement.innerText = 'No title desc';
+                descriptionTitleElement.classList.remove('text-gray-900'); // Warna teks ada
+                descriptionTitleElement.classList.add('text-gray-500'); // Warna untuk teks kosong
+            }
+
+            // Mengatur konten menggunakan value
+            descriptionContentElement.value = content || 'N/A';
+
+            // Menampilkan modal
+            document.getElementById('viewDescription').classList.remove('hidden');
         }
     </script>
     @if (session('success'))
