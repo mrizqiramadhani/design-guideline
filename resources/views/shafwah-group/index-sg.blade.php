@@ -93,15 +93,20 @@
         <div class="flex-grow px-5 py-8 text-2xl">
 
             <!-- Deskripsi Section -->
-            <div class="p-4 mb-8 min-h-[1000px] bg-white">
-                <h2 id="deskripsi" class="uppercase font-bold text-3xl text-black mb-4 section-heading">Description</h2>
-                <p class="font-light text-gray-600 text-justify paragraf">
-                    Shafwah Group adalah perusahaan yang berdedikasi untuk menyediakan layanan berkualitas tinggi
-                    di berbagai bidang seperti pariwisata, properti, dan lainnya. Kami bangga dengan komitmen
-                    kami terhadap kepuasan pelanggan dan berusaha untuk memberikan pengalaman yang luar biasa
-                    melalui berbagai unit bisnis kami.
-                </p>
-            </div>
+            <h2 id="deskripsi" class="uppercase font-bold text-3xl text-black pl-4 mb-4 section-heading">Description
+            </h2>
+
+            @foreach ($descriptions as $description)
+                <div class="p-4 mb-2 bg-white">
+                    @if ($description->title)
+                        <!-- Periksa apakah ada title -->
+                        <h3 class="font-semibold text-lg text-gray-900 mb-2">{{ $description->title }}</h3>
+                    @endif
+                    <p class="font-light text-gray-600 text-justify paragraf">
+                        {{ $description->content }}
+                    </p>
+                </div>
+            @endforeach
 
             <!-- Logo Section -->
             <div class="p-4 mb-8 min-h-[1000px] bg-white">

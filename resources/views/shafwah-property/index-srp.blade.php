@@ -86,15 +86,20 @@
         <!-- Main Content -->
         <div class="flex-grow px-5 py-8 text-2xl">
             <!-- Deskripsi Section -->
-            <div class="p-4 mb-8 min-h-[1000px] bg-white">
-                <h2 id="deskripsi" class="uppercase font-bold text-3xl text-black mb-4 section-heading">Description</h2>
-                <p class="font-light text-gray-600 text-justify paragraf">
-                    Shafwah Group adalah perusahaan yang berdedikasi untuk menyediakan layanan berkualitas tinggi
-                    di berbagai bidang seperti pariwisata, properti, dan lainnya. Kami bangga dengan komitmen
-                    kami terhadap kepuasan pelanggan dan berusaha untuk memberikan pengalaman yang luar biasa
-                    melalui berbagai unit bisnis kami.
-                </p>
-            </div>
+            <h2 id="deskripsi" class="uppercase font-bold text-3xl text-black pl-4 mb-4 section-heading">Description
+            </h2>
+
+            @foreach ($descriptions as $description)
+                <div class="p-4 mb-2 bg-white">
+                    @if ($description->title)
+                        <!-- Periksa apakah ada title -->
+                        <h3 class="font-semibold text-lg text-gray-900 mb-2">{{ $description->title }}</h3>
+                    @endif
+                    <p class="font-light text-gray-600 text-justify paragraf">
+                        {{ $description->content }}
+                    </p>
+                </div>
+            @endforeach
 
             <!-- Logo Section -->
             <div class="p-4 mb-8 min-h-[1000px] bg-white">
@@ -318,10 +323,11 @@
 
                         <div class="flex flex-wrap gap-4 mt-6 justify-between">
                             @foreach ($campaigns->where('status', 'publish') as $campaign)
-                                <div class="bg-gray-200 w-[calc(50%-0.5rem)] h-64 rounded-md flex items-center justify-center 
+                                <div
+                                    class="bg-gray-200 w-[calc(50%-0.5rem)] h-64 rounded-md flex items-center justify-center 
                                     @if ($loop->last && $loop->remaining % 2 === 0) mx-auto @endif">
                                     <img src="{{ asset('storage/' . $campaign->path) }}" alt="Campaign Image"
-                                    class="object-contain max-w-full max-h-full rounded-md">
+                                        class="object-contain max-w-full max-h-full rounded-md">
                                 </div>
                             @endforeach
                         </div>

@@ -11,6 +11,7 @@ use App\Models\Illustration;
 use App\Models\SocialMedia;
 use App\Models\Campaign;
 use App\Models\Iconography;
+use App\Models\Description;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
@@ -19,6 +20,7 @@ class ShowUnitController extends Controller
     public function showShafwahGroupPage()
     {
         $unit = Unit::where('name', 'Shafwah group')->first();
+        $descriptions = Description::where('unit_id', $unit->id)->get();
         $logos = Logo::where('unit_id', $unit->id)->get();
         $colors = ColorPalette::where('unit_id', $unit->id)->get();
         $illustrations = Illustration::where('unit_id', $unit->id)->get();
@@ -26,7 +28,7 @@ class ShowUnitController extends Controller
         $campaigns = Campaign::where('unit_id', $unit->id)->get();
         $iconographys = Iconography::where('unit_id', $unit->id)->get();
 
-        return view('shafwah-group.index-sg', compact('logos', 'unit', 'colors', 'illustrations', 'socialMedias', 'campaigns', 'iconographys'));
+        return view('shafwah-group.index-sg', compact('logos', 'descriptions', 'unit', 'colors', 'illustrations', 'socialMedias', 'campaigns', 'iconographys'));
     }
 
     public function showPrimaryLogosShafwahGroup($id)
@@ -75,6 +77,7 @@ class ShowUnitController extends Controller
     {
         // Get the logos for Shafwah Holidays unit
         $unit = Unit::where('name', 'Shafwah holidays')->first();
+        $descriptions = Description::where('unit_id', $unit->id)->get();
         $logos = Logo::where('unit_id', $unit->id)->get();
         $colors = ColorPalette::where('unit_id', $unit->id)->get();
         $illustrations = Illustration::where('unit_id', $unit->id)->get();
@@ -83,7 +86,7 @@ class ShowUnitController extends Controller
         $iconographys = Iconography::where('unit_id', $unit->id)->get();
 
         // Pass logos and unit to the view
-        return view('shafwah-holidays.index-sh', compact('logos', 'unit', 'colors', 'illustrations','socialMedias', 'campaigns', 'iconographys'));
+        return view('shafwah-holidays.index-sh', compact('logos', 'descriptions', 'unit', 'colors', 'illustrations', 'socialMedias', 'campaigns', 'iconographys'));
     }
 
     public function showPrimaryLogosShafwahHolidays($id)
@@ -132,6 +135,7 @@ class ShowUnitController extends Controller
     {
         // Get the logos for Shafwah Property unit
         $unit = Unit::where('name', 'Shafwah property')->first();
+        $descriptions = Description::where('unit_id', $unit->id)->get();
         $logos = Logo::where('unit_id', $unit->id)->get();
         $colors = ColorPalette::where('unit_id', $unit->id)->get();
         $illustrations = Illustration::where('unit_id', $unit->id)->get();
@@ -140,7 +144,7 @@ class ShowUnitController extends Controller
         $iconographys = Iconography::where('unit_id', $unit->id)->get();
 
         // Pass logos and unit to the view
-        return view('shafwah-property.index-srp', compact('logos', 'unit', 'colors', 'illustrations','socialMedias', 'campaigns', 'iconographys'));
+        return view('shafwah-property.index-srp', compact('logos',  'descriptions', 'unit', 'colors', 'illustrations', 'socialMedias', 'campaigns', 'iconographys'));
     }
 
     public function showPrimaryLogosShafwahProperty($id)
