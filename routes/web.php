@@ -52,6 +52,11 @@ Route::get('/shafwah-property/logo-primary/{id}', [ShowUnitController::class, 's
 Route::get('/shafwah-property/logo-white/{id}', [ShowUnitController::class, 'showWhiteLogosShafwahProperty'])->name('logo-white-srp');
 
 
+//!download logo
+Route::get('/download-logos/{id}', [ShowUnitController::class, 'downloadLogos'])->name('logos.download');
+
+
+
 
 Route::get('/login', function () {
     return view('auth.login');

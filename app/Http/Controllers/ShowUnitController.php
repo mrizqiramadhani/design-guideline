@@ -14,6 +14,7 @@ use App\Models\Iconography;
 use App\Models\Description;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use ZipArchive;
 
 class ShowUnitController extends Controller
 {
@@ -187,5 +188,27 @@ class ShowUnitController extends Controller
         }
 
         return view('shafwah-property.logo.logo-white', compact('logo', 'unit'));
+    }
+
+    public function downloadLogos($id)
+    {
+        $logo = Logo::with('logoPhotos')->findOrFail($id); // Gunakan relasi logoPhotos
+
+        $zip = new ZipArchive();
+        $zipFileName = storage_path("app/public/logos_{$id}.zip");
+
+        if ($zip->open($zipFileName, ZipArchive::CREATE) === TRUE) {
+            if ($logo->logoPhotos) {
+                foreach ($logo->logoPhotos as $photo) {
+                    if (in_array($photo->theme, ['Primary', 'White'])) {
+                        $filePath = storage_path("app/{$photo->path}");
+                        $zip->addFile($filePath, basename($photo->path));
+                    }
+                }
+            }
+            $zip->close();
+        }
+
+        return response()->download($zipFileName)->deleteFileAfterSend(true);
     }
 }
