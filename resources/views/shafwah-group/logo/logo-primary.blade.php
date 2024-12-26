@@ -102,7 +102,7 @@
                             <div id="dropdownMenu-{{ $loop->index }}"
                                 class="hidden dropdown-outside-card absolute w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-10">
                                 <a href="{{ asset('storage/logo_photos/' . basename($photo->path)) }}"
-                                    download="{{ $logo->title }}_logo_{{ $loop->iteration }}.jpg"
+                                    download="{{ $logo->title }}_logo_primary_{{ $loop->iteration }}.jpg"
                                     class="flex items-center px-4 py-2 hover:bg-gray-100">
                                     <span class="iconify" data-icon="material-symbols:download-rounded"
                                         style="font-size: 1.25rem;"></span>

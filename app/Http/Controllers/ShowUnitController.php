@@ -198,13 +198,18 @@ class ShowUnitController extends Controller
         $zipFileName = storage_path("app/public/logos_{$id}.zip");
 
         if ($zip->open($zipFileName, ZipArchive::CREATE) === TRUE) {
-            if ($logo->logoPhotos) {
-                foreach ($logo->logoPhotos as $photo) {
-                    if (in_array($photo->theme, ['Primary', 'White'])) {
-                        $filePath = storage_path("app/{$photo->path}");
-                        $zip->addFile($filePath, basename($photo->path));
-                    }
+            foreach ($logo->logoPhotos as $index => $photo) {
+                $themeFolder = strtolower($photo->theme);
+                $themeFolderPath = storage_path("app/public/{$themeFolder}");
+
+                // Pastikan folder sesuai tema ada, jika belum ada buat foldernya
+                if (!is_dir($themeFolderPath)) {
+                    mkdir($themeFolderPath, 0777, true);
                 }
+
+                $filePath = storage_path("app/{$photo->path}");
+                $newFileName = "{$logo->title}_{$themeFolder}_" . ($index + 1) . ".jpg"; // Menggunakan $index + 1 sebagai iterasi
+                $zip->addFile($filePath, "{$themeFolder}/{$newFileName}");
             }
             $zip->close();
         }

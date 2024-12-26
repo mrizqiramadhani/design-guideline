@@ -15,6 +15,15 @@
     * {
         font-family: Nohemi;
     }
+
+    .dropdown-outside-card {
+        top: 0;
+        /* Posisi dropdown sejajar dengan atas card */
+        right: -12px;
+        /* Geser keluar ke kanan dari card */
+        transform: translateX(100%);
+        /* Pindahkan sepenuhnya ke kanan */
+    }
 </style>
 
 <body>
@@ -30,12 +39,13 @@
 
     <header class="px-20 py-3">
         <div class="flex flex-col">
-            <div class="relative flex space-x-4 mx-10">
+            <div class="relative flex justify-between items-center mx-10">
+                <!-- Bagian Kiri: Menu Primary dan White -->
                 <ul class="flex space-x-12">
                     <li>
                         <!-- Menu Primary -->
                         <a href="{{ route('logo-primary-sg', $logo->id) }}"
-                            class="transition-colors duration-300 text-gray-800 hover:text-blue-500">
+                            class="transition-colors duration-300 text-gray-800  hover:text-blue-500">
                             Primary
                         </a>
                     </li>
@@ -47,6 +57,15 @@
                         </a>
                     </li>
                 </ul>
+
+                <!-- Bagian Kanan: Button Download All Logo -->
+                <div>
+                    <a href="{{ route('logos.download', $logo->id) }}"
+                        class="flex items-center space-x-2 bg-blue-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-600 transition duration-300">
+                        <span class="iconify" data-icon="mdi:download" style="font-size: 1.5rem;"></span>
+                        <span>Download All Logo</span>
+                    </a>
+                </div>
             </div>
             <hr class="border-t-4 border-blue-500 mx-28 mt-7 z-10 w-32">
             <hr>
@@ -61,7 +80,7 @@
 
             @foreach ($photos as $photo)
                 <div
-                    class="border border-gray-200 rounded-lg shadow-lg p-2 w-full hover:shadow-2xl hover:bg-gray-50 transition duration-200 ease-in-out">
+                    class="border border-gray-200 rounded-lg shadow-lg p-2 w-full hover:shadow-2xl hover:bg-gray-50 transition duration-200 ease-in-out relative">
                     <!-- Header card -->
                     <div class="flex items-center justify-between mb-2">
                         <!-- Ikon Add Photo menggunakan Iconify -->
@@ -73,10 +92,23 @@
                             <!-- Nama -->
                             <span class="font-medium text-gray-800">{{ $logo->title }}</span>
                         </div>
-                        <!-- Titik tiga menggunakan Iconify -->
-                        <button class="text-black text-2xl hover:bg-gray-200 rounded-full p-2">
-                            <span class="iconify" data-icon="mdi:dots-vertical" data-inline="false"></span>
-                        </button>
+                        <!-- Dropdown menu -->
+                        <div class="relative">
+                            <button class="text-black text-2xl hover:bg-gray-200 rounded-full p-2"
+                                id="dropdownToggle-{{ $loop->index }}">
+                                <span class="iconify" data-icon="mdi:dots-vertical" data-inline="false"></span>
+                            </button>
+                            <div id="dropdownMenu-{{ $loop->index }}"
+                                class="hidden dropdown-outside-card absolute w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-10">
+                                <a href="{{ asset('storage/logo_photos/' . basename($photo->path)) }}"
+                                    download="{{ $logo->title }}_logo_white_{{ $loop->iteration }}.jpg"
+                                    class="flex items-center px-4 py-2 hover:bg-gray-100">
+                                    <span class="iconify" data-icon="material-symbols:download-rounded"
+                                        style="font-size: 1.25rem;"></span>
+                                    <span class="ml-2 text-sm font-medium text-gray-700">Download Logo</span>
+                                </a>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Konten gambar -->
@@ -104,7 +136,23 @@
             @endif
         </div>
     </main>
+    <script>
+        document.addEventListener('click', function(event) {
+            // Loop through all dropdown toggles
+            document.querySelectorAll('[id^="dropdownToggle-"]').forEach(function(toggle) {
+                const index = toggle.id.split('-')[1];
+                const menu = document.getElementById(`dropdownMenu-${index}`);
 
+                if (toggle.contains(event.target)) {
+                    // Toggle the visibility of the dropdown menu
+                    menu.classList.toggle('hidden');
+                } else if (!menu.contains(event.target)) {
+                    // Close the menu if clicked outside
+                    menu.classList.add('hidden');
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>
