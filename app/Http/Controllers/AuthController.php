@@ -9,6 +9,11 @@ class AuthController extends Controller
 {
     public function showLoginForm()
     {
+        if (Auth::check()) {
+            // Jika sudah login, redirect ke dashboard berdasarkan role
+            return redirect()->intended(Auth::user()->role === 'admin' ? '/admin/dashboard' : '/operator/dashboard');
+        }
+
         return view('auth.login');
     }
 
@@ -19,14 +24,16 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
 
-        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+        // Menambahkan logika untuk remember me
+        $remember = $request->has('remember'); // Mengecek apakah checkbox remember me dipilih
+
+        if (Auth::attempt(['email' => $request->email, 'password' => $request->password], $remember)) {
             // Redirect berdasarkan role
             return redirect()->intended(Auth::user()->role === 'admin' ? '/admin/dashboard' : '/operator/dashboard');
         }
 
         return back()->withErrors(['email' => 'Invalid credentials.']);
     }
-
     public function logout()
     {
         Auth::logout();

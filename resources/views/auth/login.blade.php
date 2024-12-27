@@ -18,7 +18,7 @@
                 class="flex items-center justify-center px-8 py-8 sm:px-12 lg:col-span-7 lg:px-16 lg:py-12 xl:col-span-6">
                 <div class="max-w-xl lg:max-w-3xl">
                     <h1 class="mt-6 text-2xl font-bold text-gray-900 sm:text-3xl md:text-4xl">
-                        Shafwah Login page😳
+                        Shafwah Login Page 😳
                     </h1>
 
                     <!-- Pesan kesalahan jika ada -->
@@ -30,7 +30,6 @@
                     @endif
 
                     <form action="{{ route('login') }}" method="POST" class="mt-4 space-y-4">
-                        <!-- Changed to space-y-4 for uniform spacing -->
                         @csrf <!-- Token CSRF untuk keamanan -->
                         <div>
                             <label for="Email" class="block text-sm font-medium text-gray-700">Email</label>
@@ -44,6 +43,18 @@
                             <input type="password" id="Password" name="password"
                                 class="mt-1 w-full h-10 border-2 border-black bg-white text-lg text-black shadow-sm rounded-md px-3"
                                 required />
+                        </div>
+
+                        <!-- Remember Me dan Forgot Password -->
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <input type="checkbox" id="remember" name="remember" class="mr-2">
+                                <label for="remember" class="text-sm text-gray-700">Remember me</label>
+                            </div>
+
+                            <a href="#" class="text-sm text-blue-600 hover:underline">
+                                Forgot Password?
+                            </a>
                         </div>
 
                         <div class="flex items-center justify-between">
