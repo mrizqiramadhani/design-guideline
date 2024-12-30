@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\QueryException;
 
 class AdminController extends Controller
@@ -108,5 +109,77 @@ class AdminController extends Controller
         $operator->delete();
 
         return redirect()->route('admin.show-operators')->with('success', 'Operator successfully deleted.');
+    }
+
+    //! admin setting 
+
+    // Change Email
+    public function changeEmail(Request $request)
+    {
+        // Cek apakah Auth::user() adalah instance dari User
+        $admin = Auth::user();
+
+        if (!$admin instanceof User) {
+            return response()->json(['error' => 'User not found'], 404);
+        }
+
+        // Cek apakah pengguna adalah admin
+        if ($admin->role !== 'admin') {
+            return response()->json(['error' => 'Unauthorized'], 403);
+        }
+
+        // Validasi email
+        $request->validate([
+            'email' => 'required|email|unique:users,email',  // Pastikan email valid dan unik
+            'current_password' => 'required', // Pastikan password lama diisi
+        ]);
+
+        // Verifikasi password lama
+        if (!Hash::check($request->current_password, $admin->password)) {
+            return back()->withErrors(['current_password' => 'The provided password is incorrect.']);
+        }
+
+        // Update email jika password lama valid
+        $admin->email = $request->email;
+        $admin->save();
+
+        // Redirect ke halaman dashboard dengan pesan sukses
+        return redirect()->route(auth()->user()->role === 'admin' ? 'admin.dashboard' : 'operator.dashboard')
+            ->with('success', 'Email updated successfully');
+    }
+
+
+    public function changePassword(Request $request)
+    {
+        // Cek apakah Auth::user() adalah instance dari User
+        $admin = Auth::user();
+
+        if (!$admin instanceof User) {
+            return response()->json(['error' => 'User not found'], 404);
+        }
+
+        // Cek apakah pengguna adalah admin
+        if ($admin->role !== 'admin') {
+            return response()->json(['error' => 'Unauthorized'], 403);
+        }
+
+        // Validasi input password
+        $request->validate([
+            'current_password' => 'required',   // Pastikan password lama diisi
+            'password' => 'required|min:8|confirmed',  // Validasi password baru
+        ]);
+
+        // Verifikasi password lama
+        if (!Hash::check($request->current_password, $admin->password)) {  // Menggunakan Hash::check untuk mencocokkan password
+            return back()->withErrors(['current_password' => 'The provided password is incorrect.']);
+        }
+
+        // Enkripsi password baru dan simpan
+        $admin->password = bcrypt($request->password);
+        $admin->save();
+
+        // Redirect dengan pesan sukses
+        return redirect()->route(auth()->user()->role === 'admin' ? 'admin.dashboard' : 'operator.dashboard')
+            ->with('success', 'Password updated successfully');
     }
 }

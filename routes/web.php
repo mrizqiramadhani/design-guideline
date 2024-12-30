@@ -76,6 +76,12 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 //* Admin Route
 Route::group(['middleware' => ['auth', 'startSessionByRole']], function () {
     Route::group(['middleware' => ['checkAdmin']], function () {
+
+        //!route admin setting
+        Route::post('/admin/change-email', [AdminController::class, 'changeEmail'])->name('admin.changeEmail');
+        Route::post('/admin/change-password', [AdminController::class, 'changePassword'])->name('admin.changePassword');
+
+        //! route admin operator-list
         Route::post('/admin/add-operator', [AdminController::class, 'addOperator'])->name('admin.addOperator');
         Route::get('/admin/operator-list', [AdminController::class, 'showOperators'])->name('admin.show-operators');
         Route::get('/admin/operator/edit/{id}', [AdminController::class, 'editOperator'])->name('admin.editOperator');

@@ -53,8 +53,8 @@
 
                         <div id="userDropdown"
                             class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-20">
-                            <a href="#"
-                                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile</a>
+                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                onclick="openAdminSettingsModal()">Admin Settings</a>
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
                                 <button type="submit"
@@ -138,6 +138,170 @@
             </div>
 
 
+            <!-- Modal Admin Settings -->
+            <div id="adminSettingsModal" class="hidden fixed inset-0 z-50 overflow-y-auto bg-gray-900 bg-opacity-75">
+                <div class="flex items-center justify-center min-h-screen">
+                    <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6 space-y-6">
+                        <!-- Header Modal -->
+                        <div class="flex justify-between items-center">
+                            <h2 class="text-xl font-semibold text-gray-800">Account Settings</h2>
+                            <button class="text-gray-400 hover:text-gray-600 focus:outline-none"
+                                onclick="closeAdminSettingsModal()">
+                                &times;
+                            </button>
+                        </div>
+
+                        <!-- Content Modal -->
+                        <form>
+                            <!-- Display Role -->
+                            <div class="flex items-center border-b pb-4">
+                                <label for="role" class="text-sm font-medium text-gray-700 w-1/3">Role:</label>
+                                <span id="role" class="text-sm font-semibold text-gray-900 w-2/3">Admin</span>
+                            </div>
+
+                            <!-- Display Email -->
+                            <div class="flex items-center border-b pb-4 mt-4">
+                                <label for="email" class="text-sm font-medium text-gray-700 w-1/3">Email:</label>
+                                <div class="flex items-center w-2/3">
+                                    <span id="email"
+                                        class="text-sm font-semibold text-gray-900 w-9/12">admin@example.com</span>
+                                    <button type="button" onclick="openChangeEmailModal()"
+                                        class="ml-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 text-sm">Change</button>
+                                </div>
+                            </div>
+
+                            <!-- Display Password -->
+                            <div class="flex items-center border-b pb-4 mt-4">
+                                <label for="password" class="text-sm font-medium text-gray-700 w-1/3">Password:</label>
+                                <div class="flex items-center w-2/3">
+                                    <span id="password"
+                                        class="text-sm font-semibold text-gray-900 w-9/12">********</span>
+                                    <button type="button" onclick="openChangePasswordModal()"
+                                        class="ml-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 text-sm">Change</button>
+                                </div>
+                            </div>
+
+                            <div class="mt-6 flex justify-end">
+                                <button type="button" onclick="closeAdminSettingsModal()"
+                                    class="bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-600">Close</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Change Email -->
+            <div id="changeEmailModal" class="hidden fixed inset-0 z-50 flex justify-center items-center">
+                <div
+                    class="bg-white rounded-lg shadow-lg w-full max-w-md p-6 space-y-6 animate-slide-up-large transform transition-transform duration-300">
+                    <!-- Header Modal -->
+                    <div class="flex justify-between items-center">
+                        <h2 class="text-lg font-semibold text-gray-800">Change Email</h2>
+                        <button class="text-gray-400 hover:text-gray-600 focus:outline-none"
+                            onclick="closeChangeEmailModal()">&times;</button>
+                    </div>
+
+                    <!-- Content Modal -->
+                    <form id="changeEmailForm" action="{{ route('admin.changeEmail') }}" method="POST">
+                        @csrf
+                        <div class="space-y-4">
+                            <!-- Success Message -->
+                            @if (session('success'))
+                                <div class="text-green-500 text-sm">{{ session('success') }}</div>
+                            @endif
+
+                            <!-- Error Messages -->
+                            @if ($errors->any())
+                                <ul class="text-red-500 text-sm">
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            @endif
+
+                            <div>
+                                <label for="newEmail" class="text-sm font-medium text-gray-700">New Email:</label>
+                                <input type="email" id="newEmail" name="email" required
+                                    class="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:ring-blue-500">
+                            </div>
+                            <div>
+                                <label for="currentPasswordChangeEmail"
+                                    class="text-sm font-medium text-gray-700">Current Password:</label>
+                                <input type="password" id="currentPasswordChangeEmail" name="current_password"
+                                    required
+                                    class="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:ring-blue-500">
+                            </div>
+                        </div>
+                        <div class="mt-6 flex justify-end">
+                            <button type="submit"
+                                class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Save</button>
+                            <button type="button" onclick="closeChangeEmailModal()"
+                                class="ml-4 bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-600">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+
+            <!-- Modal Change Password -->
+            <div id="changePasswordModal" class="hidden fixed inset-0 z-50 flex justify-center items-center">
+                <div
+                    class="bg-white rounded-lg shadow-lg w-full max-w-md p-6 space-y-6 animate-slide-up transform transition-transform duration-300">
+                    <!-- Header Modal -->
+                    <div class="flex justify-between items-center">
+                        <h2 class="text-lg font-semibold text-gray-800">Change Password</h2>
+                        <button class="text-gray-400 hover:text-gray-600 focus:outline-none"
+                            onclick="closeChangePasswordModal()">&times;</button>
+                    </div>
+
+                    <!-- Content Modal -->
+                    <form id="changePasswordForm" action="{{ route('admin.changePassword') }}" method="POST">
+                        @csrf
+                        <div class="space-y-4">
+                            <!-- Success Message -->
+                            @if (session('success'))
+                                <div class="text-green-500 text-sm">{{ session('success') }}</div>
+                            @endif
+
+                            <!-- Error Messages -->
+                            @if ($errors->any())
+                                <ul class="text-red-500 text-sm">
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            @endif
+                            <div>
+                                <label for="currentPasswordChangePassword"
+                                    class="text-sm font-medium text-gray-700">Current Password:</label>
+                                <input type="password" id="currentPasswordChangePassword" name="current_password"
+                                    required
+                                    class="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:ring-blue-500">
+                            </div>
+                            <div>
+                                <label for="newPassword" class="text-sm font-medium text-gray-700">New
+                                    Password:</label>
+                                <input type="password" id="newPassword" name="password" required
+                                    class="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:ring-blue-500">
+                            </div>
+                            <div>
+                                <label for="confirmPassword" class="text-sm font-medium text-gray-700">Confirm
+                                    Password:</label>
+                                <input type="password" id="confirmPassword" name="password_confirmation" required
+                                    class="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:ring-blue-500">
+                            </div>
+                        </div>
+                        <div class="mt-6 flex justify-end">
+                            <button type="submit"
+                                class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Save</button>
+                            <button type="button" onclick="closeChangePasswordModal()"
+                                class="ml-4 bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-600">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+
             <!-- Modal Add Description -->
             <div id="addDescription"
                 class="fixed inset-0 bg-gray-500 bg-opacity-50 hidden flex items-center justify-center z-50">
@@ -157,7 +321,8 @@
                         <div class="mb-4">
                             <label for="title" class="block text-gray-700">Title:</label>
                             <input type="text" id="title" name="title"
-                                class="w-full border border-gray-300 p-2 rounded" placeholder="Enter title (optional)">
+                                class="w-full border border-gray-300 p-2 rounded"
+                                placeholder="Enter title (optional)">
                         </div>
                         <div class="mb-4">
                             <label for="content" class="block text-gray-700">Content:</label>
@@ -395,6 +560,7 @@
         </aside>
     </footer>
     <script src="{{ asset('js/admin/content/description-admin.js') }}"></script>
+    <script src="{{ asset('js/admin/settings-admin.js') }}"></script>
 
     @if (session('success'))
         <script>
