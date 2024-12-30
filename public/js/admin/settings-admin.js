@@ -1,5 +1,6 @@
 function openAdminSettingsModal() {
   document.getElementById("adminSettingsModal").classList.remove("hidden");
+  closeOtherModals("adminSettingsModal");
 }
 
 function closeAdminSettingsModal() {
@@ -8,6 +9,7 @@ function closeAdminSettingsModal() {
 
 function openChangeEmailModal() {
   document.getElementById("changeEmailModal").classList.remove("hidden");
+  closeOtherModals("changeEmailModal");
 }
 
 function closeChangeEmailModal() {
@@ -16,38 +18,23 @@ function closeChangeEmailModal() {
 
 function openChangePasswordModal() {
   document.getElementById("changePasswordModal").classList.remove("hidden");
+  closeOtherModals("changePasswordModal");
 }
 
 function closeChangePasswordModal() {
   document.getElementById("changePasswordModal").classList.add("hidden");
 }
 
-function closeChangeEmailModal() {
-  const modal = document.getElementById("changeEmailModal");
-  modal.classList.add("animate-slide-down-large");
-  setTimeout(() => {
-    modal.classList.add("hidden"); // Sembunyikan modal setelah animasi selesai
-    modal.classList.remove("animate-slide-down-large");
-  }, 500);
-}
-
-function closeChangePasswordModal() {
-  const modal = document.getElementById("changePasswordModal");
-  modal.classList.add("animate-slide-down-large");
-  setTimeout(() => {
-    modal.classList.add("hidden"); // Sembunyikan modal setelah animasi selesai
-    modal.classList.remove("animate-slide-down-large");
-  }, 500);
-}
-
-function openChangeEmailModal() {
-  const modal = document.getElementById("changeEmailModal");
-  modal.classList.remove("hidden");
-  modal.classList.add("animate-slide-up-large");
-}
-
-function openChangePasswordModal() {
-  const modal = document.getElementById("changePasswordModal");
-  modal.classList.remove("hidden");
-  modal.classList.add("animate-slide-up-large");
+// Function to close other modals
+function closeOtherModals(currentModal) {
+  const modals = [
+    "adminSettingsModal",
+    "changeEmailModal",
+    "changePasswordModal",
+  ];
+  modals.forEach((modal) => {
+    if (modal !== currentModal) {
+      document.getElementById(modal).classList.add("hidden");
+    }
+  });
 }

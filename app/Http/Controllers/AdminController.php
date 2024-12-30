@@ -111,41 +111,33 @@ class AdminController extends Controller
         return redirect()->route('admin.show-operators')->with('success', 'Operator successfully deleted.');
     }
 
-    //! admin setting 
 
-    // Change Email
+    //! admin setting 
     public function changeEmail(Request $request)
     {
-        // Cek apakah Auth::user() adalah instance dari User
         $admin = Auth::user();
 
-        if (!$admin instanceof User) {
-            return response()->json(['error' => 'User not found'], 404);
+        if (!$admin || !$admin instanceof User || $admin->role !== 'admin') {
+            return redirect()->back()->withErrors(['error' => 'Unauthorized access.']);
         }
 
-        // Cek apakah pengguna adalah admin
-        if ($admin->role !== 'admin') {
-            return response()->json(['error' => 'Unauthorized'], 403);
-        }
-
-        // Validasi email
         $request->validate([
-            'email' => 'required|email|unique:users,email',  // Pastikan email valid dan unik
-            'current_password' => 'required', // Pastikan password lama diisi
+            'email' => 'required|email|unique:users,email',
+            'old_password' => 'required',
         ]);
 
-        // Verifikasi password lama
-        if (!Hash::check($request->current_password, $admin->password)) {
-            return back()->withErrors(['current_password' => 'The provided password is incorrect.']);
+        if (!Hash::check($request->old_password, $admin->password)) {
+            return redirect()->back()->withErrors([
+                'old_password' => 'The provided password is incorrect.',
+            ])->withInput();
         }
 
-        // Update email jika password lama valid
         $admin->email = $request->email;
         $admin->save();
 
-        // Redirect ke halaman dashboard dengan pesan sukses
-        return redirect()->route(auth()->user()->role === 'admin' ? 'admin.dashboard' : 'operator.dashboard')
-            ->with('success', 'Email updated successfully');
+        $dashboardRoute = $admin->role === 'admin' ? 'admin.dashboard' : 'operator.dashboard';
+        return redirect()->route($dashboardRoute)
+            ->with('success', 'Email updated successfully.');
     }
 
 

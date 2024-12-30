@@ -162,22 +162,27 @@
                             <!-- Display Email -->
                             <div class="flex items-center border-b pb-4 mt-4">
                                 <label for="email" class="text-sm font-medium text-gray-700 w-1/3">Email:</label>
-                                <div class="flex items-center w-2/3">
-                                    <span id="email"
-                                        class="text-sm font-semibold text-gray-900 w-9/12">admin@example.com</span>
-                                    <button type="button" onclick="openChangeEmailModal()"
-                                        class="ml-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 text-sm">Change</button>
+                                <div class="flex flex-col sm:flex-row items-center sm:space-x-4 w-2/3">
+                                    @if (Auth::check() && Auth::user()->role === 'admin')
+                                        <span id="email"
+                                            class="text-sm font-semibold text-gray-900 flex-1 truncate">{{ Auth::user()->email }}</span>
+                                        <button type="button" onclick="openChangeEmailModal()"
+                                            class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 text-sm">Change</button>
+                                    @else
+                                        <span id="email" class="text-sm font-semibold text-gray-900 flex-1">You do
+                                            not have permission to change this.</span>
+                                    @endif
                                 </div>
                             </div>
 
                             <!-- Display Password -->
                             <div class="flex items-center border-b pb-4 mt-4">
                                 <label for="password" class="text-sm font-medium text-gray-700 w-1/3">Password:</label>
-                                <div class="flex items-center w-2/3">
+                                <div class="flex flex-col sm:flex-row items-center sm:space-x-4 w-2/3">
                                     <span id="password"
-                                        class="text-sm font-semibold text-gray-900 w-9/12">********</span>
+                                        class="text-sm font-semibold text-gray-900 flex-1 truncate">********</span>
                                     <button type="button" onclick="openChangePasswordModal()"
-                                        class="ml-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 text-sm">Change</button>
+                                        class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 text-sm">Change</button>
                                 </div>
                             </div>
 
@@ -190,10 +195,11 @@
                 </div>
             </div>
 
+
             <!-- Modal Change Email -->
-            <div id="changeEmailModal" class="hidden fixed inset-0 z-50 flex justify-center items-center">
-                <div
-                    class="bg-white rounded-lg shadow-lg w-full max-w-md p-6 space-y-6 animate-slide-up-large transform transition-transform duration-300">
+            <div id="changeEmailModal"
+                class="{{ $errors->has('email') || $errors->has('old_password') ? '' : 'hidden' }} fixed inset-0 z-50 bg-gray-900 bg-opacity-75 flex justify-center items-center">
+                <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6 space-y-6">
                     <!-- Header Modal -->
                     <div class="flex justify-between items-center">
                         <h2 class="text-lg font-semibold text-gray-800">Change Email</h2>
@@ -205,30 +211,29 @@
                     <form id="changeEmailForm" action="{{ route('admin.changeEmail') }}" method="POST">
                         @csrf
                         <div class="space-y-4">
-                            <!-- Success Message -->
-                            @if (session('success'))
-                                <div class="text-green-500 text-sm">{{ session('success') }}</div>
+
+                            @if ($errors->has('email'))
+                                <div class="bg-red-100 text-red-700 px-4 py-3 rounded">
+                                    <span class="block sm:inline">{{ $errors->first('email') }}</span>
+                                </div>
                             @endif
 
-                            <!-- Error Messages -->
-                            @if ($errors->any())
-                                <ul class="text-red-500 text-sm">
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
+                            @if ($errors->has('old_password'))
+                                <div class="bg-red-100 text-red-700 px-4 py-3 rounded">
+                                    <span class="block sm:inline">{{ $errors->first('old_password') }}</span>
+                                </div>
                             @endif
 
                             <div>
                                 <label for="newEmail" class="text-sm font-medium text-gray-700">New Email:</label>
-                                <input type="email" id="newEmail" name="email" required
+                                <input type="email" id="newEmail" name="email" value="{{ old('email') }}"
+                                    required
                                     class="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:ring-blue-500">
                             </div>
                             <div>
-                                <label for="currentPasswordChangeEmail"
-                                    class="text-sm font-medium text-gray-700">Current Password:</label>
-                                <input type="password" id="currentPasswordChangeEmail" name="current_password"
-                                    required
+                                <label for="oldPasswordChangeEmail" class="text-sm font-medium text-gray-700">Current
+                                    Password:</label>
+                                <input type="password" id="oldPasswordChangeEmail" name="old_password" required
                                     class="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:ring-blue-500">
                             </div>
                         </div>
@@ -244,9 +249,9 @@
 
 
             <!-- Modal Change Password -->
-            <div id="changePasswordModal" class="hidden fixed inset-0 z-50 flex justify-center items-center">
-                <div
-                    class="bg-white rounded-lg shadow-lg w-full max-w-md p-6 space-y-6 animate-slide-up transform transition-transform duration-300">
+            <div id="changePasswordModal"
+                class="{{ $errors->has('current_password') || $errors->has('password') || $errors->has('password_confirmation') ? '' : 'hidden' }} fixed inset-0 z-50 bg-gray-900 bg-opacity-75 flex justify-center items-center">
+                <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6 space-y-6">
                     <!-- Header Modal -->
                     <div class="flex justify-between items-center">
                         <h2 class="text-lg font-semibold text-gray-800">Change Password</h2>
@@ -258,19 +263,25 @@
                     <form id="changePasswordForm" action="{{ route('admin.changePassword') }}" method="POST">
                         @csrf
                         <div class="space-y-4">
-                            <!-- Success Message -->
-                            @if (session('success'))
-                                <div class="text-green-500 text-sm">{{ session('success') }}</div>
+                            @if ($errors->has('current_password'))
+                                <div class="bg-red-100 text-red-700 px-4 py-3 rounded">
+                                    <span class="block sm:inline">{{ $errors->first('current_password') }}</span>
+                                </div>
                             @endif
 
-                            <!-- Error Messages -->
-                            @if ($errors->any())
-                                <ul class="text-red-500 text-sm">
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
+                            @if ($errors->has('password'))
+                                <div class="bg-red-100 text-red-700 px-4 py-3 rounded">
+                                    <span class="block sm:inline">{{ $errors->first('password') }}</span>
+                                </div>
                             @endif
+
+                            @if ($errors->has('password_confirmation'))
+                                <div class="bg-red-100 text-red-700 px-4 py-3 rounded">
+                                    <span class="block sm:inline">{{ $errors->first('password_confirmation') }}</span>
+                                </div>
+                            @endif
+
+
                             <div>
                                 <label for="currentPasswordChangePassword"
                                     class="text-sm font-medium text-gray-700">Current Password:</label>
@@ -300,7 +311,6 @@
                     </form>
                 </div>
             </div>
-
 
             <!-- Modal Add Description -->
             <div id="addDescription"
@@ -561,7 +571,6 @@
     </footer>
     <script src="{{ asset('js/admin/content/description-admin.js') }}"></script>
     <script src="{{ asset('js/admin/settings-admin.js') }}"></script>
-
     @if (session('success'))
         <script>
             Swal.fire({

@@ -27,37 +27,3 @@ ul.space-y-6 a.active {
   font-weight: bold; /* Teks tetap tebal untuk link aktif */
   transform: none; /* Tidak ada efek zoom pada link aktif */
 }
-
-@keyframes slide-up-large {
-  from {
-    transform: translateY(100%);
-  }
-
-  to {
-    transform: translateY(0);
-  }
-}
-
-@keyframes slide-down-large {
-  from {
-    transform: translateY(0);
-  }
-
-  to {
-    transform: translateY(100%);
-  }
-}
-
-.animate-slide-up-large {
-  animation: slide-up-large 0.5s ease-out;
-}
-
-.animate-slide-down-large {
-  animation: slide-down-large 0.5s ease-in;
-}
-
-/* Change Email Modal with larger height */
-#changeEmailModal .bg-white {
-  max-height: 80vh;
-  /* Set max-height for taller modal */
-}

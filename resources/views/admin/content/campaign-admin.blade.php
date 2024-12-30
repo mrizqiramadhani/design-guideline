@@ -55,8 +55,8 @@
 
                         <div id="userDropdown"
                             class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-20">
-                            <a href="#"
-                                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile</a>
+                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                onclick="openAdminSettingsModal()">Admin Settings</a>
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
                                 <button type="submit"
@@ -69,8 +69,181 @@
         </div>
     </header>
 
+    <!-- Modal Admin Settings -->
+    <div id="adminSettingsModal" class="hidden fixed inset-0 z-50 overflow-y-auto bg-gray-900 bg-opacity-75">
+        <div class="flex items-center justify-center min-h-screen">
+            <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6 space-y-6">
+                <!-- Header Modal -->
+                <div class="flex justify-between items-center">
+                    <h2 class="text-xl font-semibold text-gray-800">Account Settings</h2>
+                    <button class="text-gray-400 hover:text-gray-600 focus:outline-none"
+                        onclick="closeAdminSettingsModal()">
+                        &times;
+                    </button>
+                </div>
+
+                <!-- Content Modal -->
+                <form>
+                    <!-- Display Role -->
+                    <div class="flex items-center border-b pb-4">
+                        <label for="role" class="text-sm font-medium text-gray-700 w-1/3">Role:</label>
+                        <span id="role" class="text-sm font-semibold text-gray-900 w-2/3">Admin</span>
+                    </div>
+
+                    <!-- Display Email -->
+                    <div class="flex items-center border-b pb-4 mt-4">
+                        <label for="email" class="text-sm font-medium text-gray-700 w-1/3">Email:</label>
+                        <div class="flex flex-col sm:flex-row items-center sm:space-x-4 w-2/3">
+                            @if (Auth::check() && Auth::user()->role === 'admin')
+                                <span id="email"
+                                    class="text-sm font-semibold text-gray-900 flex-1 truncate">{{ Auth::user()->email }}</span>
+                                <button type="button" onclick="openChangeEmailModal()"
+                                    class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 text-sm">Change</button>
+                            @else
+                                <span id="email" class="text-sm font-semibold text-gray-900 flex-1">You do
+                                    not have permission to change this.</span>
+                            @endif
+                        </div>
+                    </div>
+
+                    <!-- Display Password -->
+                    <div class="flex items-center border-b pb-4 mt-4">
+                        <label for="password" class="text-sm font-medium text-gray-700 w-1/3">Password:</label>
+                        <div class="flex flex-col sm:flex-row items-center sm:space-x-4 w-2/3">
+                            <span id="password"
+                                class="text-sm font-semibold text-gray-900 flex-1 truncate">********</span>
+                            <button type="button" onclick="openChangePasswordModal()"
+                                class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 text-sm">Change</button>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 flex justify-end">
+                        <button type="button" onclick="closeAdminSettingsModal()"
+                            class="bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-600">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Modal Change Email -->
+    <div id="changeEmailModal"
+        class="{{ $errors->has('email') || $errors->has('old_password') ? '' : 'hidden' }} fixed inset-0 z-50 bg-gray-900 bg-opacity-75 flex justify-center items-center">
+        <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6 space-y-6">
+            <!-- Header Modal -->
+            <div class="flex justify-between items-center">
+                <h2 class="text-lg font-semibold text-gray-800">Change Email</h2>
+                <button class="text-gray-400 hover:text-gray-600 focus:outline-none"
+                    onclick="closeChangeEmailModal()">&times;</button>
+            </div>
+
+            <!-- Content Modal -->
+            <form id="changeEmailForm" action="{{ route('admin.changeEmail') }}" method="POST">
+                @csrf
+                <div class="space-y-4">
+
+                    @if ($errors->has('email'))
+                        <div class="bg-red-100 text-red-700 px-4 py-3 rounded">
+                            <span class="block sm:inline">{{ $errors->first('email') }}</span>
+                        </div>
+                    @endif
+
+                    @if ($errors->has('old_password'))
+                        <div class="bg-red-100 text-red-700 px-4 py-3 rounded">
+                            <span class="block sm:inline">{{ $errors->first('old_password') }}</span>
+                        </div>
+                    @endif
+
+                    <div>
+                        <label for="newEmail" class="text-sm font-medium text-gray-700">New Email:</label>
+                        <input type="email" id="newEmail" name="email" value="{{ old('email') }}" required
+                            class="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:ring-blue-500">
+                    </div>
+                    <div>
+                        <label for="oldPasswordChangeEmail" class="text-sm font-medium text-gray-700">Current
+                            Password:</label>
+                        <input type="password" id="oldPasswordChangeEmail" name="old_password" required
+                            class="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:ring-blue-500">
+                    </div>
+                </div>
+                <div class="mt-6 flex justify-end">
+                    <button type="submit"
+                        class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Save</button>
+                    <button type="button" onclick="closeChangeEmailModal()"
+                        class="ml-4 bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-600">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- Modal Change Password -->
+    <div id="changePasswordModal"
+        class="{{ $errors->has('current_password') || $errors->has('password') || $errors->has('password_confirmation') ? '' : 'hidden' }} fixed inset-0 z-50 bg-gray-900 bg-opacity-75 flex justify-center items-center">
+        <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6 space-y-6">
+            <!-- Header Modal -->
+            <div class="flex justify-between items-center">
+                <h2 class="text-lg font-semibold text-gray-800">Change Password</h2>
+                <button class="text-gray-400 hover:text-gray-600 focus:outline-none"
+                    onclick="closeChangePasswordModal()">&times;</button>
+            </div>
+
+            <!-- Content Modal -->
+            <form id="changePasswordForm" action="{{ route('admin.changePassword') }}" method="POST">
+                @csrf
+                <div class="space-y-4">
+                    @if ($errors->has('current_password'))
+                        <div class="bg-red-100 text-red-700 px-4 py-3 rounded">
+                            <span class="block sm:inline">{{ $errors->first('current_password') }}</span>
+                        </div>
+                    @endif
+
+                    @if ($errors->has('password'))
+                        <div class="bg-red-100 text-red-700 px-4 py-3 rounded">
+                            <span class="block sm:inline">{{ $errors->first('password') }}</span>
+                        </div>
+                    @endif
+
+                    @if ($errors->has('password_confirmation'))
+                        <div class="bg-red-100 text-red-700 px-4 py-3 rounded">
+                            <span class="block sm:inline">{{ $errors->first('password_confirmation') }}</span>
+                        </div>
+                    @endif
+
+
+                    <div>
+                        <label for="currentPasswordChangePassword" class="text-sm font-medium text-gray-700">Current
+                            Password:</label>
+                        <input type="password" id="currentPasswordChangePassword" name="current_password" required
+                            class="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:ring-blue-500">
+                    </div>
+                    <div>
+                        <label for="newPassword" class="text-sm font-medium text-gray-700">New
+                            Password:</label>
+                        <input type="password" id="newPassword" name="password" required
+                            class="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:ring-blue-500">
+                    </div>
+                    <div>
+                        <label for="confirmPassword" class="text-sm font-medium text-gray-700">Confirm
+                            Password:</label>
+                        <input type="password" id="confirmPassword" name="password_confirmation" required
+                            class="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:ring-blue-500">
+                    </div>
+                </div>
+                <div class="mt-6 flex justify-end">
+                    <button type="submit"
+                        class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Save</button>
+                    <button type="button" onclick="closeChangePasswordModal()"
+                        class="ml-4 bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-600">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!-- Modal Add Campaign -->
-    <div id="addCampaign" class="fixed inset-0 bg-gray-500 bg-opacity-50 hidden flex items-center justify-center z-50">
+    <div id="addCampaign"
+        class="fixed inset-0 bg-gray-500 bg-opacity-50 hidden flex items-center justify-center z-50">
         <div class="bg-white rounded-lg w-full max-w-md p-8 shadow-lg relative">
             <h2 class="text-2xl font-semibold mb-4">Add New Campaign</h2>
             <form action="{{ route('admin.campaign.store') }}" method="POST" enctype="multipart/form-data">
@@ -116,7 +289,8 @@
 
 
     {{-- Modal Edit Campaign --}}
-    <div id="editCampaign" class="fixed inset-0 hidden bg-gray-500 bg-opacity-50 flex items-center justify-center z-50">
+    <div id="editCampaign"
+        class="fixed inset-0 hidden bg-gray-500 bg-opacity-50 flex items-center justify-center z-50">
         <div class="bg-white rounded-lg w-full max-w-md p-8 shadow-lg relative">
             <h2 class="text-2xl font-semibold mb-4">Edit Campaign</h2>
             <form id="editCampaignForm" method="POST" enctype="multipart/form-data">
@@ -125,7 +299,8 @@
                 <div id="editCampaignErrors" class="hidden"></div>
                 <div class="mb-4">
                     <label for="editUnitName" class="block text-gray-700">Unit Name:</label>
-                    <select id="editUnitName" name="unit_id" class="w-full border border-gray-300 p-2 rounded" required>
+                    <select id="editUnitName" name="unit_id" class="w-full border border-gray-300 p-2 rounded"
+                        required>
                         @foreach ($units as $unit)
                             @if (in_array($unit['name'], ['Shafwah holidays', 'Shafwah property']))
                                 <option value="{{ $unit['id'] }}">{{ $unit['name'] }}</option>
@@ -387,6 +562,7 @@
         </aside>
     </footer>
     <script src="{{ asset('js/admin/content/campaign-admin.js') }}"></script>
+    <script src="{{ asset('js/admin/settings-admin.js') }}"></script>
 
     @if (session('success'))
         <script>
