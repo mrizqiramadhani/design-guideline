@@ -58,7 +58,8 @@ class Kernel extends HttpKernel
         'checkAdmin' => \App\Http\Middleware\CheckAdmin::class,
         'checkOperator' => \App\Http\Middleware\CheckOperator::class,
         'checkRole' => \App\Http\Middleware\CheckRole::class,
-        'startSessionByRole' => \App\Http\Middleware\StartSessionByRole::class, // Tambahkan middleware CheckRole di sini
+        'startSessionByRole' => \App\Http\Middleware\StartSessionByRole::class,
+        'validate-reset-flow' => \App\Http\Middleware\ValidateResetFlow::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'auth.session' => \Illuminate\Session\Middleware\AuthenticateSession::class,
         'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,

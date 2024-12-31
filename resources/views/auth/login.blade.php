@@ -52,7 +52,7 @@
                                 <label for="remember" class="text-sm text-gray-700">Remember me</label>
                             </div>
 
-                            <a href="#" class="text-sm text-blue-600 hover:underline">
+                            <a href="{{ route('forgot-password') }}" class="text-sm text-blue-600 hover:underline">
                                 Forgot Password?
                             </a>
                         </div>
