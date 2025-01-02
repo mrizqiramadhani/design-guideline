@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\OperatorController;
 use App\Http\Controllers\DescriptionController;
@@ -63,21 +64,49 @@ Route::get('/campaign/download/{id}', [ShowUnitController::class, 'downloadCampa
 Route::get('/login', function () {
     return view('auth.login');
 });
-Route::get('/admin/dashboard', function () {
-    return view('admin.dashboard-admin');
-});
-Route::get('/operator/dashboard', function () {
-    return view('operator.dashboard-operator');
-});
+
+// Route::get('/forgot-password', function () {
+//     return view('auth.forgot-password.email-validation');
+// })->name('forgot-password');
+// Route::get('/reset-password', function () {
+//     return view('auth.forgot-password.reset-password');
+// })->name('reset-password');
+// Route::get('/reset-password-success', function () {
+//     return view('auth.forgot-password.reset-password-success');
+// })->name('reset-password-success');
 
 //! Auth Route
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
+//! Forgot password route
+Route::get('/forgot-password', [PasswordController::class, 'showForgotPassword'])->name('forgot-password');
+Route::post('/validate-email', [PasswordController::class, 'validateEmail'])->name('validate-email');
+
+Route::middleware('validate-reset-flow:reset-password')->group(function () {
+    Route::get('/reset-password', [PasswordController::class, 'showResetPassword'])->name('reset-password');
+    Route::post('/reset-password', [PasswordController::class, 'resetPassword'])->name('process-reset-password');
+});
+
+Route::middleware('validate-reset-flow:reset-password-success')->group(function () {
+    Route::get('/reset-password-success', [PasswordController::class, 'showResetPasswordSuccess'])->name('reset-password-success');
+});
+
+
 //* Admin Route
 Route::group(['middleware' => ['auth', 'startSessionByRole']], function () {
     Route::group(['middleware' => ['checkAdmin']], function () {
+
+        // !route admin setting
+        Route::post('/admin/change-email', [AdminController::class, 'changeEmail'])->name('admin.changeEmail');
+        Route::post('/admin/change-password', [AdminController::class, 'changePassword'])->name('admin.changePassword');
+
+        //! route admin forgot password
+        // Route::post('/admin/forgot-password')->name('admin.forgot-password');
+
+
+        //! route admin operator-list
         Route::post('/admin/add-operator', [AdminController::class, 'addOperator'])->name('admin.addOperator');
         Route::get('/admin/operator-list', [AdminController::class, 'showOperators'])->name('admin.show-operators');
         Route::get('/admin/operator/edit/{id}', [AdminController::class, 'editOperator'])->name('admin.editOperator');
