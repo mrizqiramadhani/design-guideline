@@ -12,6 +12,7 @@ use App\Http\Controllers\IllustrationController;
 use App\Http\Controllers\SocialMediaController;
 use App\Http\Controllers\CampaignController;
 use App\Http\Controllers\IconographyController;
+use App\Http\Controllers\TypographyController;
 
 
 // Route::get('/', function () {
@@ -55,7 +56,8 @@ Route::get('/shafwah-property/logo-white/{id}', [ShowUnitController::class, 'sho
 //!download logo
 Route::get('/download-logos/{id}', [ShowUnitController::class, 'downloadLogos'])->name('logos.download');
 
-
+//download campaign
+Route::get('/campaign/download/{id}', [ShowUnitController::class, 'downloadCampaign'])->name('campaign.download');
 
 
 Route::get('/login', function () {
@@ -146,6 +148,13 @@ Route::group(['middleware' => ['auth', 'startSessionByRole']], function () {
         Route::get('admin/campaign/{id}/edit', [CampaignController::class, 'edit'])->name('admin.campaign.edit');
         Route::put('admin/campaign/{id}', [CampaignController::class, 'update'])->name('admin.campaign.update');
         Route::delete('admin/campaign/{id}', [CampaignController::class, 'destroy'])->name('admin.campaign.destroy');
+
+        // typography Admin Routes
+        Route::get('admin/typography', [TypographyController::class, 'index'])->name('admin.typography');
+        Route::post('admin/typography', [TypographyController::class, 'store'])->name('admin.typography.store');
+        Route::get('admin/typography/{id}/edit', [TypographyController::class, 'edit'])->name('admin.typography.edit');
+        Route::put('admin/typography/{id}', [TypographyController::class, 'update'])->name('admin.typography.update');
+        Route::delete('admin/typography/{id}', [TypographyController::class, 'destroy'])->name('admin.typography.destroy');
     });
 
     Route::group(['middleware' => ['checkOperator']], function () {
@@ -207,5 +216,12 @@ Route::group(['middleware' => ['auth', 'startSessionByRole']], function () {
         Route::get('operator/campaign/{id}/edit', [CampaignController::class, 'edit'])->name('operator.campaign.edit');
         Route::put('operator/campaign/{id}', [CampaignController::class, 'update'])->name('operator.campaign.update');
         Route::delete('operator/campaign/{id}', [CampaignController::class, 'destroy'])->name('operator.campaign.destroy');
+
+        // typography Routes
+        Route::get('operator/typography', [TypographyController::class, 'index'])->name('operator.typography');
+        Route::post('operator/typography', [TypographyController::class, 'store'])->name('operator.typography.store');
+        Route::get('operator/typography/{id}/edit', [TypographyController::class, 'edit'])->name('operator.typography.edit');
+        Route::put('operator/typography/{id}', [TypographyController::class, 'update'])->name('operator.typography.update');
+        Route::delete('operator/typography/{id}', [TypographyController::class, 'destroy'])->name('operator.typography.destroy');
     });
 });

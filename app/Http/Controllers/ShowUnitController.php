@@ -11,6 +11,7 @@ use App\Models\Illustration;
 use App\Models\SocialMedia;
 use App\Models\Campaign;
 use App\Models\Iconography;
+use App\Models\Typography;
 use App\Models\Description;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
@@ -28,8 +29,9 @@ class ShowUnitController extends Controller
         $socialMedias = socialMedia::where('unit_id', $unit->id)->get();
         $campaigns = Campaign::where('unit_id', $unit->id)->get();
         $iconographys = Iconography::where('unit_id', $unit->id)->get();
+        $typographys = Typography::where('unit_id', $unit->id)->get();
 
-        return view('shafwah-group.index-sg', compact('logos', 'descriptions', 'unit', 'colors', 'illustrations', 'socialMedias', 'campaigns', 'iconographys'));
+        return view('shafwah-group.index-sg', compact('logos', 'descriptions', 'unit', 'colors', 'illustrations', 'socialMedias', 'campaigns', 'iconographys', 'typographys'));
     }
 
     public function showPrimaryLogosShafwahGroup($id)
@@ -85,9 +87,10 @@ class ShowUnitController extends Controller
         $socialMedias = socialMedia::where('unit_id', $unit->id)->get();
         $campaigns = Campaign::where('unit_id', $unit->id)->get();
         $iconographys = Iconography::where('unit_id', $unit->id)->get();
+        $typographys = Typography::where('unit_id', $unit->id)->get();
 
         // Pass logos and unit to the view
-        return view('shafwah-holidays.index-sh', compact('logos', 'descriptions', 'unit', 'colors', 'illustrations', 'socialMedias', 'campaigns', 'iconographys'));
+        return view('shafwah-holidays.index-sh', compact('logos', 'descriptions', 'unit', 'colors', 'illustrations', 'socialMedias', 'campaigns', 'iconographys', 'typographys'));
     }
 
     public function showPrimaryLogosShafwahHolidays($id)
@@ -143,9 +146,10 @@ class ShowUnitController extends Controller
         $socialMedias = socialMedia::where('unit_id', $unit->id)->get();
         $campaigns = Campaign::where('unit_id', $unit->id)->get();
         $iconographys = Iconography::where('unit_id', $unit->id)->get();
+        $typographys = Typography::where('unit_id', $unit->id)->get();
 
         // Pass logos and unit to the view
-        return view('shafwah-property.index-srp', compact('logos',  'descriptions', 'unit', 'colors', 'illustrations', 'socialMedias', 'campaigns', 'iconographys'));
+        return view('shafwah-property.index-srp', compact('logos',  'descriptions', 'unit', 'colors', 'illustrations', 'socialMedias', 'campaigns', 'iconographys', 'typographys'));
     }
 
     public function showPrimaryLogosShafwahProperty($id)
@@ -216,4 +220,23 @@ class ShowUnitController extends Controller
 
         return response()->download($zipFileName)->deleteFileAfterSend(true);
     }
+
+    public function downloadCampaign($id)
+{
+    // Cari campaign berdasarkan ID
+    $campaign = Campaign::findOrFail($id);
+
+    // Pastikan file benar-benar ada di storage
+    $filePath = storage_path('app/public/' . $campaign->path);
+    if (!file_exists($filePath)) {
+        abort(404, 'File not found.');
+    }
+
+    // Ambil nama asli file dari path
+    $fileName = basename($campaign->path);
+
+    // Kirim file untuk diunduh dengan nama asli
+    return response()->download($filePath, $fileName);
+}
+
 }

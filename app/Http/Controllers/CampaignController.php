@@ -44,28 +44,39 @@ class CampaignController extends Controller
     }
 
     public function store(Request $request)
-    {
-        // Validasi data input dari form
-        $validatedData = $request->validate([
-            'path' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:5048',
-            'unit_id' => 'required|exists:units,id',
-            'status' => 'required|in:publish,private', // Menambahkan validasi status
-        ]);
+{
+    // Validasi data input dari form
+    $validatedData = $request->validate([
+        'path' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:5048',
+        'unit_id' => 'required|exists:units,id',
+        'status' => 'required|in:publish,private', // Menambahkan validasi status
+    ]);
 
-        // Menyimpan gambar campaign ke folder 'campaigns' di storage publik
-        $campaignPath = $request->file('path')->store('campaigns', 'public');
-
-        // Membuat record baru di tabel campaign
-        Campaign::create([
-            'path' => $campaignPath,
-            'unit_id' => $validatedData['unit_id'],
-            'user_id' => auth()->id(),
-            'status' => $validatedData['status'], // Menyimpan status campaign
-        ]);
-
-        return redirect()->route(auth()->user()->role === 'admin' ? 'admin.campaign' : 'operator.campaign')
-            ->with('success', 'Campaign added successfully!');
+    // Mendapatkan file dari request
+    if ($request->hasFile('path')) {
+        $file = $request->file('path');
+        
+        // Ambil nama asli file tanpa modifikasi
+        $originalFileName = $file->getClientOriginalName();
+        
+        // Simpan file ke folder 'campaigns' di storage publik dengan nama asli
+        $campaignPath = $file->storeAs('campaigns', $originalFileName, 'public');
+    } else {
+        return redirect()->back()->with('error', 'File not uploaded.');
     }
+
+    // Membuat record baru di tabel campaign
+    Campaign::create([
+        'path' => $campaignPath, // Simpan path file
+        'unit_id' => $validatedData['unit_id'],
+        'user_id' => auth()->id(),
+        'status' => $validatedData['status'], // Menyimpan status campaign
+    ]);
+
+    // Redirect dengan pesan sukses
+    return redirect()->route(auth()->user()->role === 'admin' ? 'admin.campaign' : 'operator.campaign')
+        ->with('success', 'Campaign added successfully!');
+}
 
     public function edit($id)
     {
@@ -80,36 +91,40 @@ class CampaignController extends Controller
     }
 
     public function update(Request $request, $id)
-    {
-        $campaign = Campaign::findOrFail($id);
+{
+    $campaign = Campaign::findOrFail($id);
 
-        // Validasi data input
-        $validatedData = $request->validate([
-            'unit_id' => 'required|exists:units,id',
-            'path' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5048',
-            'status' => 'required|in:publish,private', // Menambahkan validasi status
-        ]);
+    // Validasi data input
+    $validatedData = $request->validate([
+        'unit_id' => 'required|exists:units,id',
+        'path' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5048',
+        'status' => 'required|in:publish,private',
+    ]);
 
-        // Memperbarui unit_id dan status campaign
-        $campaign->unit_id = $validatedData['unit_id'];
-        $campaign->status = $validatedData['status']; // Memperbarui status campaign
+    // Memperbarui unit_id dan status campaign
+    $campaign->unit_id = $validatedData['unit_id'];
+    $campaign->status = $validatedData['status'];
 
-        // Jika ada file gambar baru, simpan dan hapus yang lama jika ada
-        if ($request->hasFile('path')) {
-            if ($campaign->path && Storage::disk('public')->exists($campaign->path)) {
-                Storage::disk('public')->delete($campaign->path);
-            }
-
-            // Menyimpan gambar campaign baru
-            $campaign->path = $request->file('path')->store('campaigns', 'public');
+    // Jika ada file gambar baru
+    if ($request->hasFile('path')) {
+        // Hapus file lama jika ada
+        if ($campaign->path && Storage::disk('public')->exists($campaign->path)) {
+            Storage::disk('public')->delete($campaign->path);
         }
 
-        // Menyimpan perubahan campaign ke database
-        $campaign->save();
+        // Ambil nama asli file baru
+        $originalFileName = $request->file('path')->getClientOriginalName();
 
-        return redirect()->route(auth()->user()->role === 'admin' ? 'admin.campaign' : 'operator.campaign')
-            ->with('success', 'Campaign updated successfully!');
+        // Simpan file baru ke folder campaigns dengan nama asli
+        $campaign->path = $request->file('path')->storeAs('campaigns', $originalFileName, 'public');
     }
+
+    // Simpan perubahan campaign
+    $campaign->save();
+
+    return redirect()->route(auth()->user()->role === 'admin' ? 'admin.campaign' : 'operator.campaign')
+        ->with('success', 'Campaign updated successfully!');
+}
 
     public function destroy($id)
     {

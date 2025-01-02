@@ -123,33 +123,30 @@
                 @csrf
                 @method('PUT') <!-- Untuk PUT method pada update -->
                 <div id="editCampaignErrors" class="hidden"></div>
+    
                 <div class="mb-4">
                     <label for="editUnitName" class="block text-gray-700">Unit Name:</label>
                     <select id="editUnitName" name="unit_id" class="w-full border border-gray-300 p-2 rounded" required>
                         @foreach ($units as $unit)
-                            @if (in_array($unit['name'], ['Shafwah holidays', 'Shafwah property']))
-                                <option value="{{ $unit['id'] }}">{{ $unit['name'] }}</option>
-                            @endif
+                            <option value="{{ $unit->id }}">{{ $unit->name }}</option>
                         @endforeach
                     </select>
                 </div>
-
+    
                 <div class="mb-4">
                     <label for="editStatus" class="block text-gray-700">Status:</label>
-                    <select id="editStatus" name="status" class="w-full border border-gray-300 p-2 rounded"
-                        required>
-                        <option value="publish">Publish</option>
-                        <option value="private">Private</option>
+                    <select id="editStatus" name="status" class="w-full border border-gray-300 p-2 rounded" required>
+                        <option value="publish" id="status-publish">Publish</option>
+                        <option value="private" id="status-private">Private</option>
                     </select>
                 </div>
-
+    
                 <div class="mb-4">
                     <label for="editImageCampaign" class="block text-gray-700">Campaign Image:</label>
                     <input type="file" id="editImageCampaign" name="path"
                         class="w-full border border-gray-300 p-2 rounded">
-                    <p class="text-xs text-gray-500 mt-1">Kosongkan jika tidak ingin mengubah gambar.</p>
                 </div>
-
+    
                 <div class="flex justify-end">
                     <button type="button" onclick="closeModal('editCampaign')"
                         class="mr-4 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">
@@ -161,7 +158,7 @@
                 </div>
             </form>
         </div>
-    </div>
+    </div>        
 
     <!-- Modal Delete Campaign -->
     <div id="deleteCampaignModal"

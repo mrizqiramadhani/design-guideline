@@ -16,7 +16,7 @@ function openDeleteModal(id) {
 }
 
 // Fungsi untuk membuka modal edit campaign
-function openEditModal(id, unitId, path) {
+function openEditModal(id, unitId, status, path) {
   // Atur action URL form edit
   const form = document.getElementById("editCampaignForm");
   form.action = `/admin/campaign/${id}`;
@@ -26,13 +26,12 @@ function openEditModal(id, unitId, path) {
   unitSelect.value = unitId;
 
   // Kosongkan input file gambar karena tidak bisa diisi secara programatik
-  const fileInfo = document.getElementById("editImageCampaign");
-  fileInfo.value = "";
+  const fileInput = document.getElementById("editImageCampaign");
+  fileInput.value = "";
 
   // Set status campaign pada dropdown status
   const statusSelect = document.getElementById("editStatus");
-  // Menambahkan logika untuk set status dari campaign yang dipilih
-  if (path && path.includes("publish")) {
+  if (status === "publish") {
     statusSelect.value = "publish";
   } else {
     statusSelect.value = "private";

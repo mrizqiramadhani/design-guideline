@@ -144,7 +144,6 @@
                             <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Unit</th>
                             <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Color</th>
                             <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Code HEX</th>
-                            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Last Updated By</th>
                             <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Actions</th>
                         </tr>
                     </thead>

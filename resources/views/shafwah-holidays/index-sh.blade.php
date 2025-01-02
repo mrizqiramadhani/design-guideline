@@ -172,31 +172,43 @@
 
 
                     <!-- Typography Section -->
-                    <div class="p-4 mb-8 min-h-[1000px] bg-white">
+                    <div class="p-4 mb-8 bg-white">
                         <h2 id="typography" class="uppercase font-bold text-3xl text-black mb-4 section-heading">
-                            Typography</h2>
-                        <p class="font-light text-gray-600 paragraf text-justify">Lorem ipsum dolor sit amet,
-                            consectetur adipiscing
-                            elit. Vivamus lacinia odio vitae vestibulum vestibulum.
+                            Typography
+                        </h2>
+                        <p class="font-light text-gray-600 paragraf text-justify">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum.
                         </p>
                         <h3 class="font-semibold text-2xl text-black mt-6 mb-4">Primary Typeface</h3>
-                        <p class="font-light text-gray-600 paragraf mb-6 text-justify">Lorem ipsum dolor sit amet,
-                            consectetur
-                            adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                        <p class="font-light text-gray-600 paragraf mb-6 text-justify">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                         </p>
+                    
+                        @if ($typographys->isNotEmpty())
+                        <!-- Typography Section -->
+                        <div class="mt-4 flex flex-col items-center space-y-8">
+                            @foreach ($typographys as $typography)
+                                <!-- Container Gambar dan Tombol -->
+                                <div class="w-full flex flex-col items-center space-y-4">
+                                    <!-- Gambar Typography -->
+                                    <div class="h-[450px] relative flex items-center justify-center">
+                                        <img src="{{ asset('storage/' . $typography->path) }}" alt="Typography Image"
+                                            class="h-full w-full object-contain rounded-sm" />
+                                    </div>
 
-                        {{-- image --}}
-                        <div class="h-[450px] mt-4 relative">
-                            <img src="https://media.giphy.com/media/26vUucK24XyuAy9a0/giphy.gif?cid=790b7611ib14hw52te2ft44je5iphwu5evj8maz3lqx54psa&ep=v1_gifs_search&rid=giphy.gif&ct=g"alt="Typography Example"
-                                class="h-full w-full object-cover rounded-sm" />
+                                    <!-- Tombol Download -->
+                                    @if ($typography->font_name)
+                                        <a href="{{ $typography->font_name }}" target="_blank" rel="noopener noreferrer" class="w-full">
+                                            <button type="button"
+                                                class="w-full rounded-md border border-blue-600 bg-blue-600 px-6 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500">
+                                                Download
+                                            </button>
+                                        </a>
+                                    @endif
+                                </div>
+                            @endforeach
                         </div>
-                        <a href="https://fonts.google.com/specimen/Montserrat" target="_blank"
-                            rel="noopener noreferrer">
-                            <button type="button"
-                                class="w-full rounded-md border border-blue-600 bg-blue-600 px-6 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500 mt-3 mr-5">
-                                Download Font
-                            </button>
-                        </a>
+                    @endif
                     </div>
 
                     <!-- Ilustration Section -->
@@ -315,23 +327,37 @@
                             </button>
                         </a>
                     </div>
+
                     <!-- Campaign Section -->
                     <div class="p-4 mb-8 min-h-[1000px] bg-white">
                         <h2 id="campaign" class="uppercase font-bold text-3xl text-black mb-4 section-heading">
-                            Campaign</h2>
-                        <p class="font-light text-gray-600 paragraf">Lorem ipsum dolor sit amet, consectetur
-                            adipisicing elit. Enim ipsum mollitia veniam! Perspiciatis dignissimos ducimus laboriosam
-                            fugit doloribus inventore molestias omnis nesciunt, odit temporibus! Laborum vitae error vel
-                            sapiente similique.</p>
+                            Campaign
+                        </h2>
+                        <p class="font-light text-gray-600 paragraf">
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim ipsum mollitia veniam! Perspiciatis dignissimos
+                            ducimus laboriosam fugit doloribus inventore molestias omnis nesciunt, odit temporibus! Laborum vitae error vel
+                            sapiente similique.
+                        </p>
 
                         <!-- Rectangle Container -->
                         <div class="flex flex-wrap gap-4 mt-6 justify-between">
                             @foreach ($campaigns->where('status', 'publish') as $campaign)
                                 <div
-                                    class="bg-gray-200 w-[calc(50%-0.5rem)] h-64 rounded-md flex items-center justify-center 
+                                    class="relative bg-gray-200 w-[calc(50%-0.5rem)] h-64 rounded-md overflow-hidden group flex items-center justify-center 
                                     @if ($loop->last && $loop->remaining % 2 === 0) mx-auto @endif">
+                                    
+                                    <!-- Image -->
                                     <img src="{{ asset('storage/' . $campaign->path) }}" alt="Campaign Image"
                                         class="object-contain max-w-full max-h-full rounded-md">
+
+                                    <!-- Hover Overlay -->
+                                    <div
+                                        class="absolute inset-0 bg-black bg-opacity-70 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                        <a href="{{ route('campaign.download', $campaign->id) }}"
+                                            class="px-6 py-2 rounded-full border border-white text-white hover:bg-white hover:text-black transition-all duration-300">
+                                            Download
+                                        </a>                    
+                                    </div>
                                 </div>
                             @endforeach
                         </div>
