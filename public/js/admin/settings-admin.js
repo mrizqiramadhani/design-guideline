@@ -38,3 +38,41 @@ function closeOtherModals(currentModal) {
     }
   });
 }
+
+function togglePassword(id, iconId) {
+  const passwordInput = document.getElementById(id);
+  const icon = document.getElementById(iconId).querySelector(".iconify");
+
+  if (passwordInput.type === "password") {
+    passwordInput.type = "text";
+    icon.setAttribute("data-icon", "mdi:eye-off");
+  } else {
+    passwordInput.type = "password";
+    icon.setAttribute("data-icon", "mdi:eye");
+  }
+}
+
+// Add event listeners for toggling passwords
+document
+  .getElementById("toggle-old-password-email")
+  .addEventListener("click", function () {
+    togglePassword("oldPasswordChangeEmail", "toggle-old-password-email");
+  });
+
+document
+  .getElementById("toggle-current-password")
+  .addEventListener("click", function () {
+    togglePassword("currentPasswordChangePassword", "toggle-current-password");
+  });
+
+document
+  .getElementById("toggle-new-password")
+  .addEventListener("click", function () {
+    togglePassword("newPassword", "toggle-new-password");
+  });
+
+document
+  .getElementById("toggle-confirm-password")
+  .addEventListener("click", function () {
+    togglePassword("confirmPassword", "toggle-confirm-password");
+  });

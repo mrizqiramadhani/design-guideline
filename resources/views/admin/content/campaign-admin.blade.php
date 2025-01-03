@@ -12,6 +12,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.15/dist/sweetalert2.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.iconify.design/2/2.0.3/iconify.min.js"></script>
 </head>
 
 <body>
@@ -163,8 +164,14 @@
                     <div>
                         <label for="oldPasswordChangeEmail" class="text-sm font-medium text-gray-700">Current
                             Password:</label>
-                        <input type="password" id="oldPasswordChangeEmail" name="old_password" required
-                            class="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:ring-blue-500">
+                        <div class="relative">
+                            <input type="password" id="oldPasswordChangeEmail" name="old_password" required
+                                class="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:ring-blue-500">
+                            <span class="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer"
+                                id="toggle-old-password-email">
+                                <span class="iconify" data-icon="mdi:eye" data-width="20" data-height="20"></span>
+                            </span>
+                        </div>
                     </div>
                 </div>
                 <div class="mt-6 flex justify-end">
@@ -176,7 +183,6 @@
             </form>
         </div>
     </div>
-
 
     <!-- Modal Change Password -->
     <div id="changePasswordModal"
@@ -193,6 +199,7 @@
             <form id="changePasswordForm" action="{{ route('admin.changePassword') }}" method="POST">
                 @csrf
                 <div class="space-y-4">
+
                     @if ($errors->has('current_password'))
                         <div class="bg-red-100 text-red-700 px-4 py-3 rounded">
                             <span class="block sm:inline">{{ $errors->first('current_password') }}</span>
@@ -211,24 +218,42 @@
                         </div>
                     @endif
 
-
                     <div>
                         <label for="currentPasswordChangePassword" class="text-sm font-medium text-gray-700">Current
                             Password:</label>
-                        <input type="password" id="currentPasswordChangePassword" name="current_password" required
-                            class="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:ring-blue-500">
+                        <div class="relative">
+                            <input type="password" id="currentPasswordChangePassword" name="current_password"
+                                required
+                                class="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:ring-blue-500">
+                            <span class="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer"
+                                id="toggle-current-password">
+                                <span class="iconify" data-icon="mdi:eye" data-width="20" data-height="20"></span>
+                            </span>
+                        </div>
                     </div>
                     <div>
                         <label for="newPassword" class="text-sm font-medium text-gray-700">New
                             Password:</label>
-                        <input type="password" id="newPassword" name="password" required
-                            class="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:ring-blue-500">
+                        <div class="relative">
+                            <input type="password" id="newPassword" name="password" required
+                                class="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:ring-blue-500">
+                            <span class="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer"
+                                id="toggle-new-password">
+                                <span class="iconify" data-icon="mdi:eye" data-width="20" data-height="20"></span>
+                            </span>
+                        </div>
                     </div>
                     <div>
                         <label for="confirmPassword" class="text-sm font-medium text-gray-700">Confirm
                             Password:</label>
-                        <input type="password" id="confirmPassword" name="password_confirmation" required
-                            class="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:ring-blue-500">
+                        <div class="relative">
+                            <input type="password" id="confirmPassword" name="password_confirmation" required
+                                class="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:ring-blue-500">
+                            <span class="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer"
+                                id="toggle-confirm-password">
+                                <span class="iconify" data-icon="mdi:eye" data-width="20" data-height="20"></span>
+                            </span>
+                        </div>
                     </div>
                 </div>
                 <div class="mt-6 flex justify-end">
@@ -297,7 +322,7 @@
                 @csrf
                 @method('PUT') <!-- Untuk PUT method pada update -->
                 <div id="editCampaignErrors" class="hidden"></div>
-    
+
                 <div class="mb-4">
                     <label for="editUnitName" class="block text-gray-700">Unit Name:</label>
                     <select id="editUnitName" name="unit_id" class="w-full border border-gray-300 p-2 rounded"
@@ -307,21 +332,22 @@
                         @endforeach
                     </select>
                 </div>
-    
+
                 <div class="mb-4">
                     <label for="editStatus" class="block text-gray-700">Status:</label>
-                    <select id="editStatus" name="status" class="w-full border border-gray-300 p-2 rounded" required>
+                    <select id="editStatus" name="status" class="w-full border border-gray-300 p-2 rounded"
+                        required>
                         <option value="publish" id="status-publish">Publish</option>
                         <option value="private" id="status-private">Private</option>
                     </select>
                 </div>
-    
+
                 <div class="mb-4">
                     <label for="editImageCampaign" class="block text-gray-700">Campaign Image:</label>
                     <input type="file" id="editImageCampaign" name="path"
                         class="w-full border border-gray-300 p-2 rounded">
                 </div>
-    
+
                 <div class="flex justify-end">
                     <button type="button" onclick="closeModal('editCampaign')"
                         class="mr-4 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">
@@ -333,7 +359,7 @@
                 </div>
             </form>
         </div>
-    </div>        
+    </div>
 
     <!-- Modal Delete Campaign -->
     <div id="deleteCampaignModal"

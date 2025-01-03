@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/2/2.0.3/iconify.min.js"></script>
     <title>Reset Password</title>
 </head>
 
@@ -31,6 +32,11 @@
                                     <input type="password" id="new-password" name="password"
                                         class="py-3 px-4 block w-full border-2 border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 shadow-sm"
                                         required>
+                                    <span class="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer"
+                                        id="toggle-new-password">
+                                        <span class="iconify" data-icon="mdi:eye" data-width="20"
+                                            data-height="20"></span>
+                                    </span>
                                 </div>
                                 <p class="hidden text-xs text-red-600 mt-2" id="new-password-error">Please enter a valid
                                     password.</p>
@@ -44,6 +50,11 @@
                                     <input type="password" id="confirm-password" name="password_confirmation"
                                         class="py-3 px-4 block w-full border-2 border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 shadow-sm"
                                         required>
+                                    <span class="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer"
+                                        id="toggle-confirm-password">
+                                        <span class="iconify" data-icon="mdi:eye" data-width="20"
+                                            data-height="20"></span>
+                                    </span>
                                 </div>
                                 <p class="hidden text-xs text-red-600 mt-2" id="confirm-password-error">Passwords do not
                                     match.</p>
@@ -58,6 +69,32 @@
             </div>
         </div>
     </main>
+
+    <script>
+        document.getElementById('toggle-new-password').addEventListener('click', function() {
+            const passwordInput = document.getElementById('new-password');
+            const icon = this.querySelector('.iconify');
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                icon.setAttribute('data-icon', 'mdi:eye-off');
+            } else {
+                passwordInput.type = 'password';
+                icon.setAttribute('data-icon', 'mdi:eye');
+            }
+        });
+
+        document.getElementById('toggle-confirm-password').addEventListener('click', function() {
+            const passwordInput = document.getElementById('confirm-password');
+            const icon = this.querySelector('.iconify');
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                icon.setAttribute('data-icon', 'mdi:eye-off');
+            } else {
+                passwordInput.type = 'password';
+                icon.setAttribute('data-icon', 'mdi:eye');
+            }
+        });
+    </script>
 </body>
 
 </html>

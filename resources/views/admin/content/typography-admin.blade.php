@@ -11,6 +11,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.15/dist/sweetalert2.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.iconify.design/2/2.0.3/iconify.min.js"></script>
 </head>
 
 <body>
@@ -162,8 +163,14 @@
                     <div>
                         <label for="oldPasswordChangeEmail" class="text-sm font-medium text-gray-700">Current
                             Password:</label>
-                        <input type="password" id="oldPasswordChangeEmail" name="old_password" required
-                            class="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:ring-blue-500">
+                        <div class="relative">
+                            <input type="password" id="oldPasswordChangeEmail" name="old_password" required
+                                class="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:ring-blue-500">
+                            <span class="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer"
+                                id="toggle-old-password-email">
+                                <span class="iconify" data-icon="mdi:eye" data-width="20" data-height="20"></span>
+                            </span>
+                        </div>
                     </div>
                 </div>
                 <div class="mt-6 flex justify-end">
@@ -175,7 +182,6 @@
             </form>
         </div>
     </div>
-
 
     <!-- Modal Change Password -->
     <div id="changePasswordModal"
@@ -192,6 +198,7 @@
             <form id="changePasswordForm" action="{{ route('admin.changePassword') }}" method="POST">
                 @csrf
                 <div class="space-y-4">
+
                     @if ($errors->has('current_password'))
                         <div class="bg-red-100 text-red-700 px-4 py-3 rounded">
                             <span class="block sm:inline">{{ $errors->first('current_password') }}</span>
@@ -210,24 +217,42 @@
                         </div>
                     @endif
 
-
                     <div>
                         <label for="currentPasswordChangePassword" class="text-sm font-medium text-gray-700">Current
                             Password:</label>
-                        <input type="password" id="currentPasswordChangePassword" name="current_password" required
-                            class="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:ring-blue-500">
+                        <div class="relative">
+                            <input type="password" id="currentPasswordChangePassword" name="current_password"
+                                required
+                                class="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:ring-blue-500">
+                            <span class="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer"
+                                id="toggle-current-password">
+                                <span class="iconify" data-icon="mdi:eye" data-width="20" data-height="20"></span>
+                            </span>
+                        </div>
                     </div>
                     <div>
                         <label for="newPassword" class="text-sm font-medium text-gray-700">New
                             Password:</label>
-                        <input type="password" id="newPassword" name="password" required
-                            class="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:ring-blue-500">
+                        <div class="relative">
+                            <input type="password" id="newPassword" name="password" required
+                                class="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:ring-blue-500">
+                            <span class="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer"
+                                id="toggle-new-password">
+                                <span class="iconify" data-icon="mdi:eye" data-width="20" data-height="20"></span>
+                            </span>
+                        </div>
                     </div>
                     <div>
                         <label for="confirmPassword" class="text-sm font-medium text-gray-700">Confirm
                             Password:</label>
-                        <input type="password" id="confirmPassword" name="password_confirmation" required
-                            class="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:ring-blue-500">
+                        <div class="relative">
+                            <input type="password" id="confirmPassword" name="password_confirmation" required
+                                class="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:ring-blue-500">
+                            <span class="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer"
+                                id="toggle-confirm-password">
+                                <span class="iconify" data-icon="mdi:eye" data-width="20" data-height="20"></span>
+                            </span>
+                        </div>
                     </div>
                 </div>
                 <div class="mt-6 flex justify-end">
@@ -239,7 +264,6 @@
             </form>
         </div>
     </div>
-
     <!-- Modal Add Typography -->
     <div id="addTypography"
         class="fixed inset-0 bg-gray-500 bg-opacity-50 hidden flex items-center justify-center z-50">
