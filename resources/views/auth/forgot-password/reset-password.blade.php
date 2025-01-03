@@ -22,7 +22,7 @@
                 </div>
 
                 <div class="mt-5">
-                    <form action="{{ route('reset-password') }}" method="POST">
+                    <form action="{{ route('reset-password') }}" method="POST" id="resetPasswordForm">
                         @csrf
                         <div class="grid gap-y-4">
                             <!-- New Password -->
@@ -62,39 +62,17 @@
 
                             <!-- Submit Button -->
                             <button type="submit"
-                                class="py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm">Confirm</button>
+                                class="py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm">
+                                Confirm
+                            </button>
                         </div>
                     </form>
+
                 </div>
             </div>
         </div>
     </main>
-
-    <script>
-        document.getElementById('toggle-new-password').addEventListener('click', function() {
-            const passwordInput = document.getElementById('new-password');
-            const icon = this.querySelector('.iconify');
-            if (passwordInput.type === 'password') {
-                passwordInput.type = 'text';
-                icon.setAttribute('data-icon', 'mdi:eye-off');
-            } else {
-                passwordInput.type = 'password';
-                icon.setAttribute('data-icon', 'mdi:eye');
-            }
-        });
-
-        document.getElementById('toggle-confirm-password').addEventListener('click', function() {
-            const passwordInput = document.getElementById('confirm-password');
-            const icon = this.querySelector('.iconify');
-            if (passwordInput.type === 'password') {
-                passwordInput.type = 'text';
-                icon.setAttribute('data-icon', 'mdi:eye-off');
-            } else {
-                passwordInput.type = 'password';
-                icon.setAttribute('data-icon', 'mdi:eye');
-            }
-        });
-    </script>
+    <script src="{{ asset('js/auth.js') }}"></script>
 </body>
 
 </html>
