@@ -63,83 +63,83 @@
     <!-- Modal Add Typography -->
     <!-- Modal Add Typography -->
     <div id="addTypography"
-    class="fixed inset-0 bg-gray-500 bg-opacity-50 hidden flex items-center justify-center z-50">
-    <div class="bg-white rounded-lg w-full max-w-md p-8 shadow-lg relative">
-        <h2 class="text-2xl font-semibold mb-4">Add New Typography</h2>
-        <form action="{{ route('operator.typography.store') }}" method="POST" enctype="multipart/form-data">
-            @csrf
-            <div id="typographyErrors" class="hidden mb-4"></div>
-            <div class="mb-4">
-                <label for="unit_id" class="block text-gray-700">Unit Name:</label>
-                <select id="unit_id" name="unit_id" class="w-full border border-gray-300 p-2 rounded">
-                    @foreach ($units as $unit)
-                        <option value="{{ $unit->id }}">{{ $unit->name }}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="mb-4">
-                <label for="path" class="block text-gray-700">Image Typography:</label>
-                <input type="file" id="path" name="path"
-                    class="w-full border border-gray-300 p-2 rounded">
-            </div>
-            <div class="mb-4">
-                <label for="font_name" class="block text-gray-700">Typography Link:</label>
-                <input type="url" id="font_name" name="font_name"
-                    class="w-full border border-gray-300 p-2 rounded" placeholder="https://example.com">
-            </div>
-            <div class="flex justify-end">
-                <button type="button" onclick="closeModal('addTypography')"
-                    class="mr-4 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">
-                    Cancel
-                </button>
-                <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
-                    Save
-                </button>
-            </div>
-        </form>
+        class="fixed inset-0 bg-gray-500 bg-opacity-50 hidden flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg w-full max-w-md p-8 shadow-lg relative">
+            <h2 class="text-2xl font-semibold mb-4">Add New Typography</h2>
+            <form action="{{ route('operator.typography.store') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div id="typographyErrors" class="hidden mb-4"></div>
+                <div class="mb-4">
+                    <label for="unit_id" class="block text-gray-700">Unit Name:</label>
+                    <select id="unit_id" name="unit_id" class="w-full border border-gray-300 p-2 rounded">
+                        @foreach ($units as $unit)
+                            <option value="{{ $unit->id }}">{{ $unit->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <label for="path" class="block text-gray-700">Image Typography:</label>
+                    <input type="file" id="path" name="path"
+                        class="w-full border border-gray-300 p-2 rounded">
+                </div>
+                <div class="mb-4">
+                    <label for="font_name" class="block text-gray-700">Typography Link:</label>
+                    <input type="url" id="font_name" name="font_name"
+                        class="w-full border border-gray-300 p-2 rounded" placeholder="https://example.com">
+                </div>
+                <div class="flex justify-end">
+                    <button type="button" onclick="closeModal('addTypography')"
+                        class="mr-4 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">
+                        Cancel
+                    </button>
+                    <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
+                        Save
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
 
     {{-- Modal Edit Typography --}}
     <div id="editTypography"
-    class="fixed inset-0 hidden bg-gray-500 bg-opacity-50 flex items-center justify-center z-50">
-    <div class="bg-white rounded-lg w-full max-w-md p-8 shadow-lg relative">
-        <h2 class="text-2xl font-semibold mb-4">Edit Typography</h2>
-        <form id="editTypographyForm" method="POST" enctype="multipart/form-data">
-            @csrf
-            @method('PUT') <!-- Untuk PUT method pada update -->
-            <div id="editTypographyErrors" class="hidden mb-4"></div>
-            <div class="mb-4">
-                <label for="editUnitName" class="block text-gray-700">Unit Name:</label>
-                <select id="editUnitName" name="unit_id" class="w-full border border-gray-300 p-2 rounded" required>
-                    @foreach ($units as $unit)
-                        <option value="{{ $unit->id }}">{{ $unit->name }}</option>
-                    @endforeach
-                </select>
-            </div>
+        class="fixed inset-0 hidden bg-gray-500 bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg w-full max-w-md p-8 shadow-lg relative">
+            <h2 class="text-2xl font-semibold mb-4">Edit Typography</h2>
+            <form id="editTypographyForm" method="POST" enctype="multipart/form-data">
+                @csrf
+                @method('PUT') <!-- Untuk PUT method pada update -->
+                <div id="editTypographyErrors" class="hidden mb-4"></div>
+                <div class="mb-4">
+                    <label for="editUnitName" class="block text-gray-700">Unit Name:</label>
+                    <select id="editUnitName" name="unit_id" class="w-full border border-gray-300 p-2 rounded" required>
+                        @foreach ($units as $unit)
+                            <option value="{{ $unit->id }}">{{ $unit->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
 
-            <div class="mb-4">
-                <label for="editImageTypography" class="block text-gray-700">Image Typography:</label>
-                <input type="file" id="editImageTypography" name="path"
-                    class="w-full border border-gray-300 p-2 rounded">
-                <p class="text-xs text-gray-500 mt-1">Kosongkan jika tidak ingin mengubah gambar.</p>
-            </div>
+                <div class="mb-4">
+                    <label for="editImageTypography" class="block text-gray-700">Image Typography:</label>
+                    <input type="file" id="editImageTypography" name="path"
+                        class="w-full border border-gray-300 p-2 rounded">
+                    <p class="text-xs text-gray-500 mt-1">Kosongkan jika tidak ingin mengubah gambar.</p>
+                </div>
 
-            <div class="mb-4">
-                <label for="editFontName" class="block text-gray-700">Typography Link:</label>
-                <input type="url" id="editFontName" name="font_name"
-                    class="w-full border border-gray-300 p-2 rounded" placeholder="https://example.com">
-            </div>
+                <div class="mb-4">
+                    <label for="editFontName" class="block text-gray-700">Typography Link:</label>
+                    <input type="url" id="editFontName" name="font_name"
+                        class="w-full border border-gray-300 p-2 rounded" placeholder="https://example.com">
+                </div>
 
-            <div class="flex justify-end">
-                <button type="button" onclick="closeModal('editTypography')"
-                    class="mr-4 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Cancel</button>
-                <button type="submit"
-                    class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Update</button>
-            </div>
-        </form>
+                <div class="flex justify-end">
+                    <button type="button" onclick="closeModal('editTypography')"
+                        class="mr-4 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Cancel</button>
+                    <button type="submit"
+                        class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Update</button>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
 
 
     <!-- Modal Delete Typography -->
@@ -257,11 +257,13 @@
                             <tr class="border-t">
                                 <td class="px-4 py-2 text-gray-900">{{ $typography->unit->name ?? '' }}</td>
                                 <td class="px-4 py-2 text-gray-900">
-                                    <img src="{{ asset('storage/' . $typography->path) }}" alt="Typography Image" class="w-32 h-20 object-cover">
+                                    <img src="{{ asset('storage/' . $typography->path) }}" alt="Typography Image"
+                                        class="w-32 h-20 object-cover">
                                 </td>
                                 <td class="px-4 py-2 text-gray-900">
                                     @if ($typography->font_name)
-                                        <a href="{{ $typography->font_name }}" target="_blank" class="text-blue-500 hover:underline">
+                                        <a href="{{ $typography->font_name }}" target="_blank"
+                                            class="text-blue-500 hover:underline">
                                             {{ $typography->font_name }}
                                         </a>
                                     @else
@@ -285,7 +287,7 @@
                         @endforeach
                     </tbody>
                 </table>
-            </div> 
+            </div>
 
             <!-- Pagination -->
             @if ($typographys->count() > 0)
@@ -341,9 +343,8 @@
                 </div>
             @else
                 <div class="flex flex-col items-center justify-center mt-5">
-                    <img src="https://i.pinimg.com/originals/6a/f3/71/6af371f102361c0fd47619eb524bf4bb.gif"
-                        alt="Empty Content" class="w-32 h-32">
-                    <p class="text-gray-500 mt-3">Tidak ada konten untuk ditampilkan</p>
+                    <img src="{{ asset('img/not found.png') }}" alt="Empty Content" class="w-32 h-32">
+                    <p class="text-gray-800 font-bold text-lg">No Content Available</p>
                 </div>
 
             @endif

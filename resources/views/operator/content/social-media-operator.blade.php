@@ -352,9 +352,8 @@
                 </div>
             @else
                 <div class="flex flex-col items-center justify-center mt-5">
-                    <img src="https://i.pinimg.com/originals/6a/f3/71/6af371f102361c0fd47619eb524bf4bb.gif"
-                        alt="Empty Content" class="w-32 h-32">
-                    <p class="text-gray-500 mt-3">Tidak ada konten untuk ditampilkan</p>
+                    <img src="{{ asset('img/not found.png') }}" alt="Empty Content" class="w-32 h-32">
+                    <p class="text-gray-800 font-bold text-lg">No Content Available</p>
                 </div>
 
             @endif

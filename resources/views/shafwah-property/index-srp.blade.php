@@ -58,7 +58,10 @@
 
     <!-- Content Section -->
     <div class="w-full h-[800px] flex items-center justify-center bg-black">
-        <img src="{{ asset('img/main-SRP.png') }}" alt="Shafwah Property" class="mx-auto bg-black" />
+        <div class="flex justify-center items-center w-full px-10 h-[400px] relative">
+            <img src="{{ asset('img/main-srp.png') }}" alt="Main SH Image"
+                class="h-auto max-h-[400px] w-auto max-w-[80%]" />
+        </div>
     </div>
 
     <div class="flex">
@@ -175,38 +178,42 @@
                             Typography
                         </h2>
                         <p class="font-light text-gray-600 paragraf text-justify">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum.
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae
+                            vestibulum vestibulum.
                         </p>
                         <h3 class="font-semibold text-2xl text-black mt-6 mb-4">Primary Typeface</h3>
                         <p class="font-light text-gray-600 paragraf mb-6 text-justify">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut
+                            labore et dolore magna aliqua.
                         </p>
-                    
-                        @if ($typographys->isNotEmpty())
-                        <!-- Typography Section -->
-                        <div class="mt-4 flex flex-col items-center space-y-8">
-                            @foreach ($typographys as $typography)
-                                <!-- Container Gambar dan Tombol -->
-                                <div class="w-full flex flex-col items-center space-y-4">
-                                    <!-- Gambar Typography -->
-                                    <div class="h-[450px] relative flex items-center justify-center">
-                                        <img src="{{ asset('storage/' . $typography->path) }}" alt="Typography Image"
-                                            class="h-full w-full object-contain rounded-sm" />
-                                    </div>
 
-                                    <!-- Tombol Download -->
-                                    @if ($typography->font_name)
-                                        <a href="{{ $typography->font_name }}" target="_blank" rel="noopener noreferrer" class="w-full">
-                                            <button type="button"
-                                                class="w-full rounded-md border border-blue-600 bg-blue-600 px-6 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500">
-                                                Download
-                                            </button>
-                                        </a>
-                                    @endif
-                                </div>
-                            @endforeach
-                        </div>
-                    @endif
+                        @if ($typographys->isNotEmpty())
+                            <!-- Typography Section -->
+                            <div class="mt-4 flex flex-col items-center space-y-8">
+                                @foreach ($typographys as $typography)
+                                    <!-- Container Gambar dan Tombol -->
+                                    <div class="w-full flex flex-col items-center space-y-4">
+                                        <!-- Gambar Typography -->
+                                        <div class="h-[450px] relative flex items-center justify-center">
+                                            <img src="{{ asset('storage/' . $typography->path) }}"
+                                                alt="Typography Image"
+                                                class="h-full w-full object-contain rounded-sm" />
+                                        </div>
+
+                                        <!-- Tombol Download -->
+                                        @if ($typography->font_name)
+                                            <a href="{{ $typography->font_name }}" target="_blank"
+                                                rel="noopener noreferrer" class="w-full">
+                                                <button type="button"
+                                                    class="w-full rounded-md border border-blue-600 bg-blue-600 px-6 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500">
+                                                    Download
+                                                </button>
+                                            </a>
+                                        @endif
+                                    </div>
+                                @endforeach
+                            </div>
+                        @endif
                     </div>
 
                     <!-- Ilustration Section -->
@@ -331,8 +338,10 @@
                             Campaign
                         </h2>
                         <p class="font-light text-gray-600 paragraf">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim ipsum mollitia veniam! Perspiciatis dignissimos
-                            ducimus laboriosam fugit doloribus inventore molestias omnis nesciunt, odit temporibus! Laborum vitae error vel
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim ipsum mollitia veniam!
+                            Perspiciatis dignissimos
+                            ducimus laboriosam fugit doloribus inventore molestias omnis nesciunt, odit temporibus!
+                            Laborum vitae error vel
                             sapiente similique.
                         </p>
 
@@ -342,7 +351,7 @@
                                 <div
                                     class="relative bg-gray-200 w-[calc(50%-0.5rem)] h-64 rounded-md overflow-hidden group flex items-center justify-center 
                                     @if ($loop->last && $loop->remaining % 2 === 0) mx-auto @endif">
-                                    
+
                                     <!-- Image -->
                                     <img src="{{ asset('storage/' . $campaign->path) }}" alt="Campaign Image"
                                         class="object-contain max-w-full max-h-full rounded-md">
@@ -353,7 +362,7 @@
                                         <a href="{{ route('campaign.download', $campaign->id) }}"
                                             class="px-6 py-2 rounded-full border border-white text-white hover:bg-white hover:text-black transition-all duration-300">
                                             Download
-                                        </a>                    
+                                        </a>
                                     </div>
                                 </div>
                             @endforeach
