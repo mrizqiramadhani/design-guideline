@@ -56,6 +56,7 @@ window.onclick = function (event) {
 };
 
 // Validation for Modal Tambah
+// Validation for Modal Tambah
 document
     .querySelector("#addTypography form")
     .addEventListener("submit", function (event) {
@@ -102,7 +103,9 @@ document
         }
 
         // Validasi font_name (optional)
-        if (fontName && !/^https?:\/\/.+/.test(fontName)) {
+        if (!fontName) {
+            errors.push("Typography Link is required.");
+        } else if (fontName && !/^https?:\/\/.+/.test(fontName)) {
             errors.push("Typography Link must be a valid URL.");
         }
 
@@ -144,7 +147,7 @@ document
             errors.push("Unit Name is required.");
         }
 
-        // Validasi path (gambar)
+        // Validasi path (gambar) - hanya berlaku jika file diupload
         if (path.length > 0) {
             const allowedMimeTypes = [
                 "image/jpeg",
@@ -165,9 +168,11 @@ document
             }
         }
 
-        // Validasi font_name (optional)
+        // Validasi font_name (optional, jika diisi harus URL yang valid)
         if (fontName && !/^https?:\/\/.+/.test(fontName)) {
             errors.push("Typography Link must be a valid URL.");
+        } else if (!fontName) {
+            errors.push("Typography Link is required."); // Jika link kosong
         }
 
         // Jika ada error, tampilkan pesan error di modal

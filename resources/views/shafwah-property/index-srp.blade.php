@@ -196,9 +196,9 @@
 
                                     <!-- Tombol Download -->
                                     @if ($typography->font_name)
-                                        <a href="{{ $typography->font_name }}" target="_blank" rel="noopener noreferrer" class="w-full">
+                                        <a href="{{ $typography->font_name }}" target="_blank" rel="noopener noreferrer" class="w-full relative z-10">
                                             <button type="button"
-                                                class="w-full rounded-md border border-blue-600 bg-blue-600 px-6 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500">
+                                                class="w-full rounded-md border border-blue-600 bg-blue-600 px-6 py-3 text-sm font-medium text-white transition-all hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500 block z-20">
                                                 Download
                                             </button>
                                         </a>
