@@ -13,6 +13,7 @@ class Iconography extends Model
 
     protected $fillable = [
         'path',
+        'link',
         'unit_id',
         'user_id'
     ];

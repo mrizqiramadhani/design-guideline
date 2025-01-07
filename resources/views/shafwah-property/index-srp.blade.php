@@ -312,26 +312,46 @@
 
 
                     <!-- Iconography Section -->
-                    <div class="p-4 mb-8 min-h-[1000px] bg-white">
+                    <div class="p-4 mb-8 bg-white">
                         <h2 id="iconography" class="uppercase font-bold text-3xl text-black mb-4 section-heading">
-                            Iconography</h2>
-                        <p class="font-light text-gray-600 paragraf">Lorem ipsum dolor sit amet, consectetur
-                            adipisicing elit. Enim ipsum mollitia veniam! Perspiciatis dignissimos ducimus laboriosam
-                            fugit doloribus inventore molestias omnis nesciunt, odit temporibus! Laborum vitae error vel
-                            sapiente similique.</p>
-                        {{-- image --}}
-                        <div class="h-[450px] mt-4 relative flex items-center justify-center">
-                            @foreach ($iconographys as $iconography)
-                                <img src="{{ asset('storage/' . $iconography->path) }}" alt="Iconography Image"
-                                    class="h-full w-full object-contain rounded-sm" />
+                            Iconography
+                        </h2>
+                        <p class="font-light text-gray-600 paragraf text-justify">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae
+                            vestibulum vestibulum.
+                        </p>
+                        <h3 class="font-semibold text-2xl text-black mt-6 mb-4">Primary Typeface</h3>
+                        <p class="font-light text-gray-600 paragraf mb-6 text-justify">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut
+                            labore et dolore magna aliqua.
+                        </p>
+
+                        @if ($iconographys->isNotEmpty())
+                            <!-- iconography Section -->
+                            <div class="mt-4 flex flex-col items-center space-y-8">
+                                @foreach ($iconographys as $iconography)
+                                    <!-- Container Gambar dan Tombol -->
+                                    <div class="w-full flex flex-col items-center space-y-4">
+                                        <!-- Gambar iconography -->
+                                        <div class="h-[450px] relative flex items-center justify-center">
+                                            <img src="{{ asset('storage/' . $iconography->path) }}"
+                                                alt="Iconography Image"
+                                                class="h-full w-full object-contain rounded-sm" />
+                                        </div>
+
+                                    <!-- Tombol Download -->
+                                    @if ($iconography->link)
+                                        <a href="{{ $iconography->link }}" target="_blank" rel="noopener noreferrer" class="w-full">
+                                            <button type="button"
+                                                class="w-full rounded-md border border-blue-600 bg-blue-600 px-6 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500">
+                                                Download
+                                            </button>
+                                        </a>
+                                    @endif
+                                </div>
                             @endforeach
                         </div>
-                        <a href="#" target="_blank" rel="noopener noreferrer">
-                            <button type="button"
-                                class="w-full rounded-md border border-blue-600 bg-blue-600 px-6 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500 mt-3 mr-5">
-                                Download icon
-                            </button>
-                        </a>
+                    @endif
                     </div>
 
                     <!-- Campaign Section -->

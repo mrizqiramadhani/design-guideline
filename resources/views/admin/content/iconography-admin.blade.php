@@ -264,7 +264,7 @@
             </form>
         </div>
     </div>
-
+    
     <!-- Modal Add Iconography -->
     <div id="addIconography"
         class="fixed inset-0 bg-gray-500 bg-opacity-50 hidden flex items-center justify-center z-50">
@@ -272,6 +272,7 @@
             <h2 class="text-2xl font-semibold mb-4">Add New Iconography</h2>
             <form action="{{ route('admin.iconography.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
+                <div id="iconographyErrors" class="hidden mb-4"></div>
                 <div class="mb-4">
                     <label for="unit_id" class="block text-gray-700">Unit Name:</label>
                     <select id="unit_id" name="unit_id" class="w-full border border-gray-300 p-2 rounded">
@@ -281,9 +282,14 @@
                     </select>
                 </div>
                 <div class="mb-4">
-                    <label for="path" class="block text-gray-700">Iconography:</label>
+                    <label for="path" class="block text-gray-700">Image Iconography:</label>
                     <input type="file" id="path" name="path"
                         class="w-full border border-gray-300 p-2 rounded">
+                </div>
+                <div class="mb-4">
+                    <label for="link" class="block text-gray-700">Iconography Link:</label>
+                    <input type="url" id="link" name="link"
+                        class="w-full border border-gray-300 p-2 rounded" placeholder="https://example.com">
                 </div>
                 <div class="flex justify-end">
                     <button type="button" onclick="closeModal('addIconography')"
@@ -306,6 +312,7 @@
             <form id="editIconographyForm" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT') <!-- Untuk PUT method pada update -->
+                <div id="editIconographyErrors" class="hidden mb-4"></div>
                 <div class="mb-4">
                     <label for="editUnitName" class="block text-gray-700">Unit Name:</label>
                     <select id="editUnitName" name="unit_id" class="w-full border border-gray-300 p-2 rounded"
@@ -323,6 +330,12 @@
                     <p class="text-xs text-gray-500 mt-1">Kosongkan jika tidak ingin mengubah gambar.</p>
                 </div>
 
+                <div class="mb-4">
+                    <label for="editLink" class="block text-gray-700">Iconography Link:</label>
+                    <input type="url" id="editLink" name="link"
+                        class="w-full border border-gray-300 p-2 rounded" placeholder="https://example.com">
+                </div>
+
                 <div class="flex justify-end">
                     <button type="button" onclick="closeModal('editIconography')"
                         class="mr-4 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Cancel</button>
@@ -333,7 +346,6 @@
         </div>
     </div>
 
-
     <!-- Modal Delete Iconography -->
     <div id="deleteIconographyModal"
         class="fixed inset-0 hidden bg-gray-500 bg-opacity-50 flex items-center justify-center z-50">
@@ -342,7 +354,7 @@
             <h2 class="text-2xl font-semibold mb-4">Delete Iconography</h2>
 
             <!-- Informasi Hapus -->
-            <p class="mb-4">Are you sure you want to delete this iconography and its associated images?</p>
+            <p class="mb-4">Are you sure you want to delete this Iconography and its associated images?</p>
 
             <!-- Action buttons -->
             <div class="flex justify-end">
@@ -439,7 +451,8 @@
                     <thead class="bg-gray-50">
                         <tr>
                             <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Unit</th>
-                            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Iconography</th>
+                            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Image Iconography</th>
+                            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Link</th>
                             <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Actions</th>
                         </tr>
                     </thead>
@@ -451,10 +464,20 @@
                                     <img src="{{ asset('storage/' . $iconography->path) }}" alt="Iconography Image"
                                         class="w-32 h-20 object-cover">
                                 </td>
+                                <td class="px-4 py-2 text-gray-900">
+                                    @if ($iconography->link)
+                                        <a href="{{ $iconography->link }}" target="_blank"
+                                            class="text-blue-500 hover:underline">
+                                            {{ $iconography->link }}
+                                        </a>
+                                    @else
+                                        <span class="text-gray-500 italic">No link provided</span>
+                                    @endif
+                                </td>
                                 <td class="px-4 py-2">
                                     <div class="flex space-x-2">
                                         <button
-                                            onclick="openEditModal({{ $iconography->id }}, '{{ $iconography->unit->id }}', '{{ $iconography->path }}')"
+                                            onclick="openEditModal({{ $iconography->id }}, '{{ $iconography->unit->id }}', '{{ $iconography->path }}', '{{ $iconography->link }}')"
                                             class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">
                                             Edit
                                         </button>
@@ -466,6 +489,7 @@
                                 </td>
                             </tr>
                         @endforeach
+                    </tbody>
                 </table>
             </div>
 
@@ -527,7 +551,6 @@
                     <p class="text-gray-800 font-bold text-lg">No Content Available</p>
                 </div>
             @endif
-
         </main>
     </div>
     <footer class="absolute bottom-0 left-0 w-full bg-black text-center text-white p-4 font-bold">
