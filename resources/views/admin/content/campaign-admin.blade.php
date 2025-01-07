@@ -335,12 +335,11 @@
 
                 <div class="mb-4">
                     <label for="editStatus" class="block text-gray-700">Status:</label>
-                    <select id="editStatus" name="status" class="w-full border border-gray-300 p-2 rounded"
-                        required>
-                        <option value="publish" id="status-publish">Publish</option>
-                        <option value="private" id="status-private">Private</option>
-                    </select>
-                </div>
+                    <select id="editStatus" name="status" class="w-full border border-gray-300 p-2 rounded" required>
+                        <option value="publish">Publish</option>
+                        <option value="private">Private</option>
+                    </select>                    
+                </div>                
 
                 <div class="mb-4">
                     <label for="editImageCampaign" class="block text-gray-700">Campaign Image:</label>
@@ -498,7 +497,7 @@
                                     <div class="flex space-x-2">
                                         <!-- Edit Button -->
                                         <button
-                                            onclick="openEditModal({{ $campaign->id }}, '{{ $campaign->unit->id }}', '{{ $campaign->path }}')"
+                                            onclick="openEditModal({{ $campaign->id }}, '{{ $campaign->unit->id }}', '{{ $campaign->status }}', '{{ $campaign->path }}')"
                                             class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">
                                             Edit
                                         </button>

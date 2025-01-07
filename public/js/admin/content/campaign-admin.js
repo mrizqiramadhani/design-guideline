@@ -31,11 +31,7 @@ function openEditModal(id, unitId, status, path) {
 
   // Set status campaign pada dropdown status
   const statusSelect = document.getElementById("editStatus");
-  if (status === "publish") {
-    statusSelect.value = "publish";
-  } else {
-    statusSelect.value = "private";
-  }
+  statusSelect.value = status; // Mengatur nilai dropdown status sesuai data yang diterima
 
   // Tampilkan modal
   const modal = document.getElementById("editCampaign");

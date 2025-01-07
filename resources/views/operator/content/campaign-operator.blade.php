@@ -62,10 +62,11 @@
     </header>
 
     <!-- Modal Add Campaign -->
-    <div id="addCampaign" class="fixed inset-0 bg-gray-500 bg-opacity-50 hidden flex items-center justify-center z-50">
+    <div id="addCampaign"
+        class="fixed inset-0 bg-gray-500 bg-opacity-50 hidden flex items-center justify-center z-50">
         <div class="bg-white rounded-lg w-full max-w-md p-8 shadow-lg relative">
             <h2 class="text-2xl font-semibold mb-4">Add New Campaign</h2>
-            <form action="{{ route('admin.campaign.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('operator.campaign.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div id="campaignErrors" class="hidden mb-4"></div>
                 <div class="mb-4">
@@ -77,7 +78,6 @@
                             @endif
                         @endforeach
                     </select>
-
                 </div>
                 <div class="mb-4">
                     <label for="status" class="block text-gray-700">Status:</label>
@@ -107,8 +107,10 @@
         </div>
     </div>
 
+
     {{-- Modal Edit Campaign --}}
-    <div id="editCampaign" class="fixed inset-0 hidden bg-gray-500 bg-opacity-50 flex items-center justify-center z-50">
+    <div id="editCampaign"
+        class="fixed inset-0 hidden bg-gray-500 bg-opacity-50 flex items-center justify-center z-50">
         <div class="bg-white rounded-lg w-full max-w-md p-8 shadow-lg relative">
             <h2 class="text-2xl font-semibold mb-4">Edit Campaign</h2>
             <form id="editCampaignForm" method="POST" enctype="multipart/form-data">
@@ -118,11 +120,10 @@
 
                 <div class="mb-4">
                     <label for="editUnitName" class="block text-gray-700">Unit Name:</label>
-                    <select id="editUnitName" name="unit_id" class="w-full border border-gray-300 p-2 rounded" required>
+                    <select id="editUnitName" name="unit_id" class="w-full border border-gray-300 p-2 rounded"
+                        required>
                         @foreach ($units as $unit)
-                            @if (in_array($unit['name'], ['Shafwah holidays', 'Shafwah property']))
-                                <option value="{{ $unit['id'] }}">{{ $unit['name'] }}</option>
-                            @endif
+                            <option value="{{ $unit->id }}">{{ $unit->name }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -132,14 +133,13 @@
                     <select id="editStatus" name="status" class="w-full border border-gray-300 p-2 rounded" required>
                         <option value="publish">Publish</option>
                         <option value="private">Private</option>
-                    </select>
-                </div>
+                    </select>                    
+                </div>                
 
                 <div class="mb-4">
                     <label for="editImageCampaign" class="block text-gray-700">Campaign Image:</label>
                     <input type="file" id="editImageCampaign" name="path"
                         class="w-full border border-gray-300 p-2 rounded">
-                    <p class="text-xs text-gray-500 mt-1">Kosongkan jika tidak ingin mengubah gambar.</p>
                 </div>
 
                 <div class="flex justify-end">
@@ -292,7 +292,7 @@
                                     <div class="flex space-x-2">
                                         <!-- Edit Button -->
                                         <button
-                                            onclick="openEditModal({{ $campaign->id }}, '{{ $campaign->unit->id }}', '{{ $campaign->path }}')"
+                                            onclick="openEditModal({{ $campaign->id }}, '{{ $campaign->unit->id }}', '{{ $campaign->status }}', '{{ $campaign->path }}')"
                                             class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">
                                             Edit
                                         </button>
