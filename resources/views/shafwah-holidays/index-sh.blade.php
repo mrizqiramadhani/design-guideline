@@ -161,13 +161,16 @@
                         @foreach ($colors as $color)
                             <div class="w-1/4 px-2 mb-4 text-center color-item" data-color="{{ $color->color }}">
                                 <div class="color-circle rounded-full mx-auto"
-                                    style="background-color: {{ $color->color }};">
-                                    <span class="copy-tooltip hidden">Copy Code</span>
+                                    style="background-color: {{ $color->color }}; position: relative;">
+                                    <span class="copy-tooltip hidden" 
+                                          style="font-size: 15px; font-weight: bold; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+                                          Copy Code
+                                    </span>
                                 </div>
                                 <p class="text-lg mt-2 text-gray-600">{{ $color->color }}</p>
                             </div>
                         @endforeach
-                    </div>
+                    </div>  
 
                     <!-- Notification -->
                     <div id="notification" class="notification hidden"></div>

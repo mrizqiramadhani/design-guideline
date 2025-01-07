@@ -136,7 +136,6 @@
                             <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Unit</th>
                             <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Color</th>
                             <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Code HEX</th>
-                            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Last Updated By</th>
                             <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Actions</th>
                         </tr>
                     </thead>
@@ -149,7 +148,6 @@
                                         style="background-color: {{ $color->color }};"></span>
                                 </td>
                                 <td class="px-4 py-2">{{ $color->color }}</td>
-                                <td class="px-4 py-2">{{ $color->user->name ?? 'N/A' }}</td>
                                 <td class="px-4 py-2">
                                     <button type="button"
                                         onclick="openEditModal({{ $color->id }}, '{{ $color->unit_id }}', '{{ $color->color }}')"
@@ -243,7 +241,6 @@
                     <label for="unit_id" class="block text-sm font-semibold text-gray-700">Select Unit</label>
                     <select id="unit_id" name="unit_id" required
                         class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-green-200">
-                        <option value="" disabled selected>Choose a unit</option>
                         @foreach ($units as $unit)
                             <option value="{{ $unit->id }}">{{ $unit->name }}</option>
                         @endforeach
