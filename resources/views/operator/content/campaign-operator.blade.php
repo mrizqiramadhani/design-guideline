@@ -120,10 +120,11 @@
 
                 <div class="mb-4">
                     <label for="editUnitName" class="block text-gray-700">Unit Name:</label>
-                    <select id="editUnitName" name="unit_id" class="w-full border border-gray-300 p-2 rounded"
-                        required>
+                    <select id="editUnitName" name="unit_id" class="w-full border border-gray-300 p-2 rounded">
                         @foreach ($units as $unit)
-                            <option value="{{ $unit->id }}">{{ $unit->name }}</option>
+                            @if (in_array($unit['name'], ['Shafwah holidays', 'Shafwah property']))
+                                <option value="{{ $unit['id'] }}">{{ $unit['name'] }}</option>
+                            @endif
                         @endforeach
                     </select>
                 </div>
