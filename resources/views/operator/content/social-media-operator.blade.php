@@ -275,7 +275,8 @@
                                 <td class="px-4 py-2 text-gray-900">
                                     <div class="w-32 h-20">
                                         <img src="{{ asset('storage/' . $socialMedia->path) }}"
-                                            alt="Social Media Image" class="w-full h-full object-cover rounded">
+                                            alt="Social Media Image"
+                                            class="w-full h-full object-contain rounded bg-black">
                                     </div>
                                 </td>
                                 <!-- Actions -->

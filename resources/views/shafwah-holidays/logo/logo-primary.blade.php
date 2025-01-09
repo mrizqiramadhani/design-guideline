@@ -124,15 +124,15 @@
 
             @if ($photos->isEmpty())
                 <!-- Centering the content in the grid when no photos are available -->
-                <div class="col-span-5 flex items-center justify-center h-full min-h-[210px]">
+                <div class="col-span-5 flex items-center justify-center h-full">
                     <div class="flex flex-col items-center text-center">
                         <!-- GIF -->
                         <div class="w-full mb-3">
-                            <img src="https://i.pinimg.com/originals/6a/f3/71/6af371f102361c0fd47619eb524bf4bb.gif"
-                                alt="No Photo Available" class="h-32 w-auto rounded-lg mx-auto">
+                            <img src="{{ asset('img/No data-pana.png') }}" alt="No Photo Available"
+                                class="h-48 w-auto rounded-lg mx-auto">
                         </div>
                         <!-- Text -->
-                        <p class="text-gray-600 font-medium">Maaf, Photo Primary tidak ada 😭</p>
+                        <p class="text-gray-600 font-medium">Sorry, no primary photos available 😭</p>
                     </div>
                 </div>
             @endif

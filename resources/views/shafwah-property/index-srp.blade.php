@@ -160,15 +160,15 @@
                             <div class="w-1/4 px-2 mb-4 text-center color-item" data-color="{{ $color->color }}">
                                 <div class="color-circle rounded-full mx-auto"
                                     style="background-color: {{ $color->color }}; position: relative;">
-                                    <span class="copy-tooltip hidden" 
-                                          style="font-size: 15px; font-weight: bold; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
-                                          Copy Code
+                                    <span class="copy-tooltip hidden"
+                                        style="font-size: 15px; font-weight: bold; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+                                        Copy Code
                                     </span>
                                 </div>
                                 <p class="text-lg mt-2 text-gray-600">{{ $color->color }}</p>
                             </div>
                         @endforeach
-                    </div>  
+                    </div>
 
                     <!-- Notification -->
                     <div id="notification" class="notification hidden"></div>
@@ -203,19 +203,20 @@
                                                 class="h-full w-full object-contain rounded-sm" />
                                         </div>
 
-                                    <!-- Tombol Download -->
-                                    @if ($typography->font_name)
-                                        <a href="{{ $typography->font_name }}" target="_blank" rel="noopener noreferrer" class="w-full">
-                                            <button type="button"
-                                                class="w-full rounded-md border border-blue-600 bg-blue-600 px-6 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500">
-                                                Download
-                                            </button>
-                                        </a>
-                                    @endif
-                                </div>
-                            @endforeach
-                        </div>
-                    @endif
+                                        <!-- Tombol Download -->
+                                        @if ($typography->font_name)
+                                            <a href="{{ $typography->font_name }}" target="_blank"
+                                                rel="noopener noreferrer" class="w-full">
+                                                <button type="button"
+                                                    class="w-full rounded-md border border-blue-600 bg-blue-600 px-6 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500">
+                                                    Download
+                                                </button>
+                                            </a>
+                                        @endif
+                                    </div>
+                                @endforeach
+                            </div>
+                        @endif
                     </div>
 
                     <!-- Ilustration Section -->
@@ -247,7 +248,7 @@
                     </div>
 
                     <!-- Social Media Section -->
-                    <div class="p-4 mb-8 min-h-[1000px] bg-white">
+                    <div class="p-4 mb-2 bg-white">
                         <h2 id="social-media" class="uppercase font-bold text-3xl text-black mb-4 section-heading">
                             Social Media
                         </h2>
@@ -257,8 +258,8 @@
                             dicta ex consequatur corrupti quos voluptatem!
                         </p>
 
-                        <h3 class="font-semibold text-2xl text-black mt-20 mb-2 flex justify-center">
-                            Feed</h3>
+                        <!-- Feed Section -->
+                        <h3 class="font-semibold text-2xl text-black mt-20 mb-2 flex justify-center">Feed</h3>
                         <div class="grid grid-cols-1 gap-4 justify-items-center">
                             @php
                                 $feedSocialMedias = $socialMedias->where('type', 'feed');
@@ -268,15 +269,17 @@
                                 <p class="text-center text-gray-500">No Social Media content available for feed.</p>
                             @else
                                 @foreach ($feedSocialMedias as $socialMedia)
-                                    <img src="{{ asset('storage/' . $socialMedia->path) }}" alt="Social Media Feed"
-                                        class="w-[655px] h-[543px] rounded-md object-cover" />
+                                    <div class="bg-black rounded-md">
+                                        <img src="{{ asset('storage/' . $socialMedia->path) }}"
+                                            alt="Social Media Feed" class="rounded-md object-contain mx-auto"
+                                            style="max-width: 100%; max-height: 100%;" />
+                                    </div>
                                 @endforeach
                             @endif
                         </div>
 
-
+                        <!-- Story Section -->
                         <h3 class="font-semibold text-2xl text-black mt-20 mb-2 flex justify-center">Story</h3>
-
                         <div class="grid grid-cols-1 gap-4 justify-items-center">
                             @php
                                 $storySocialMedias = $socialMedias->where('type', 'story');
@@ -286,14 +289,17 @@
                                 <p class="text-center text-gray-500">No Social Media content available for story.</p>
                             @else
                                 @foreach ($storySocialMedias as $socialMedia)
-                                    <img src="{{ asset('storage/' . $socialMedia->path) }}" alt="Social Media Story"
-                                        class="w-[655px] h-[543px] rounded-md object-cover" />
+                                    <div class="bg-black rounded-md">
+                                        <img src="{{ asset('storage/' . $socialMedia->path) }}"
+                                            alt="Social Media Story" class="rounded-md object-contain mx-auto"
+                                            style="max-width: 100%; max-height: 100%;" />
+                                    </div>
                                 @endforeach
                             @endif
                         </div>
 
+                        <!-- Reels Section -->
                         <h3 class="font-semibold text-2xl text-black mt-20 mb-2 flex justify-center">Reels</h3>
-
                         <div class="grid grid-cols-1 gap-4 justify-items-center">
                             @php
                                 $reelsSocialMedias = $socialMedias->where('type', 'reels');
@@ -303,12 +309,16 @@
                                 <p class="text-center text-gray-500">No Social Media content available for reels.</p>
                             @else
                                 @foreach ($reelsSocialMedias as $socialMedia)
-                                    <img src="{{ asset('storage/' . $socialMedia->path) }}" alt="Social Media Feed"
-                                        class="w-[655px] h-[543px] rounded-md object-cover" />
+                                    <div class="bg-black rounded-md">
+                                        <img src="{{ asset('storage/' . $socialMedia->path) }}"
+                                            alt="Social Media Reels" class="rounded-md object-contain mx-auto"
+                                            style="max-width: 100%; max-height: 100%;" />
+                                    </div>
                                 @endforeach
                             @endif
                         </div>
                     </div>
+
 
 
                     <!-- Iconography Section -->
@@ -339,19 +349,20 @@
                                                 class="h-full w-full object-contain rounded-sm" />
                                         </div>
 
-                                    <!-- Tombol Download -->
-                                    @if ($iconography->link)
-                                        <a href="{{ $iconography->link }}" target="_blank" rel="noopener noreferrer" class="w-full">
-                                            <button type="button"
-                                                class="w-full rounded-md border border-blue-600 bg-blue-600 px-6 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500">
-                                                Download
-                                            </button>
-                                        </a>
-                                    @endif
-                                </div>
-                            @endforeach
-                        </div>
-                    @endif
+                                        <!-- Tombol Download -->
+                                        @if ($iconography->link)
+                                            <a href="{{ $iconography->link }}" target="_blank"
+                                                rel="noopener noreferrer" class="w-full">
+                                                <button type="button"
+                                                    class="w-full rounded-md border border-blue-600 bg-blue-600 px-6 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500">
+                                                    Download
+                                                </button>
+                                            </a>
+                                        @endif
+                                    </div>
+                                @endforeach
+                            </div>
+                        @endif
                     </div>
 
                     <!-- Campaign Section -->
