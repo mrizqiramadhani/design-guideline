@@ -14,6 +14,7 @@ use App\Http\Controllers\SocialMediaController;
 use App\Http\Controllers\CampaignController;
 use App\Http\Controllers\IconographyController;
 use App\Http\Controllers\TypographyController;
+use App\Http\Controllers\QuestionController;
 
 
 // Route::get('/', function () {
@@ -103,9 +104,11 @@ Route::group(['middleware' => ['auth', 'startSessionByRole']], function () {
         Route::post('/admin/change-password', [AdminController::class, 'changePassword'])->name('admin.changePassword');
 
         //! route admin CRUD QUESTION 
-        Route::get('/admin/personal-information', function () {
-            return view('admin.personal-information'); // Pastikan file view ini sudah ada
-        })->name('personal.information');
+        Route::get('admin/personal-information', [QuestionController::class, 'index'])->name('personal.information');
+        Route::post('admin/security-questions', [QuestionController::class, 'store'])->name('security-questions.store');
+        Route::post('admin/security-questions/{id}/validate', [QuestionController::class, 'validateAnswer'])->name('security-questions.validate');
+        Route::put('admin/security-questions/{id}', [QuestionController::class, 'update'])->name('security-questions.update');
+        Route::delete('admin/security-questions/{id}', [QuestionController::class, 'destroy'])->name('security-questions.destroy');
 
 
         //! route admin operator-list
