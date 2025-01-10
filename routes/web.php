@@ -102,8 +102,10 @@ Route::group(['middleware' => ['auth', 'startSessionByRole']], function () {
         Route::post('/admin/change-email', [AdminController::class, 'changeEmail'])->name('admin.changeEmail');
         Route::post('/admin/change-password', [AdminController::class, 'changePassword'])->name('admin.changePassword');
 
-        //! route admin forgot password
-        // Route::post('/admin/forgot-password')->name('admin.forgot-password');
+        //! route admin CRUD QUESTION 
+        Route::get('/admin/personal-information', function () {
+            return view('admin.personal-information'); // Pastikan file view ini sudah ada
+        })->name('personal.information');
 
 
         //! route admin operator-list
