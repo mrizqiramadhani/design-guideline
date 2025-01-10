@@ -17,29 +17,6 @@ use App\Http\Controllers\TypographyController;
 use App\Http\Controllers\QuestionController;
 
 
-// Route::get('/', function () {
-//     return view('shafwah-group.index-sg');
-// });
-
-// Route::get('/shafwah-group', function () {
-//     return view('shafwah-group.index-sg');
-// })->name('shafwah-group');
-
-// Route::get('/shafwah-holidays', function () {
-//     return view('shafwah-holidays.index-sh');
-// })->name('shafwah-holidays');
-
-// Route::get('/shafwah-property', function () {
-//     return view('shafwah-property.index-srp');
-// })->name('shafwah-property');
-
-// Route::get('shafwah-group/logo-primary', function () {
-//     return view('shafwah-group.logo.logo-primary');
-// })->name('logo-primary-sg');
-// Route::get('shafwah-group/logo-white', function () {
-//     return view('shafwah-group.logo.logo-white');
-// })->name('logo-white-sg');
-
 //* route Logo Unit bisnis
 Route::get('/', [ShowUnitController::class, 'showShafwahGroupPage']);
 Route::get('/shafwah-group', [ShowUnitController::class, 'showShafwahGroupPage'])->name('shafwah-group');
@@ -66,15 +43,9 @@ Route::get('/login', function () {
     return view('auth.login');
 });
 
-// Route::get('/forgot-password', function () {
-//     return view('auth.forgot-password.email-validation');
-// })->name('forgot-password');
-// Route::get('/reset-password', function () {
-//     return view('auth.forgot-password.reset-password');
-// })->name('reset-password');
-// Route::get('/reset-password-success', function () {
-//     return view('auth.forgot-password.reset-password-success');
-// })->name('reset-password-success');
+Route::get('/security-question', function () {
+    return view('auth.forgot-password.security-question');
+});
 
 //! Auth Route
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
@@ -85,6 +56,11 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/forgot-password', [PasswordController::class, 'showForgotPassword'])->name('forgot-password');
 Route::post('/validate-email', [PasswordController::class, 'validateEmail'])->name('validate-email');
 
+Route::middleware('validate-reset-flow:security-question')->group(function () {
+    Route::get('/security-question', [PasswordController::class, 'showSecurityQuestion'])->name('security-question');
+    Route::post('/validate-security-question', [PasswordController::class, 'validateSecurityQuestion'])->name('validate-security-question');
+});
+
 Route::middleware('validate-reset-flow:reset-password')->group(function () {
     Route::get('/reset-password', [PasswordController::class, 'showResetPassword'])->name('reset-password');
     Route::post('/reset-password', [PasswordController::class, 'resetPassword'])->name('process-reset-password');
@@ -93,6 +69,7 @@ Route::middleware('validate-reset-flow:reset-password')->group(function () {
 Route::middleware('validate-reset-flow:reset-password-success')->group(function () {
     Route::get('/reset-password-success', [PasswordController::class, 'showResetPasswordSuccess'])->name('reset-password-success');
 });
+
 
 
 //* Admin Route

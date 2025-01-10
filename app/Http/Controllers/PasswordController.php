@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Log;
 use App\Models\User;
+use App\Models\QuestionValidation;
 
 class PasswordController extends Controller
 {
@@ -26,12 +27,69 @@ class PasswordController extends Controller
         $user = User::where('email', $request->email)->where('role', 'admin')->first();
 
         if ($user) {
+            Session::flush(); // Hapus semua session terkait sebelum memulai ulang proses
             Session::put('validated_email', $user->email);
 
-            return response()->json(['message' => 'Email is valid.']);
+            $questions = QuestionValidation::where('user_id', $user->id)->inRandomOrder()->first();
+
+            if ($questions) {
+                Session::put('selected_question', $questions->id);
+                Log::info("Security question selected for user: {$user->email}");
+                return response()->json(['redirect' => route('security-question')], 200);
+            }
+
+            Log::info("No security questions found for user: {$user->email}");
+            return response()->json(['redirect' => route('reset-password')], 200);
         }
 
-        return response()->json(['message' => 'Invalid email address or not an admin role'], 422);
+        return response()->json(['message' => 'Invalid email address or not an admin role.'], 422);
+    }
+
+    // Menampilkan halaman security question
+    public function showSecurityQuestion()
+    {
+        if (!Session::has('validated_email')) {
+            return redirect()->route('forgot-password')->with('error', 'Session expired. Please restart the reset process.');
+        }
+
+        $questionId = Session::get('selected_question');
+        $question = QuestionValidation::find($questionId);
+
+        if (!$question) {
+            return redirect()->route('reset-password')->with('info', 'No security questions found. Proceeding to reset password.');
+        }
+
+        return view('auth.forgot-password.security-question', ['question' => $question]);
+    }
+
+    // Proses validasi jawaban security question
+    public function validateSecurityQuestion(Request $request)
+    {
+        $request->validate([
+            'security_answer' => 'required|string',
+        ]);
+
+        $questionId = Session::get('selected_question');
+        $question = QuestionValidation::find($questionId);
+
+        $attempts = Session::get('security_question_attempts', 0);
+        Session::put('security_question_attempts', $attempts + 1);
+
+        if ($attempts >= 2) {
+            Log::warning("User exceeded maximum attempts for security question: {$questionId}");
+            Session::forget('security_question_attempts');
+            return redirect()->route('forgot-password')->with('error', 'Too many attempts. Please restart the process.');
+        }
+
+        if ($question && Hash::check($request->security_answer, $question->security_answer)) {
+            Session::put('security_question_answered', true);
+            Session::forget('security_question_attempts'); // Reset attempts
+            Log::info("Security question answered successfully for question ID: {$questionId}");
+            return redirect()->route('reset-password');
+        }
+
+        Log::warning("Incorrect security answer for question ID: {$questionId}");
+        return back()->withErrors(['security_answer' => 'Incorrect answer. Please try again.']);
     }
 
     // Menampilkan halaman reset password
@@ -39,6 +97,10 @@ class PasswordController extends Controller
     {
         if (!Session::has('validated_email')) {
             return redirect()->route('forgot-password')->with('error', 'Access denied.');
+        }
+
+        if (!Session::has('security_question_answered')) {
+            return redirect()->route('security-question')->with('error', 'You must answer the security question before resetting your password.');
         }
 
         return view('auth.forgot-password.reset-password');
@@ -60,12 +122,12 @@ class PasswordController extends Controller
 
             Session::forget('validated_email');
             Session::put('password_reset_success', true);
+
             return redirect()->route('reset-password-success');
         }
 
-        return response()->json(['message' => 'User not found.'], 404);
+        return back()->withErrors(['password' => 'User not found.']);
     }
-
 
     // Menampilkan halaman reset password success
     public function showResetPasswordSuccess()
@@ -76,6 +138,7 @@ class PasswordController extends Controller
 
         Session::forget('validated_email');
         Session::forget('password_reset_success');
+
         return view('auth.forgot-password.reset-password-success');
     }
 }

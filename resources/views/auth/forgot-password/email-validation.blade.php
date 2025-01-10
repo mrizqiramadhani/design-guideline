@@ -24,7 +24,7 @@
                 </div>
 
                 <div class="mt-5">
-                    <form action="{{ route('validate-email') }}" method="POST" id="forgot-password-form">
+                    <form id="forgot-password-form">
                         @csrf
                         <div class="grid gap-y-4">
                             <div>
@@ -34,17 +34,17 @@
                                         class="py-3 px-4 block w-full border-2 border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 shadow-sm"
                                         required aria-describedby="email-feedback" oninput="validateEmail()">
                                 </div>
-                                <p class="hidden text-xs text-red-600 mt-2" id="email-error">Please include a valid
-                                    email address so we can get back to you</p>
+                                <p class="hidden text-xs text-red-600 mt-2" id="email-error"></p>
                                 <p class="hidden text-xs text-green-600 mt-2 flex items-center gap-2"
                                     id="email-success">
                                     <span class="iconify" data-icon="bx:check-circle"></span>
                                     <span>Email is valid.</span>
                                 </p>
                             </div>
-                            <button type="submit" id="reset-button" disabled
-                                class="py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm disabled:bg-gray-400 disabled:cursor-not-allowed">Reset
-                                Password</button>
+                            <button type="button" id="reset-button" disabled
+                                class="py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm disabled:bg-gray-400 disabled:cursor-not-allowed">
+                                Reset Password
+                            </button>
                         </div>
                     </form>
                 </div>
@@ -54,55 +54,66 @@
 </body>
 <script src="https://code.iconify.design/2/2.0.3/iconify.min.js"></script>
 <script>
-    function validateEmail() {
-        const emailInput = document.getElementById('email');
-        const button = document.getElementById('reset-button');
-        const errorElement = document.getElementById('email-error');
-        const successElement = document.getElementById('email-success');
+    let debounceTimeout;
 
-        if (emailInput.value.trim() !== '') {
-            fetch('{{ route('validate-email') }}', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                    },
-                    body: JSON.stringify({
-                        email: emailInput.value
+    function validateEmail() {
+        clearTimeout(debounceTimeout);
+
+        debounceTimeout = setTimeout(() => {
+            const emailInput = document.getElementById('email');
+            const button = document.getElementById('reset-button');
+            const errorElement = document.getElementById('email-error');
+            const successElement = document.getElementById('email-success');
+
+            if (emailInput.value.trim() !== '') {
+                fetch('{{ route('validate-email') }}', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        },
+                        body: JSON.stringify({
+                            email: emailInput.value
+                        })
                     })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.message === 'Email is valid.') {
+                    .then(response => {
+                        // console.log('Raw response:', response);
+                        if (!response.ok) throw response;
+                        return response.json();
+                    })
+                    .then(data => {
+                        // console.log("Success response:", data);
                         successElement.classList.remove('hidden');
                         errorElement.classList.add('hidden');
-                        button.removeAttribute('disabled'); // Enable button when email is valid
-
-                        // Tambahkan event listener pada tombol submit
-                        button.onclick = function(e) {
-                            e.preventDefault(); // Prevent form submission
-                            window.location.href =
-                                '{{ route('reset-password') }}'; // Redirect to reset password route
+                        button.removeAttribute('disabled');
+                        button.onclick = function() {
+                            window.location.href = data.redirect;
                         };
-                    } else {
-                        errorElement.innerText = 'Invalid email address or not an admin role';
+                    })
+                    .catch(async (error) => {
+                        if (error instanceof Response) {
+                            try {
+                                const errData = await error.json();
+                                errorElement.textContent = errData.message || 'Invalid email address.';
+                            } catch (e) {
+                                console.error('Error parsing JSON:', e);
+                                errorElement.textContent =
+                                    'An unexpected error occurred. Please try again.';
+                            }
+                        } else {
+                            console.error('Unexpected error:', error);
+                            errorElement.textContent = 'A network error occurred. Please try again.';
+                        }
                         errorElement.classList.remove('hidden');
                         successElement.classList.add('hidden');
-                        button.setAttribute('disabled', 'disabled'); // Disable button if invalid
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    errorElement.innerText = 'There was an error validating the email.';
-                    errorElement.classList.remove('hidden');
-                    successElement.classList.add('hidden');
-                    button.setAttribute('disabled', 'disabled');
-                });
-        } else {
-            errorElement.classList.add('hidden');
-            successElement.classList.add('hidden');
-            button.setAttribute('disabled', 'disabled'); // Disable button if email input is empty
-        }
+                        button.setAttribute('disabled', 'disabled');
+                    });
+            } else {
+                errorElement.classList.add('hidden');
+                successElement.classList.add('hidden');
+                button.setAttribute('disabled', 'disabled');
+            }
+        }, 300); // Debounce delay 300ms
     }
 </script>
 
