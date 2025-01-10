@@ -17,48 +17,55 @@
 <body class="bg-gray-100 py-10">
     <!-- Back Button -->
     <a href="{{ route('admin.dashboard') }}"
-        class="absolute top-4 left-4 flex items-center bg-gray-500 text-white px-3 py-2 rounded hover:bg-gray-600">
+        class="fixed top-4 left-4 flex items-center bg-gray-700 text-white px-4 py-3 rounded-full shadow-lg hover:bg-gray-800 transition duration-300">
         <span class="iconify" data-icon="mdi:arrow-left" data-inline="false"></span>
-        <span class="ml-2">Back</span>
+        <span class="ml-2 font-medium">Back</span>
     </a>
 
-    <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-md p-6">
-        <h1 class="text-2xl font-bold mb-4 text-center">Personal Information</h1>
-
-        <!-- Add Question Button -->
-        <button id="addQuestionButton" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
-            onclick="openModal('addQuestionModal')">
-            Add Question
-        </button>
+    <div class="max-w-5xl mx-auto bg-white rounded-lg shadow-lg p-8">
+        <!-- Header -->
+        <div class="flex items-center justify-between mb-6">
+            <h1 class="text-3xl font-bold text-gray-900">Personal Information</h1>
+            <button id="addQuestionButton" onclick="openModal('addQuestionModal')"
+                class="bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600 shadow transition duration-300">
+                + Add Question
+            </button>
+        </div>
 
         <!-- Table -->
-        <table class="min-w-full border-collapse border border-gray-300">
-            <thead>
-                <tr>
-                    <th class="border border-gray-300 px-4 py-2 text-left">#</th>
-                    <th class="border border-gray-300 px-4 py-2 text-left">Question</th>
-                    <th class="border border-gray-300 px-4 py-2">Actions</th>
-                </tr>
-            </thead>
-            <tbody id="questionTableBody">
-                @foreach ($questions as $index => $question)
+        <div class="overflow-x-auto border border-gray-200 rounded-lg">
+            <table class="min-w-full bg-white">
+                <thead class="bg-gray-100">
                     <tr>
-                        <td class="border border-gray-300 px-4 py-2">{{ $index + 1 }}</td>
-                        <td class="border border-gray-300 px-4 py-2">{{ $question->security_question }}</td>
-                        <td class="border border-gray-300 px-4 py-2 text-center">
-                            <button class="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600 mr-2"
-                                onclick="openAnswerValidationModal({{ $question->id }})">Edit</button>
-                            <button class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
-                                onclick="deleteQuestion({{ $question->id }})">Delete</button>
-                        </td>
+                        <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">No</th>
+                        <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Question</th>
+                        <th class="px-6 py-3 text-center text-sm font-semibold text-gray-700">Actions</th>
                     </tr>
-                @endforeach
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach ($questions as $index => $question)
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4 text-gray-900">{{ $index + 1 }}</td>
+                            <td class="px-6 py-4 text-gray-900">{{ $question->security_question }}</td>
+                            <td class="px-6 py-4 text-center">
+                                <button onclick="openAnswerValidationModal({{ $question->id }})"
+                                    class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-300">
+                                    Edit
+                                </button>
+                                <button onclick="deleteQuestion({{ $question->id }})"
+                                    class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition duration-300 ml-2">
+                                    Delete
+                                </button>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
     </div>
 
-    {{-- add modal --}}
-    <div id="addQuestionModal" class="hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center">
+    {{-- add modal --}} <div id="addQuestionModal"
+        class="hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center">
         <div class="bg-white w-96 rounded-lg shadow-md p-6">
             <h2 class="text-lg font-bold mb-4">Add Security Question</h2>
             <form action="{{ route('security-questions.store') }}" method="POST">
@@ -96,11 +103,9 @@
                 @csrf
                 <div class="mb-4">
                     <label class="block text-gray-700 mb-1">Answer</label>
-                    <input type="text" name="security_answer" class="w-full border border-gray-300 rounded px-3 py-2"
-                        required>
-                    @error('security_answer')
-                        <span class="text-red-500 text-sm">{{ $message }}</span>
-                    @enderror
+                    <input type="text" name="security_answer" id="securityAnswerInput"
+                        class="w-full border border-gray-300 rounded px-3 py-2" required>
+                    <span id="securityAnswerError" class="text-red-500 text-sm hidden"></span>
                 </div>
                 <div class="flex justify-end">
                     <button type="button" onclick="closeModal('answerValidationModal')"
@@ -159,111 +164,7 @@
             </form>
         </div>
     </div>
-
-    <script>
-        // Fungsi untuk membuka modal dengan validasi tambahan
-        function openModal(modalId) {
-            const modal = document.getElementById(modalId);
-            if (!modal) {
-                console.error(`Modal with ID "${modalId}" not found.`);
-                return;
-            }
-            modal.classList.remove('hidden');
-        }
-
-        // Fungsi untuk menutup modal dengan validasi tambahan
-        function closeModal(modalId) {
-            const modal = document.getElementById(modalId);
-            if (!modal) {
-                console.error(`Modal with ID "${modalId}" not found.`);
-                return;
-            }
-            modal.classList.add('hidden');
-        }
-
-        // Fungsi untuk membuka modal Answer Validation
-        function openAnswerValidationModal(id) {
-            console.log("Received ID in openAnswerValidationModal:", id); // Log ID
-            const form = document.getElementById('answerValidationForm');
-            if (!form) {
-                console.error("Answer Validation Form not found.");
-                return;
-            }
-            if (!id) {
-                console.error("ID is missing for Answer Validation.");
-                return;
-            }
-
-            // Atur action ke route validate
-            const actionUrl = `/admin/security-questions/${id}/validate`;
-            console.log("Form action URL:", actionUrl); // Log URL
-            form.action = actionUrl;
-
-            // Tangani submit form
-            form.onsubmit = function(e) {
-                e.preventDefault();
-                const formData = new FormData(form);
-
-                fetch(actionUrl, {
-                        method: 'POST',
-                        body: formData,
-                        headers: {
-                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute(
-                                'content'),
-                        },
-                    })
-                    .then(response => {
-                        if (!response.ok) throw response;
-                        return response.json();
-                    })
-                    .then(data => {
-                        console.log("Validation successful:", data); // Debug log
-                        closeModal('answerValidationModal'); // Tutup modal validasi
-                        openEditModal(data.id, data); // Buka modal edit langsung
-                    })
-                    .catch(async (error) => {
-                        if (error.json) {
-                            const errData = await error.json();
-                            alert(errData.error || 'Validation failed.');
-                        } else {
-                            console.error("Unexpected error:", error);
-                            alert('An unexpected error occurred.');
-                        }
-                    });
-            };
-
-            openModal('answerValidationModal');
-        }
-
-
-        // Fungsi untuk membuka modal Edit Question
-        function openEditModal(id, question) {
-            const form = document.getElementById('editQuestionForm');
-            if (!form) {
-                console.error("Edit Question Form not found.");
-                return;
-            }
-
-            // Atur action ke route update
-            form.action = `/admin/security-questions/${id}`;
-            document.getElementById('editQuestionInput').value = question?.security_question || '';
-            document.getElementById('editAnswerInput').value = ''; // Kosongkan jawaban
-
-            openModal('editQuestionModal');
-        }
-
-        function deleteQuestion(id) {
-            console.log("Delete ID:", id); // Log ID untuk memastikan ID diterima
-            const form = document.getElementById('deleteQuestionForm');
-            if (!form) {
-                console.error("Delete Question Form not found.");
-                return;
-            }
-            // Atur action URL berdasarkan ID
-            form.action = `/admin/security-questions/${id}`;
-            openModal('deleteConfirmationModal'); // Buka modal delete
-        }
-    </script>
+    <script src="{{ asset('js/admin/personal-question.js') }}"></script>
     @if (session('success'))
         <script>
             Swal.fire({
@@ -272,16 +173,6 @@
                 text: '{{ session('success') }}',
                 timer: 2000, // Pesan dari controller
                 showConfirmButton: false,
-            });
-        </script>
-    @endif
-
-    @if ($errors->any())
-        <script>
-            Swal.fire({
-                icon: 'error',
-                title: 'Error!',
-                text: '{{ $errors->first() }}',
             });
         </script>
     @endif

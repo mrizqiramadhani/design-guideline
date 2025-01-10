@@ -44,22 +44,26 @@ class QuestionController extends Controller
      */
     public function validateAnswer(Request $request, $id)
     {
-        $request->validate(['security_answer' => 'required|string']);
+        try {
+            $request->validate(['security_answer' => 'required|string']);
 
-        $question = QuestionValidation::where('id', $id)->where('user_id', Auth::id())->firstOrFail();
+            $question = QuestionValidation::where('id', $id)
+                ->where('user_id', Auth::id())
+                ->firstOrFail();
 
-        if (!Hash::check($request->security_answer, $question->security_answer)) {
-            return redirect()->back()->withErrors(['security_answer' => 'Answer is incorrect.']);
+            if (!Hash::check($request->security_answer, $question->security_answer)) {
+                return response()->json(['error' => 'Answer is incorrect.'], 403);
+            }
+
+            $question->update(['validated_at' => now()]);
+
+            return response()->json([
+                'id' => $question->id,
+                'message' => 'Answer validated successfully.'
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'An unexpected server error occurred.'], 500);
         }
-
-        // Update kolom validated_at jika valid
-        $question->update(['validated_at' => now()]);
-
-        return response()->json([
-            'message' => 'Answer validated successfully.',
-            'id' => $id,
-            'security_question' => $question->security_question,
-        ], 200);
     }
 
     /**

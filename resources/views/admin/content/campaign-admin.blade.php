@@ -118,9 +118,18 @@
                         </div>
                     </div>
 
-                    <div class="mt-6 flex justify-end">
+                    <!-- Footer Buttons -->
+                    <div class="mt-6 flex justify-end space-x-2">
+                        <!-- Button Personal Information -->
+                        <a href="{{ route('personal.information') }}"
+                            class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 text-sm">
+                            Personal Information
+                        </a>
+                        <!-- Close Button -->
                         <button type="button" onclick="closeAdminSettingsModal()"
-                            class="bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-600">Close</button>
+                            class="bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-600">
+                            Close
+                        </button>
                     </div>
                 </form>
             </div>
@@ -336,11 +345,12 @@
 
                 <div class="mb-4">
                     <label for="editStatus" class="block text-gray-700">Status:</label>
-                    <select id="editStatus" name="status" class="w-full border border-gray-300 p-2 rounded" required>
+                    <select id="editStatus" name="status" class="w-full border border-gray-300 p-2 rounded"
+                        required>
                         <option value="publish">Publish</option>
                         <option value="private">Private</option>
-                    </select>                    
-                </div>                
+                    </select>
+                </div>
 
                 <div class="mb-4">
                     <label for="editImageCampaign" class="block text-gray-700">Campaign Image:</label>
