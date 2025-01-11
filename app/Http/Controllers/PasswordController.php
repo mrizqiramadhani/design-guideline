@@ -17,32 +17,46 @@ class PasswordController extends Controller
         return view('auth.forgot-password.email-validation');
     }
 
-    // Proses validasi email
+
+    public function adminEmail(Request $request)
+    {
+        $user = User::where('role', 'admin')->first();
+
+        if ($user) {
+            return response()->json(['email' => $user->email], 200);
+        } else {
+            return response()->json(['message' => 'Admin not found.'], 404);
+        }
+    }
+
     public function validateEmail(Request $request)
     {
         $request->validate([
             'email' => 'required|email',
         ]);
 
-        $user = User::where('email', $request->email)->where('role', 'admin')->first();
+        $user = User::where('role', 'admin')->first();
 
         if ($user) {
-            Session::flush(); // Hapus semua session terkait sebelum memulai ulang proses
-            Session::put('validated_email', $user->email);
+            if ($user->email == $request->email) {
+                // Create session
+                Session::flush(); // Hapus semua session terkait sebelum memulai ulang proses
+                Session::put('validated_email', $user->email);
 
-            $questions = QuestionValidation::where('user_id', $user->id)->inRandomOrder()->first();
+                $questions = QuestionValidation::where('user_id', $user->id)->inRandomOrder()->first();
 
-            if ($questions) {
-                Session::put('selected_question', $questions->id);
-                Log::info("Security question selected for user: {$user->email}");
-                return response()->json(['redirect' => route('security-question')], 200);
+                if ($questions) {
+                    Session::put('selected_question', $questions->id);
+                    // Log::info("Security question selected for user: {$user->email}");
+                    // return response()->json(['redirect' => route('security-question')], 200);
+                    return response()->json(['valid' => true, 'redirect' => route('security-question')], 200);
+                }
+            } else {
+                return response()->json(['valid' => false], 404);
             }
-
-            Log::info("No security questions found for user: {$user->email}");
-            return response()->json(['redirect' => route('reset-password')], 200);
+        } else {
+            return response()->json(['valid' => false], 404);
         }
-
-        return response()->json(['message' => 'Invalid email address or not an admin role.'], 422);
     }
 
     // Menampilkan halaman security question
@@ -76,19 +90,19 @@ class PasswordController extends Controller
         Session::put('security_question_attempts', $attempts + 1);
 
         if ($attempts >= 2) {
-            Log::warning("User exceeded maximum attempts for security question: {$questionId}");
-            Session::forget('security_question_attempts');
+            // Log::warning("User exceeded maximum attempts for security question: {$questionId}");
+            Session::flush();
             return redirect()->route('forgot-password')->with('error', 'Too many attempts. Please restart the process.');
         }
 
         if ($question && Hash::check($request->security_answer, $question->security_answer)) {
             Session::put('security_question_answered', true);
             Session::forget('security_question_attempts'); // Reset attempts
-            Log::info("Security question answered successfully for question ID: {$questionId}");
+            // Log::info("Security question answered successfully for question ID: {$questionId}");
             return redirect()->route('reset-password');
         }
 
-        Log::warning("Incorrect security answer for question ID: {$questionId}");
+        // Log::warning("Incorrect security answer for question ID: {$questionId}");
         return back()->withErrors(['security_answer' => 'Incorrect answer. Please try again.']);
     }
 

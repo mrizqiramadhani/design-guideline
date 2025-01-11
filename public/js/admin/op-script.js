@@ -73,7 +73,7 @@ window.onclick = function (event) {
 function toggleModal() {
   const modal = document.getElementById("addOperatorModal");
   modal.classList.toggle("hidden");
-  modal.classList.toggle("flex");
+  // modal.classList.toggle("flex");
 }
 function closeModal() {
   const modal = document.getElementById("addOperatorModal"); // Make sure to reference the correct modal ID

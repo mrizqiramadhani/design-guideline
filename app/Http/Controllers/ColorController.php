@@ -21,7 +21,7 @@ class ColorController extends Controller
         $userRole = auth()->user()->role;
 
         // Ambil data color palette dengan relasi 'unit' dan urutkan berdasarkan terbaru, dengan pagination
-        $colors = ColorPalette::with('unit')->latest()->paginate(7);
+        $colors = ColorPalette::with('unit')->latest()->paginate(5);
 
         // Jika halaman lebih besar dari jumlah halaman yang tersedia, redirect ke halaman terakhir yang valid
         if ($colors->currentPage() > $colors->lastPage()) {

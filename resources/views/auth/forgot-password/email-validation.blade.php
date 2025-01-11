@@ -34,7 +34,10 @@
                                         class="py-3 px-4 block w-full border-2 border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 shadow-sm"
                                         required aria-describedby="email-feedback" oninput="validateEmail()">
                                 </div>
-                                <p class="hidden text-xs text-red-600 mt-2" id="email-error"></p>
+                                <p class="hidden text-xs text-red-600 mt-2 flex items-center gap-2" id="email-error">
+                                    <span class="iconify" data-icon="bx:x-circle"></span>
+                                    <span>Email is invalid.</span>
+                                </p>
                                 <p class="hidden text-xs text-green-600 mt-2 flex items-center gap-2"
                                     id="email-success">
                                     <span class="iconify" data-icon="bx:check-circle"></span>
@@ -54,65 +57,68 @@
 </body>
 <script src="https://code.iconify.design/2/2.0.3/iconify.min.js"></script>
 <script>
+    const emailInput = document.getElementById('email');
+    const button = document.getElementById('reset-button');
+    const errorElement = document.getElementById('email-error');
+    const successElement = document.getElementById('email-success');
+
     let debounceTimeout;
 
     function validateEmail() {
         clearTimeout(debounceTimeout);
 
-        debounceTimeout = setTimeout(() => {
-            const emailInput = document.getElementById('email');
-            const button = document.getElementById('reset-button');
-            const errorElement = document.getElementById('email-error');
-            const successElement = document.getElementById('email-success');
+        debounceTimeout = setTimeout(async () => {
+            try {
+                const response = await fetch('{{ route('admin-email') }}', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                });
 
-            if (emailInput.value.trim() !== '') {
-                fetch('{{ route('validate-email') }}', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                        },
-                        body: JSON.stringify({
-                            email: emailInput.value
-                        })
-                    })
-                    .then(response => {
-                        // console.log('Raw response:', response);
-                        if (!response.ok) throw response;
-                        return response.json();
-                    })
-                    .then(data => {
-                        // console.log("Success response:", data);
-                        successElement.classList.remove('hidden');
-                        errorElement.classList.add('hidden');
-                        button.removeAttribute('disabled');
-                        button.onclick = function() {
+                const data = await response.json();
+                if (!response.ok) throw response;
+
+                if (data.email === emailInput.value) {
+                    successElement.classList.remove('hidden');
+                    errorElement.classList.add('hidden');
+                    button.removeAttribute('disabled');
+
+                    button.onclick = async () => {
+                        try {
+
+                            const response = await fetch('{{ route('validate-email') }}', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                },
+                                body: JSON.stringify({
+                                    email: emailInput.value
+                                })
+                            })
+
+                            const data = await response.json();
+
+                            if (!response.ok) throw response;
+
+
+                            console.log(data);
+
                             window.location.href = data.redirect;
-                        };
-                    })
-                    .catch(async (error) => {
-                        if (error instanceof Response) {
-                            try {
-                                const errData = await error.json();
-                                errorElement.textContent = errData.message || 'Invalid email address.';
-                            } catch (e) {
-                                console.error('Error parsing JSON:', e);
-                                errorElement.textContent =
-                                    'An unexpected error occurred. Please try again.';
-                            }
-                        } else {
-                            console.error('Unexpected error:', error);
-                            errorElement.textContent = 'A network error occurred. Please try again.';
+                        } catch (error) {
+                            alert('Failed to validate email. Please try again later.');
                         }
-                        errorElement.classList.remove('hidden');
-                        successElement.classList.add('hidden');
-                        button.setAttribute('disabled', 'disabled');
-                    });
-            } else {
-                errorElement.classList.add('hidden');
-                successElement.classList.add('hidden');
-                button.setAttribute('disabled', 'disabled');
+                    };
+                } else {
+                    successElement.classList.add('hidden');
+                    errorElement.classList.remove('hidden');
+                    button.setAttribute('disabled', 'disabled');
+                }
+            } catch (error) {
+                alert('Failed to validate email. Please try again later.');
             }
+
         }, 300); // Debounce delay 300ms
     }
 </script>

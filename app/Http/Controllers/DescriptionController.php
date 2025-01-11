@@ -10,7 +10,7 @@ class DescriptionController extends Controller
 {
     public function index(Request $request)
     {
-        $descriptions = Description::paginate(8);
+        $descriptions = Description::paginate(6);
         $units = Unit::all();
         $userRole = auth()->user()->role;
 

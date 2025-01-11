@@ -54,6 +54,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 //! Forgot password route
 Route::get('/forgot-password', [PasswordController::class, 'showForgotPassword'])->name('forgot-password');
+Route::get('/admin-email', [PasswordController::class, 'adminEmail'])->name('admin-email');
 Route::post('/validate-email', [PasswordController::class, 'validateEmail'])->name('validate-email');
 
 Route::middleware('validate-reset-flow:security-question')->group(function () {

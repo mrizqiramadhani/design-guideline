@@ -20,10 +20,25 @@
     <header id="navbar" class="bg-black transition-colors duration-300 fixed top-0 left-0 right-0 z-10">
         <div class="mx-auto max-w-screen-xl px-4 py-3 sm:px-6 sm:py-4 lg:px-8">
             <div class="flex items-center justify-between">
+                {{-- create hamburber menu button that will shown only on small screen --}}
+                <div class="sm:hidden">
+                    <button id="hamburgerButton" type="button" class="text-white focus:outline-none">
+                        <svg id="hamburgerIcon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                        <svg id="closeIcon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
                 <h1 class="text-2xl font-bold text-white sm:text-3xl cursor-pointer">
                     <a href="{{ route('admin.dashboard') }}">Shafwah Admin Panel</a>
                 </h1>
-                <div class="flex space-x-4">
+                <div class="hidden sm:flex space-x-4">
                     <ul class="flex space-x-10 text-lg text-white font-bold">
                         <li class="group">
                             <a href="{{ route('admin.dashboard') }}"
@@ -66,6 +81,37 @@
                         </div>
                     </div>
                 </div>
+                <div class="sm:hidden relative">
+                    <button id="profileMenuButton" class="focus:outline-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white cursor-pointer" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v1h16v-1c0-2.66-5.33-4-8-4z" />
+                        </svg>
+                    </button>
+
+                    <div id="hamburgerDropdown"
+                        class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-20">
+                        <a href="{{ route('admin.dashboard') }}"
+                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Dashboard</a>
+                        <a href="{{ route('admin.show-operators') }}"
+                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Operator</a>
+                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                            onclick="openAdminSettingsModal()">Admin Settings</a>
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button type="submit"
+                                class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Logout</button>
+                        </form>
+                    </div>
+                </div>
+
+                <script>
+                    document.getElementById('profileMenuButton').addEventListener('click', function() {
+                        var dropdown = document.getElementById('hamburgerDropdown');
+                        dropdown.classList.toggle('hidden');
+                    });
+                </script>
             </div>
         </div>
     </header>
@@ -393,7 +439,27 @@
 
     <!-- Content -->
     <div class="flex min-h-screen">
-        <aside class="w-1/5 bg-white border-r border-gray-200 font-bold">
+        <aside id="sidebar"
+            class="fixed sm:relative hidden sm:block h-full w-100 sm:w-1/5 bg-white border-r border-gray-200 font-bold">
+            <script>
+                const hamburgerButton = document.getElementById('hamburgerButton');
+                const hamburgerIcon = document.getElementById('hamburgerIcon');
+                const closeIcon = document.getElementById('closeIcon');
+
+                hamburgerButton.addEventListener('click', function() {
+                    var sidebar = document.getElementById('sidebar');
+                    sidebar.classList.toggle('hidden');
+
+                    // if hidden
+                    if (sidebar.classList.contains('hidden')) {
+                        hamburgerIcon.style.display = 'block';
+                        closeIcon.style.display = 'none';
+                    } else {
+                        hamburgerIcon.style.display = 'none';
+                        closeIcon.style.display = 'block';
+                    }
+                });
+            </script>
             <div class="px-10 py-20">
                 <nav class="my-8">
                     <ul class="space-y-6 text-lg text-gray-900">
@@ -450,9 +516,8 @@
             </div>
         </aside>
 
-        <main class="w-4/5 p-8 bg-gray-100">
-
-            <div class="mt-20 mb-5 flex items-center justify-between">
+        <main class="w-full p-8 bg-gray-100">
+            <div class="mt-20 mb-5 md:flex md:items-center md:justify-between">
                 <h2 class="text-4xl font-bold text-gray-900">Social Media</h2>
                 <div class="flex space-x-4">
                     <button onclick="openModal('addSocialMedia')"
