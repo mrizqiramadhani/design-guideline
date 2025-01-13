@@ -199,7 +199,7 @@
         <!-- Main Content -->
         <div class="flex-grow px-5 py-8 text-xl sm:text-2xl lg:px-10 lg:py-12">
             <!-- Deskripsi Section -->
-            <h2 id="deskripsi" class="uppercase font-bold text-3xl text-black PL-4 mb-4 section-heading">Description
+            <h2 id="deskripsi" class="uppercase font-bold text-3xl text-black pl-4 mb-4 section-heading">Description
             </h2>
 
             @foreach ($descriptions as $description)
