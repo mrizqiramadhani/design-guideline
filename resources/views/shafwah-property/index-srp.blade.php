@@ -466,7 +466,7 @@
             </div>
 
             <!-- Campaign Section -->
-            <div class="p-4 mb-8 min-h-[1000px] bg-white">
+            <div class="p-4 mb-8 bg-white">
                 <h2 id="campaign" class="uppercase font-bold text-3xl text-black mb-4 section-heading">
                     Campaign
                 </h2>
@@ -482,13 +482,13 @@
                 <div class="flex flex-wrap gap-4 mt-6 justify-between">
                     @foreach ($campaigns->where('status', 'publish') as $campaign)
                         <div
-                            class="relative bg-gray-200 w-[calc(50%-0.5rem)] h-64 rounded-md overflow-hidden group flex items-center justify-center 
+                            class="relative bg-gray-200 w-full sm:w-[calc(50%-0.5rem)] h-64 rounded-md overflow-hidden group flex items-center justify-center 
                                     @if ($loop->last && $loop->remaining % 2 === 0) mx-auto @endif">
-
+                
                             <!-- Image -->
                             <img src="{{ asset('storage/' . $campaign->path) }}" alt="Campaign Image"
                                 class="object-contain max-w-full max-h-full rounded-md">
-
+                
                             <!-- Hover Overlay -->
                             <div
                                 class="absolute inset-0 bg-black bg-opacity-70 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -499,7 +499,7 @@
                             </div>
                         </div>
                     @endforeach
-                </div>
+                </div>                
             </div>
         </div>
     </div>
