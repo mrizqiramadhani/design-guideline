@@ -536,8 +536,7 @@
                         <input type="text" id="colorHex" name="color" required placeholder="#000000"
                             class="flex-1 block px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-green-200"
                             pattern="^#[A-Fa-f0-9]{6}$" title="Please enter a valid HEX code (e.g., #1A1A1A)" />
-                        <input type="color" id="colorPicker"
-                            class="w-full h-full max-w-[44px] max-h-[44px] p-1 rounded-md border">
+                        <input type="color" id="colorPicker" class="w-10 h-10 p-1 rounded-md border">
                     </div>
                 </div>
 
