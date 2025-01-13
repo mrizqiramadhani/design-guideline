@@ -13,6 +13,9 @@
 </head>
 
 <style>
+    @import url("https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;700&display=swap");
+    @import url(https://db.onlinewebfonts.com/c/29ddb4605533a38e086b48fa105e0d12?family=Nohemi);
+
     * {
         font-family: Nohemi;
     }
@@ -25,16 +28,30 @@
         transform: translateX(100%);
         /* Pindahkan sepenuhnya ke kanan */
     }
+
+    @media (max-width: 640px) {
+
+        /* Untuk layar kecil (mobile) */
+        .dropdown-outside-card {
+            top: 100%;
+            /* Geser dropdown ke bawah tombol */
+            right: 0;
+            /* Posisi dropdown sejajar dengan tombol */
+            transform: translateX(0);
+            /* Reset transformasi */
+            width: 100%;
+            /* Lebar dropdown penuh sesuai tombol */
+        }
+    }
 </style>
 
 <body>
 
     <!-- Navigation Header -->
-    <nav class="bg-white py-0 flex items-center justify-between">
+    <nav class="bg-white py-2 flex items-center justify-between px-4 md:px-12">
         <div class="flex items-center">
             <a href="{{ route('shafwah-holidays') }}#downloads">
-                <img src="{{ asset('img/main-SH.png') }}" alt="Logo"
-                    class="max-h-32 w-auto mr-4 m bg-white-200 mx-12 my-4 object-contain">
+                <img src="{{ asset('img/main-SH.png') }}" alt="Logo" class="max-h-20 w-auto mr-4">
             </a>
         </div>
     </nav>
@@ -61,7 +78,7 @@
                 </ul>
 
                 <!-- Bagian Kanan: Button Download All Logo -->
-                <div>
+                <div class="hidden sm:block">
                     <a href="{{ route('logos.download', $logo->id) }}"
                         class="flex items-center space-x-2 bg-blue-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-600 transition duration-300">
                         <span class="iconify" data-icon="mdi:download" style="font-size: 1.5rem;"></span>
@@ -71,11 +88,17 @@
             </div>
             <hr class="border-t-4 border-blue-500 mt-7 z-10 w-32">
             <hr>
+            <div class="block sm:hidden mt-4">
+                <a href="{{ route('logos.download', $logo->id) }}"
+                    class="flex items-center space-x-2 bg-blue-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-600 transition duration-300">
+                    <span class="iconify" data-icon="mdi:download" style="font-size: 1.5rem;"></span>
+                    <span>Download All Logo</span>
+                </a>
+            </div>
         </div>
     </header>
-
-    <main class="px-20 py-12">
-        <div class="grid grid-cols-5 gap-4">
+    <main class="px-4 md:px-20 py-5">
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
             @php
                 $photos = $logo->logoPhotos->where('theme', 'Primary');
             @endphp
@@ -124,7 +147,7 @@
 
             @if ($photos->isEmpty())
                 <!-- Centering the content in the grid when no photos are available -->
-                <div class="col-span-5 flex items-center justify-center h-full">
+                <div class="col-span-2 sm:col-span-3 lg:col-span-5 flex items-center justify-center h-full">
                     <div class="flex flex-col items-center text-center">
                         <!-- GIF -->
                         <div class="w-full mb-3">
@@ -138,7 +161,6 @@
             @endif
         </div>
     </main>
-
     <script>
         document.addEventListener('click', function(event) {
             // Loop through all dropdown toggles
@@ -156,7 +178,6 @@
             });
         });
     </script>
-
 </body>
 
 </html>

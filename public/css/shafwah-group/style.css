@@ -10,7 +10,7 @@
 
 .sidebar-sticky {
   position: sticky;
-  top: 90px; /* Adjust this value based on the height of the navbar */
+  top: 90px;
   height: calc(100vh - 90px); /* Adjust the height of the sidebar */
   overflow-y: auto;
 }
@@ -47,29 +47,12 @@
   height: 90px;
   opacity: 1;
   transition: opacity 0.3s ease;
-  background-color: #000000;
+  background-color: #000;
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 100;
-}
-
-/* paralax effect */
-.parallax-container {
-  position: relative;
-  overflow: hidden;
-  height: 400px; /* Adjust height as needed */
-}
-
-.parallax-image {
-  position: absolute;
-  transition: transform 0.5s ease-in-out;
-}
-
-.icon {
-  left: 50%; /* Start from center */
-  transform: translateX(-50%) translateY(-50%); /* Center the icon */
 }
 
 .logo {
