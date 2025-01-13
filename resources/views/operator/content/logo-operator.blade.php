@@ -476,10 +476,10 @@
                 </table>
             </div>
 
-            <div id="loading-overlay"
+            {{-- <div id="loading-overlay"
                 class="hidden fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
                 <span class="loader-paginate"></span>
-            </div>
+            </div> --}}
 
             <!-- Pagination -->
             @if ($logos->count() > 0)
