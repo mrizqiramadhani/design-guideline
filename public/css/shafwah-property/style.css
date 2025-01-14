@@ -43,17 +43,7 @@
 } */
 
 /* navbar */
-#navbar {
-  height: 90px;
-  opacity: 1;
-  transition: opacity 0.3s ease;
-  background-color: #000000;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 100;
-}
+
 .text-extra-small {
   font-size: 0.7rem; /* Adjust to your preferred size */
 }
@@ -137,4 +127,25 @@
 .download-anchor {
   scroll-behavior: smooth;
   scroll-margin-top: 90px; /* Sesuaikan dengan tinggi navbar */
+}
+
+/* Default Navbar (Sebelum di-scroll) */
+.navbar-default {
+  height: 100px;
+  /* Tinggi awal */
+  width: 100%;
+  /* Lebar penuh */
+  transition: height 0.3s ease, width 0.3s ease;
+  /* Transisi untuk height dan width */
+}
+
+/* Scrolled Navbar */
+.navbar-scrolled {
+  height: 90px;
+  /* Tinggi saat di-scroll */
+  width: 100%;
+  /* Atur lebar jika perlu */
+  margin: 0 auto;
+  transition: height 0.3s ease, width 0.3s ease;
+  /* Efek transisi */
 }

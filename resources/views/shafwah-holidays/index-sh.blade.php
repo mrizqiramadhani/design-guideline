@@ -30,21 +30,22 @@
 
 <body>
     <!-- Header -->
-    <header id="navbar" class="bg-black transition-colors duration-300 fixed top-0 left-0 right-0 z-10">
+    <header id="navbar"
+        class="bg-transparent text-black navbar-default transition-colors duration-300 fixed top-0 left-0 right-0 z-10">
         <div class="mx-auto max-w-screen-xl px-4 py-4 sm:px-6 sm:py-8 lg:px-8">
             <div class="flex flex-wrap items-center justify-between">
                 <!-- Logo -->
                 <div class="flex-shrink-0">
-                    <h1 class="text-2xl font-bold text-white sm:text-3xl cursor-pointer">
-                        <a href="{{ url('/') }}">Shafwah Content</a>
+                    <h1 class="text-2xl font-bold sm:text-3xl cursor-pointer">
+                        <a href="{{ url('/') }}" id="navbar-logo">Shafwah Content</a>
                     </h1>
                 </div>
                 <!-- Navigation -->
                 <div class="flex items-center space-x-4 md:space-x-8">
-                    <ul class="hidden sm:flex space-x-10 text-lg text-white font-bold">
+                    <ul class="hidden sm:flex space-x-10 text-lg font-bold">
                         <li class="group">
                             <a href="{{ route('shafwah-group') }}"
-                                class="nav-link relative inline-block text-white transition-transform duration-300 ease-in-out group-hover:scale-105 group-hover:text-blue-500">
+                                class="nav-link relative inline-block transition-transform duration-300 ease-in-out group-hover:scale-105 group-hover:text-blue-500">
                                 Shafwah Group
                                 <span
                                     class="absolute left-0 bottom-0 w-0 h-1 bg-gradient-to-r from-blue-400 to-blue-600 transition-all duration-500 ease-in-out group-hover:w-full rounded-full"></span>
@@ -53,7 +54,8 @@
                         <li class="group">
                             <a href="{{ route('shafwah-holidays') }}"
                                 class="nav-link relative inline-block transition-transform duration-300 ease-in-out group-hover:scale-105 group-hover:text-blue-500"
-                                style="color: #2076ff">
+                                style="color:
+                                #2076ff">
                                 Shafwah Holidays
                                 <span
                                     class="absolute left-0 bottom-0 w-0 h-1 bg-gradient-to-r from-blue-400 to-blue-600 transition-all duration-500 ease-in-out group-hover:w-full rounded-full"></span>
@@ -71,10 +73,10 @@
                     <!-- Hamburger Menu -->
                     <div class="sm:hidden">
                         <button id="hamburger" type="button"
-                            class="text-white hover:text-gray-300 focus:outline-none focus:text-gray-300"
+                            class="text-black hover:text-gray-300 focus:outline-none focus:text-gray-300"
                             onclick="document.getElementById('drawer').classList.toggle('hidden');">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg">
+                            <svg id="hamburger-icon" class="w-6 h-6" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M4 6h16M4 12h16M4 18h16"></path>
                             </svg>
@@ -98,8 +100,7 @@
                 </div>
 
                 <!-- Drawer Navigation -->
-                <ul class="p-4 space-y-4 text-gray-700">
-                    <!-- Shafwah Group Section -->
+                <ul class="p-4 space-y-4 text-black" id="drawer-links">
                     <li>
                         <a href="{{ route('shafwah-group') }}" class="block py-2 hover:bg-gray-100 rounded">Shafwah
                             Group</a>
@@ -144,29 +145,13 @@
                 </ul>
             </div>
         </div>
-
-        <script>
-            function toggleDrawer() {
-                document.getElementById('drawer').classList.toggle('hidden');
-            }
-
-            // Optional: Close the drawer when clicking outside of it
-            document.addEventListener('click', function(event) {
-                const drawer = document.getElementById('drawer');
-                const isClickInside = drawer.contains(event.target) || document.getElementById('hamburger').contains(
-                    event.target);
-                if (!isClickInside && !drawer.classList.contains('hidden')) {
-                    drawer.classList.add('hidden');
-                }
-            });
-        </script>
-
     </header>
 
 
     <!-- Header Image Section -->
-    <div class="w-full h-[800px] flex items-center justify-center bg-black">
-        <div class="w-full h-auto flex items-center justify-center bg-black">
+    <div class="w-full h-[800px] flex items-center justify-center"
+        style="background-image: url('{{ asset('img/index-img/img_1.jpg') }}'); background-size: cover; background-position: center;">
+        <div class="w-full h-auto flex items-center justify-center">
             <div class="flex justify-center items-center w-full px-4 sm:px-10 h-auto relative">
                 <img src="{{ asset('img/main-SH.png') }}" alt="Main SG Image"
                     class="h-auto max-h-[400px] w-full sm:max-w-[80%] object-contain" />
@@ -181,7 +166,8 @@
             <nav class="-mx-3 space-y-6">
                 <div class="space-y-3">
                     <div class="flex justify-center ml-10">
-                        <ul class="space-y-8 text-center mt-10 text-3xl capitalize text-black cursor-pointer font-bold">
+                        <ul
+                            class="space-y-8 text-center mt-10 text-3xl capitalize text-black cursor-pointer font-bold">
                             <li><a href="#deskripsi">Description</a></li>
                             <li><a href="#logo">Logo</a></li>
                             <li><a href="#color-palette">Color Palette</a></li>
@@ -488,11 +474,11 @@
                         <div
                             class="relative bg-gray-200 w-full sm:w-[calc(50%-0.5rem)] h-64 rounded-md overflow-hidden group flex items-center justify-center 
                                     @if ($loop->last && $loop->remaining % 2 === 0) mx-auto @endif">
-                
+
                             <!-- Image -->
                             <img src="{{ asset('storage/' . $campaign->path) }}" alt="Campaign Image"
                                 class="object-contain max-w-full max-h-full rounded-md">
-                
+
                             <!-- Hover Overlay -->
                             <div
                                 class="absolute inset-0 bg-black bg-opacity-70 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -503,7 +489,7 @@
                             </div>
                         </div>
                     @endforeach
-                </div>                
+                </div>
             </div>
         </div>
     </div>

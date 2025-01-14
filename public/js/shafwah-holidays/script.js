@@ -177,3 +177,39 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 });
+
+//* hamburber and navbar
+
+function toggleDrawer() {
+  document.getElementById("drawer").classList.toggle("hidden");
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  const navbar = document.getElementById("navbar");
+  const hamburger = document.getElementById("hamburger-icon");
+  const navbarLinks = navbar.querySelectorAll("a:not(#drawer-links a)");
+  const drawerLinks = document.querySelectorAll("#drawer-links a"); // Drawer links
+
+  // Fungsi untuk memeriksa posisi scroll dan mengatur navbar
+  const handleScroll = () => {
+    if (window.scrollY > 50) {
+      navbar.classList.add("bg-black", "text-white", "navbar-scrolled");
+      navbar.classList.remove("bg-transparent", "text-black", "navbar-default");
+      hamburger.setAttribute("stroke", "white"); // Mengubah warna ikon hamburger menjadi putih
+      navbarLinks.forEach((link) => link.classList.add("text-white"));
+      drawerLinks.forEach((link) => link.classList.add("text-black")); // Drawer links tetap hitam
+    } else {
+      navbar.classList.add("bg-transparent", "text-black", "navbar-default");
+      navbar.classList.remove("bg-black", "text-white", "navbar-scrolled");
+      hamburger.setAttribute("stroke", "black"); // Mengubah warna ikon hamburger menjadi hitam
+      navbarLinks.forEach((link) => link.classList.remove("text-white"));
+      drawerLinks.forEach((link) => link.classList.add("text-black")); // Drawer links tetap hitam
+    }
+  };
+
+  // Periksa posisi scroll saat halaman dimuat
+  handleScroll();
+
+  // Tambahkan event listener untuk scroll
+  window.addEventListener("scroll", handleScroll);
+});

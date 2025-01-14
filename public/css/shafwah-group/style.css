@@ -43,17 +43,6 @@
 } */
 
 /* navbar */
-#navbar {
-  height: 90px;
-  opacity: 1;
-  transition: opacity 0.3s ease;
-  background-color: #000;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 100;
-}
 
 .logo {
   top: 50%; /* Start from the center vertically */
@@ -143,4 +132,39 @@
 .download-anchor {
   scroll-behavior: smooth;
   scroll-margin-top: 90px; /* Sesuaikan dengan tinggi navbar */
+}
+
+#masonry-grid {
+  display: block;
+  overflow: visible;
+}
+
+.group {
+  margin-bottom: 18px;
+  /* Sama dengan gutter Masonry */
+  overflow: hidden;
+  /* Pastikan gambar tidak keluar */
+  position: relative;
+}
+
+/* navbar */
+/* Default Navbar (Sebelum di-scroll) */
+.navbar-default {
+  height: 100px;
+  /* Tinggi awal */
+  width: 100%;
+  /* Lebar penuh */
+  transition: height 0.3s ease, width 0.3s ease;
+  /* Transisi untuk height dan width */
+}
+
+/* Scrolled Navbar */
+.navbar-scrolled {
+  height: 90px;
+  /* Tinggi saat di-scroll */
+  width: 100%;
+  /* Atur lebar jika perlu */
+  margin: 0 auto;
+  transition: height 0.3s ease, width 0.3s ease;
+  /* Efek transisi */
 }
