@@ -218,11 +218,10 @@
                 <div class="flex flex-wrap -mx-2">
                     @foreach ($logos as $logo)
                         <div class="w-1/2 sm:w-1/4 px-2 mb-4">
-                            <div class="relative block h-52 rounded-lg overflow-hidden">
+                            <div class="relative block aspect-square rounded-lg overflow-hidden">
                                 <div class="flex items-center justify-center h-full">
                                     <img src="{{ asset('storage/thumbnails/' . basename($logo->thumbnail)) }}"
-                                        alt="{{ $logo->name }} Logo"
-                                        class="max-h-full max-w-full object-contain" />
+                                        alt="{{ $logo->name }} Logo" class="h-full w-full object-contain " />
                                 </div>
                                 <div
                                     class="absolute inset-0 bg-black opacity-0 hover:opacity-80 transition-opacity duration-300 flex items-center justify-center">
