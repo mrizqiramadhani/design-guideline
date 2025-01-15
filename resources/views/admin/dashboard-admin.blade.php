@@ -488,7 +488,7 @@
 
                         <div class="mb-4">
                             <label for="editContent" class="block text-gray-700">Content:</label>
-                            <textarea id="editContent" name="content" rows="4" class="w-full border border-gray-300 p-2 rounded"></textarea>
+                            <textarea id="editContent" name="content" rows="4" class="w-full border border-gray-300 p-2 rounded" required></textarea>
                         </div>
 
                         <div class="flex justify-end">
