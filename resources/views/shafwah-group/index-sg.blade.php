@@ -103,9 +103,9 @@
                     <hr class="my-4 border-gray-300">
 
                     <!-- Tag li Section -->
-                    <li>
+                    {{-- <li>
                         <a href="#deskripsi" class="block py-2 hover:bg-gray-100 rounded">Description</a>
-                    </li>
+                    </li> --}}
                     <li>
                         <a href="#logo" class="block py-2 hover:bg-gray-100 rounded">Logo</a>
                     </li>
@@ -116,7 +116,7 @@
                         <a href="#typography" class="block py-2 hover:bg-gray-100 rounded">Typography</a>
                     </li>
                     <li>
-                        <a href="#illustration" class="block py-2 hover:bg-gray-100 rounded">Illustration</a>
+                        <a href="#illustration" class="block py-2 hover:bg-gray-100 rounded">Pattern</a>
                     </li>
                     <li>
                         <a href="#social-media" class="block py-2 hover:bg-gray-100 rounded">Social Media</a>
@@ -148,11 +148,11 @@
                 <div class="space-y-3">
                     <div class="flex justify-center ml-10">
                         <ul class="space-y-8 text-center mt-10 text-3xl capitalize text-black cursor-pointer font-bold">
-                            <li><a href="#deskripsi">Description</a></li>
+                            {{-- <li><a href="#deskripsi">Description</a></li> --}}
                             <li><a href="#logo">Logo</a></li>
                             <li><a href="#color-palette">Color Palette</a></li>
                             <li><a href="#typography">Typography</a></li>
-                            <li><a href="#illustration">Illustration</a></li>
+                            <li><a href="#illustration">Pattern</a></li>
                             <li><a href="#social-media">Social Media</a></li>
                             <li><a href="#iconography">Iconography</a></li>
                         </ul>
@@ -164,7 +164,7 @@
         <!-- Main Content -->
         <div class="flex-grow px-5 py-8 text-xl sm:text-2xl lg:px-10 lg:py-12">
 
-            <!-- Deskripsi Section -->
+            {{-- <!-- Deskripsi Section -->
             <h2 id="deskripsi" class="uppercase font-bold text-3xl text-black pl-4 mb-4 section-heading">Description
             </h2>
 
@@ -178,25 +178,20 @@
                         {{ $description->content }}
                     </p>
                 </div>
-            @endforeach
+            @endforeach --}}
 
             <!-- Logo Section -->
             <div class="p-4 mb-8 min-h-[1000px]">
                 <h2 id="logo" class="uppercase font-bold text-3xl text-black mb-4 section-heading">Logo</h2>
                 <p class="font-light text-gray-600 paragraf text-justify">
-                    Logo Shafwah Group mencerminkan profesionalisme, keunggulan layanan, dan dedikasi kami dalam
-                    memberikan nilai terbaik kepada pelanggan. Desain logo yang modern dan elegan ini
-                    mencerminkan misi kami untuk tetap relevan dan berkembang bersama kebutuhan klien kami.
+                    Di bagian ini, kami akan menyajikan cerita di balik penciptaan logo kami, makna simbolis yang
+                    terkandung dalam desainnya, serta panduan untuk memastikan penggunaannya yang konsisten dan efektif
+                    untuk berbagai platform.
                 </p>
-                <h3 class="font-semibold text-2xl text-black mt-5 mb-4">The Logo</h3>
-                <p class="font-light text-gray-600 paragraf text-justify">
-                    Logo kami dibuat dengan cermat untuk menggambarkan visi dan nilai yang kami pegang. Warna dan
-                    bentuk logo disesuaikan untuk memberikan kesan terpercaya, inovatif, dan berorientasi pada
-                    pelanggan dalam setiap aspek bisnis kami.
-                </p>
+                <h3 class="font-semibold text-2xl text-black mt-8 mb-4 text-center">Filosofi Logo</h3>
 
-                <img src="{{ asset('img/main-SG.png') }}" alt="Logo Shafwah Group"
-                    class="w-full h-auto max-w-full mx-auto mt-4">
+                <img src="{{ asset('img/filosofi-sg.png') }}" alt="Logo Shafwah Group"
+                    class="w-full h-auto max-w-full mx-auto mt-4 mb-14">
 
                 {{-- download section --}}
                 <h3 id="downloads" class="font-semibold text-2xl text-black mt-5 mb-10 download-anchor">Downloads</h3>
@@ -223,13 +218,9 @@
             <div class="p-4 mb-8">
                 <h2 id="color-palette" class="uppercase font-bold text-3xl text-black mb-4 section-heading">Color
                     Palette</h2>
-                <p class="font-light text-gray-600 paragraf text-justify">Lorem ipsum dolor sit amet, consectetur
-                    adipiscing
-                    elit. Vivamus lacinia odio vitae vestibulum vestibulum.</p>
-                <h3 class="font-semibold text-2xl text-black mt-6 mb-4">Primary Color</h3>
-                <p class="font-light text-gray-600 paragraf mb-6 text-justify">Lorem ipsum dolor sit amet,
-                    consectetur
-                    adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                <p class="font-light text-gray-600 paragraf text-justify">Palet warna yang digunakan dalam berbagai
+                    platform desain dan alat pemasaran berasal dari turunan warna logo brand Shafwah Group</p>
+                <h3 class="font-semibold text-2xl text-black mt-6 mb-12">Primary Color</h3>
 
                 <!-- Color Palette Display -->
                 <div class="flex flex-wrap -mx-2">
@@ -256,14 +247,10 @@
                     Typography
                 </h2>
                 <p class="font-light text-gray-600 paragraf text-justify">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae
-                    vestibulum vestibulum.
+                    Dalam menyajikan setiap informasi, Shafwah Group konsisten menggunakan tiga pilihan font utama yang
+                    disesuaikan dengan kebutuhan publikasi, yaitu Product Sans, Futura, dan Montserrat.
                 </p>
                 <h3 class="font-semibold text-2xl text-black mt-6 mb-4">Primary Typeface</h3>
-                <p class="font-light text-gray-600 paragraf mb-6 text-justify">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut
-                    labore et dolore magna aliqua.
-                </p>
 
                 @if ($typographys->isNotEmpty())
                     <!-- Typography Section -->
@@ -292,10 +279,11 @@
             <!-- Ilustration Section -->
             <div class="p-4 mb-8">
                 <h2 id="illustration" class="uppercase font-bold text-3xl text-black mb-4 section-heading">
-                    Illustration
+                    Pattern
                 </h2>
                 <p class="font-light text-gray-600 paragraf text-justify">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facilis nostrum soluta assumenda.
+                    Pattern yang digunakan untuk menyempurnakan tampilan visual merupakan pattern yang mewakili
+                    nilai-nilai perusahaan.
                 </p>
 
                 @if ($illustrations->isNotEmpty())
@@ -317,9 +305,9 @@
                     Social Media
                 </h2>
                 <p class="font-light text-gray-600 paragraf text-justify mb-10">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut reiciendis blanditiis unde.
-                    Repellat omnis placeat vel voluptates sed laborum inventore, minima rerum aperiam soluta
-                    dicta ex consequatur corrupti quos voluptatem!
+                    Berikut adalah beberapa contoh penggunaan logo, ikon, serta informasi lainnya di platform media
+                    sosial.
+
                 </p>
 
                 <!-- Feed Section -->
@@ -390,8 +378,8 @@
                     Iconography
                 </h2>
                 <p class="font-light text-gray-600 paragraf text-justify">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae
-                    vestibulum vestibulum.
+                    Ikonografi yang digunakan oleh Shafwah Group berupa ikon 2D sederhana dengan garis tepi (outline)
+                    yang jelas, namun tetap efektif dalam mewakili visual yang ingin disampaikan.
                 </p>
 
 
