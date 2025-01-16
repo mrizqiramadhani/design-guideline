@@ -522,13 +522,13 @@
 
             <!-- Content Table -->
             <div class="overflow-x-auto">
-                <table class="min-w-full border border-gray-300 bg-white">
+                <table class="min-w-full border border-gray-300 bg-white table-fixed">
                     <thead class="bg-gray-50">
                         <tr>
-                            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Unit</th>
-                            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Image Iconography</th>
-                            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Link</th>
-                            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Actions</th>
+                            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700 w-1/5">Unit</th>
+                            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700 w-1/6">Image Iconography</th>
+                            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700 w-1/2">Link</th>
+                            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700 w-1/6">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -539,10 +539,10 @@
                                     <img src="{{ asset('storage/' . $iconography->path) }}" alt="Iconography Image"
                                         class="w-32 h-20 object-cover">
                                 </td>
-                                <td class="px-4 py-2 text-gray-900">
+                                <td class="px-4 py-2 text-gray-900 break-words">
                                     @if ($iconography->link)
                                         <a href="{{ $iconography->link }}" target="_blank"
-                                            class="text-blue-500 hover:underline">
+                                            class="text-blue-500 hover:underline break-all">
                                             {{ $iconography->link }}
                                         </a>
                                     @else
@@ -566,7 +566,7 @@
                         @endforeach
                     </tbody>
                 </table>
-            </div>
+            </div>            
 
             <!-- Pagination -->
             @if ($iconographys->count() > 0)
