@@ -119,23 +119,14 @@ Ikuti langkah-langkah di bawah ini untuk menjalankan proyek secara lokal:
 
 # 👥 Tim Pengembang
 
-| Nama                     | Role                 |     |
-| ------------------------ | -------------------- | --- |
-| Muhammad Rizqi Ramadhani | front-end & back-end |     |
-| Muhammad Rayyan          | front-end & back-end |     |
+| Nama                     | Role                 |
+| ------------------------ | -------------------- |
+| Muhammad Rizqi Ramadhani | front-end & back-end |
+| Muhammad Rayyan          | front-end & back-end |
 
 ## 🌟 Credit readme
 
 makasih template readMe nya wak 😂
 
-### Muhammad Ganang Ramadhan
-
-[![Instagram](https://img.shields.io/badge/Instagram-%23E4405F.svg?logo=Instagram&logoColor=white)](https://instagram.com/username)  
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?style=flat&logo=linkedin&logoColor=white)](https://linkedin.com/in/username)  
-[![GitHub](https://img.shields.io/badge/GitHub-%23121011.svg?logo=github&logoColor=white)](https://github.com/pawpawly)
-
-### Muhammad Mashaan Navarin
-
-[![Instagram](https://img.shields.io/badge/Instagram-%23E4405F.svg?logo=Instagram&logoColor=white)](https://instagram.com/username)  
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?style=flat&logo=linkedin&logoColor=white)](https://linkedin.com/in/username)  
-[![GitHub](https://img.shields.io/badge/GitHub-%23121011.svg?logo=github&logoColor=white)](https://github.com/RinnHehe) |
+[![GitHub](https://img.shields.io/badge/-Muhammad%20Ganang%20Ramadhan-%23121011.svg?logo=github&logoColor=white)](https://github.com/pawpawly)
+[![GitHub](https://img.shields.io/badge/-Muhammad%20Mashaan%20Navarin-%23121011.svg?logo=github&logoColor=white)](https://github.com/RinnHehe)
