@@ -238,12 +238,12 @@
             <div class="px-10 py-20">
                 <nav class="my-8">
                     <ul class="space-y-6 text-lg text-gray-900">
-                        <li>
+                        {{-- <li>
                             <a href="{{ route('operator.description') }}"
                                 class="{{ request()->routeIs('operator.description') ? 'active' : '' }}">
                                 Description
                             </a>
-                        </li>
+                        </li> --}}
                         <li>
                             <a href="{{ route('operator.logo') }}"
                                 class="{{ request()->routeIs('operator.logo') ? 'active' : '' }}">
@@ -265,7 +265,7 @@
                         <li>
                             <a href="{{ route('operator.illustration') }}"
                                 class="{{ request()->routeIs('operator.illustration') ? 'active' : '' }}">
-                                Illustration
+                                Pattern
                             </a>
                         </li>
                         <li>
@@ -308,10 +308,11 @@
                 <table class="min-w-full border border-gray-300 bg-white table-fixed">
                     <thead class="bg-gray-50">
                         <tr>
-                            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700 w-1/5">Unit</th>
-                            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700 w-1/6">Image Typography</th>
-                            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700 w-1/2">Link</th>
-                            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700 w-1/6">Actions</th>
+                            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Unit</th>
+                            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Image Typography
+                            </th>
+                            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Link</th>
+                            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -325,7 +326,8 @@
                                 <td class="px-4 py-2 text-gray-900 break-words">
                                     @if ($typography->font_name)
                                         <a href="{{ $typography->font_name }}" target="_blank"
-                                            class="text-blue-500 hover:underline break-all">
+                                            class="text-blue-500 hover:underline truncate block max-w-full"
+                                            style="max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                                             {{ $typography->font_name }}
                                         </a>
                                     @else

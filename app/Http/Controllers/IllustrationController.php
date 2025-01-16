@@ -60,7 +60,7 @@ class IllustrationController extends Controller
         ]);
 
         return redirect()->route(auth()->user()->role === 'admin' ? 'admin.illustration' : 'operator.illustration')
-            ->with('success', 'Illustration added successfully!');
+            ->with('success', 'Pattern added successfully!');
     }
 
     public function edit($id)
@@ -98,7 +98,7 @@ class IllustrationController extends Controller
         $illustration->save();
 
         return redirect()->route(auth()->user()->role === 'admin' ? 'admin.illustration' : 'operator.illustration')
-            ->with('success', 'Illustration updated successfully!');
+            ->with('success', 'Pattern updated successfully!');
     }
 
     public function destroy($id)
@@ -114,6 +114,6 @@ class IllustrationController extends Controller
         $illustration->delete();
 
         return redirect()->route(auth()->user()->role === 'admin' ? 'admin.illustration' : 'operator.illustration')
-            ->with('success', 'Illustration deleted successfully!');
+            ->with('success', 'Pattern deleted successfully!');
     }
 }

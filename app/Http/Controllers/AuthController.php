@@ -11,7 +11,7 @@ class AuthController extends Controller
     {
         if (Auth::check()) {
             // Jika sudah login, redirect ke dashboard berdasarkan role
-            return redirect()->intended(Auth::user()->role === 'admin' ? '/admin/dashboard' : '/operator/dashboard');
+            return redirect()->intended(Auth::user()->role === 'admin' ? '/admin/logo' : '/operator/logo');
         }
 
         return view('auth.login');
@@ -29,7 +29,7 @@ class AuthController extends Controller
 
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password], $remember)) {
             // Redirect berdasarkan role
-            return redirect()->intended(Auth::user()->role === 'admin' ? '/admin/dashboard' : '/operator/dashboard');
+            return redirect()->intended(Auth::user()->role === 'admin' ? '/admin/logo' : '/operator/logo');
         }
 
         return back()->withErrors(['email' => 'Invalid credentials.']);

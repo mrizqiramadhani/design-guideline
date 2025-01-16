@@ -141,12 +141,12 @@
             <div class="px-10 py-20">
                 <nav class="my-8">
                     <ul class="space-y-6 text-lg text-gray-900 font-bold">
-                        <li>
+                        {{-- <li>
                             <a href="{{ route('admin.description') }}"
                                 class="{{ request()->routeIs('admin.description', 'admin.dashboard') ? 'active' : '' }}">
                                 Description
                             </a>
-                        </li>
+                        </li> --}}
                         <li>
                             <a href="{{ route('admin.logo') }}"
                                 class="{{ request()->routeIs('admin.logo') ? 'active' : '' }}">

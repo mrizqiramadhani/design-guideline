@@ -126,12 +126,12 @@
             <div class="px-10 py-20">
                 <nav class="my-8">
                     <ul class="space-y-6 text-lg text-gray-900">
-                        <li>
+                        {{-- <li>
                             <a href="{{ route('operator.description') }}"
                                 class="{{ request()->routeIs('operator.description') ? 'active' : '' }}">
                                 Description
                             </a>
-                        </li>
+                        </li> --}}
                         <li>
                             <a href="{{ route('operator.logo') }}"
                                 class="{{ request()->routeIs('operator.logo') ? 'active' : '' }}">
@@ -153,7 +153,7 @@
                         <li>
                             <a href="{{ route('operator.illustration') }}"
                                 class="{{ request()->routeIs('operator.illustration') ? 'active' : '' }}">
-                                Illustration
+                                Pattern
                             </a>
                         </li>
                         <li>

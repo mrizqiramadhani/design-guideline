@@ -107,7 +107,7 @@
     <div id="addIllustration"
         class="fixed inset-0 bg-gray-500 bg-opacity-50 hidden flex items-center justify-center z-50">
         <div class="bg-white rounded-lg w-full max-w-md p-8 shadow-lg relative">
-            <h2 class="text-2xl font-semibold mb-4">Add New Illustration</h2>
+            <h2 class="text-2xl font-semibold mb-4">Add New Pattern</h2>
             <form action="{{ route('operator.illustration.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div id="illustrationErrors" class="hidden mb-4"></div>
@@ -120,7 +120,7 @@
                     </select>
                 </div>
                 <div class="mb-4">
-                    <label for="path" class="block text-gray-700">Image Illustration:</label>
+                    <label for="path" class="block text-gray-700">Image Pattern:</label>
                     <input type="file" id="path" name="path"
                         class="w-full border border-gray-300 p-2 rounded">
                 </div>
@@ -141,7 +141,7 @@
     <div id="editIllustration"
         class="fixed inset-0 hidden bg-gray-500 bg-opacity-50 flex items-center justify-center z-50">
         <div class="bg-white rounded-lg w-full max-w-md p-8 shadow-lg relative">
-            <h2 class="text-2xl font-semibold mb-4">Edit Illustration</h2>
+            <h2 class="text-2xl font-semibold mb-4">Edit Pattern</h2>
             <form id="editIllustrationForm" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT') <!-- Untuk PUT method pada update -->
@@ -157,7 +157,7 @@
                 </div>
 
                 <div class="mb-4">
-                    <label for="editImageIllustration" class="block text-gray-700">Image Illustration:</label>
+                    <label for="editImageIllustration" class="block text-gray-700">Image Pattern:</label>
                     <input type="file" id="editImageIllustration" name="path"
                         class="w-full border border-gray-300 p-2 rounded">
                     <p class="text-xs text-gray-500 mt-1">Kosongkan jika tidak ingin mengubah gambar.</p>
@@ -179,10 +179,10 @@
         class="fixed inset-0 hidden bg-gray-500 bg-opacity-50 flex items-center justify-center z-50">
         <div class="bg-white rounded-lg w-full max-w-md p-8 shadow-lg">
             <!-- Header Modal -->
-            <h2 class="text-2xl font-semibold mb-4">Delete Illustration</h2>
+            <h2 class="text-2xl font-semibold mb-4">Delete Pattern</h2>
 
             <!-- Informasi Hapus -->
-            <p class="mb-4">Are you sure you want to delete this illustration and its associated images?</p>
+            <p class="mb-4">Are you sure you want to delete this Pattern and its associated images?</p>
 
             <!-- Action buttons -->
             <div class="flex justify-end">
@@ -228,12 +228,12 @@
             <div class="px-10 py-20">
                 <nav class="my-8">
                     <ul class="space-y-6 text-lg text-gray-900">
-                        <li>
+                        {{-- <li>
                             <a href="{{ route('operator.description') }}"
                                 class="{{ request()->routeIs('operator.description') ? 'active' : '' }}">
                                 Description
                             </a>
-                        </li>
+                        </li> --}}
                         <li>
                             <a href="{{ route('operator.logo') }}"
                                 class="{{ request()->routeIs('operator.logo') ? 'active' : '' }}">
@@ -255,7 +255,7 @@
                         <li>
                             <a href="{{ route('operator.illustration') }}"
                                 class="{{ request()->routeIs('operator.illustration') ? 'active' : '' }}">
-                                Illustration
+                                Pattern
                             </a>
                         </li>
                         <li>
@@ -283,11 +283,11 @@
 
         <main class="w-full p-8 bg-gray-100">
             <div class="mt-20 mb-5 md:flex md:items-center md:justify-between">
-                <h2 class="text-4xl font-bold text-gray-900">Illustration</h2>
+                <h2 class="text-4xl font-bold text-gray-900">Pattern</h2>
                 <div class="flex space-x-4">
                     <button onclick="openModal('addIllustration')"
                         class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
-                        + Add New Illustration
+                        + Add New Pattern
                     </button>
                 </div>
             </div>
@@ -299,7 +299,7 @@
                     <thead class="bg-gray-50">
                         <tr>
                             <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Unit</th>
-                            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Image Illustration</th>
+                            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Image Pattern</th>
                             <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Actions</th>
                         </tr>
                     </thead>

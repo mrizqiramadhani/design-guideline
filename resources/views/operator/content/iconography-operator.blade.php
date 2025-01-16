@@ -236,12 +236,12 @@
             <div class="px-10 py-20">
                 <nav class="my-8">
                     <ul class="space-y-6 text-lg text-gray-900">
-                        <li>
-                            <a href="{{ route('operator.description') }}"
-                                class="{{ request()->routeIs('operator.description') ? 'active' : '' }}">
-                                Description
-                            </a>
-                        </li>
+                        {{-- <li>
+                                <a href="{{ route('operator.description') }}"
+                                    class="{{ request()->routeIs('operator.description') ? 'active' : '' }}">
+                                    Description
+                                </a>
+                            </li> --}}
                         <li>
                             <a href="{{ route('operator.logo') }}"
                                 class="{{ request()->routeIs('operator.logo') ? 'active' : '' }}">
@@ -263,7 +263,7 @@
                         <li>
                             <a href="{{ route('operator.illustration') }}"
                                 class="{{ request()->routeIs('operator.illustration') ? 'active' : '' }}">
-                                Illustration
+                                Pattern
                             </a>
                         </li>
                         <li>
@@ -306,10 +306,11 @@
                 <table class="min-w-full border border-gray-300 bg-white table-fixed">
                     <thead class="bg-gray-50">
                         <tr>
-                            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700 w-1/5">Unit</th>
-                            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700 w-1/6">Image Iconography</th>
-                            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700 w-1/2">Link</th>
-                            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700 w-1/6">Actions</th>
+                            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Unit</th>
+                            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Image Iconography
+                            </th>
+                            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Link</th>
+                            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -323,7 +324,8 @@
                                 <td class="px-4 py-2 text-gray-900 break-words">
                                     @if ($iconography->link)
                                         <a href="{{ $iconography->link }}" target="_blank"
-                                            class="text-blue-500 hover:underline break-all">
+                                            class="text-blue-500 hover:underline truncate block max-w-full"
+                                            style="max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                                             {{ $iconography->link }}
                                         </a>
                                     @else
@@ -348,6 +350,7 @@
                     </tbody>
                 </table>
             </div>
+
 
             <!-- Pagination -->
             @if ($iconographys->count() > 0)
