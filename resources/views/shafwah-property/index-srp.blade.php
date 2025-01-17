@@ -139,6 +139,9 @@
                     <li>
                         <a href="#iconography" class="block py-2 hover:bg-gray-100 rounded">Iconography</a>
                     </li>
+                    <li>
+                        <a href="#campaign" class="block py-2 hover:bg-gray-100 rounded">Campaign</a>
+                    </li>
                 </ul>
             </div>
         </div>
