@@ -101,10 +101,10 @@
 
                 <!-- Drawer Navigation -->
                 <ul class="p-4 space-y-4 text-black" id="drawer-links">
-                    {{-- <li>
+                    <li>
                         <a href="{{ route('shafwah-group') }}" class="block py-2 hover:bg-gray-100 rounded">Shafwah
                             Group</a>
-                    </li> --}}
+                    </li>
                     <li>
                         <a href="{{ route('shafwah-holidays') }}" class="block py-2 hover:bg-gray-100 rounded">Shafwah
                             Holidays</a>
@@ -118,9 +118,9 @@
                     <hr class="my-4 border-gray-300">
 
                     <!-- Tag li Section -->
-                    <li>
+                    {{-- <li>
                         <a href="#deskripsi" class="block py-2 hover:bg-gray-100 rounded">Description</a>
-                    </li>
+                    </li> --}}
                     <li>
                         <a href="#logo" class="block py-2 hover:bg-gray-100 rounded">Logo</a>
                     </li>
