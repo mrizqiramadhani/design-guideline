@@ -135,7 +135,7 @@ class AdminController extends Controller
         $admin->email = $request->email;
         $admin->save();
 
-        $dashboardRoute = $admin->role === 'admin' ? 'admin.dashboard' : 'operator.dashboard';
+        $dashboardRoute = $admin->role === 'admin' ? 'admin.logo' : 'operator.logo';
         return redirect()->route($dashboardRoute)
             ->with('success', 'Email updated successfully.');
     }
@@ -171,7 +171,7 @@ class AdminController extends Controller
         $admin->save();
 
         // Redirect dengan pesan sukses
-        return redirect()->route(auth()->user()->role === 'admin' ? 'admin.dashboard' : 'operator.dashboard')
+        return redirect()->route(auth()->user()->role === 'admin' ? 'admin.logo' : 'operator.logo')
             ->with('success', 'Password updated successfully');
     }
 }
